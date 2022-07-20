@@ -36,6 +36,8 @@
 
 import Vue from "vue";
 import VueSocketIO from "vue-socket.io";
+
+
 const socket = new VueSocketIO({
   connection: "https://dev.apigochat.com/",
   options: {
