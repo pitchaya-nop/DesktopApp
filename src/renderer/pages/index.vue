@@ -10,7 +10,6 @@ import Vue from "vue";
 import Chat from "@/components/messenger/chat.vue";
 import { mapState } from "vuex";
 import VueSocketIO from "vue-socket.io";
-import SocketioService from "../plugins/socketio.service.js";
 
 Vue.use(
       new VueSocketIO({
@@ -52,7 +51,6 @@ export default {
     },
   },
   async mounted() {
-    this.$socket.connect();
     if (this.getProfile == null) {
       await this.getMe();
     }
@@ -214,6 +212,8 @@ export default {
               `rooms:official:update:${officialdata.id}`,
               function (data) {
                 data.data.map((item) => {
+                  console.log('room update');
+                  console.log(item);
                   item.roomtype = "official";
                   item.idofficialroom = officialdata.id;
                   if (this.checkDuplicateRoom(item.id)) {
@@ -224,9 +224,9 @@ export default {
                   }
                 });
 
-                if (this.checkDuplicateRoom(data.data[0].id)) {
+                // if (this.checkDuplicateRoom(data.data[0].id)) {
                   this.addDataToRealm(data.data, "addRooms");
-                }
+                // }
 
                 this.sockets.subscribe(
                   `messages:${data.data[0].sessionId}`,
