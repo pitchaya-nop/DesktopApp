@@ -106,9 +106,6 @@ export default {
     this.getRooms();
     this.getOfficial();
     this.sockets.subscribe("socketId", function (data) {
-      console.log(data);
-    });
-    this.sockets.subscribe("socketId", function (data) {
       this.syncTime = data.syncTime;
       this.$socket.emit(
         "officials:user",

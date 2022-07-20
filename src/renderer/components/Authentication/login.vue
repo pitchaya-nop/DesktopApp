@@ -247,6 +247,7 @@ export default {
           const data = response.data;
           await this.$store.dispatch("auth/setToken", data.accessToken);
           await this.$store.dispatch("auth/setProfile", data.userProfile);
+          
           this.$router.push("/");
         }
         console.log(data);
