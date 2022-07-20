@@ -1,0 +1,60 @@
+{
+    "callcontent": [
+        {
+            "id": 0,
+            "log_symbol": "phone-incoming",
+            "log_type": "incoming call",
+            "time": "15 Minutes ago 5:10",
+            "date": "(22/10/19)"
+        },
+        {
+            "id": 1,
+            "log_symbol": "phone-incoming",
+            "log_type": "outgoing call",
+            "time": "30 Minutes ago 10:30",
+            "date": "(12/09/19)"
+        },
+        {
+            "id": 2,
+            "log_symbol": "phone-missed",
+            "log_type": "missed call",
+            "time": "1 Minutes ago 8:30",
+            "date": "(28/08/19)"
+        },
+        {
+            "id": 3,
+            "log_symbol": "phone-missed",
+            "log_type": "missed call",
+            "time": "10 Minutes ago 9:10",
+            "date": "(18/01/19)"
+        },
+        {
+            "id": 4,
+            "log_symbol": "phone-missed",
+            "log_type": "missed call",
+            "time": "35 Minutes ago 9:10",
+            "date": "(17/01/19)"
+        },
+        {
+            "id": 5,
+            "log_symbol": "phone-missed",
+            "log_type": "missed call",
+            "time": "80 Minutes ago 12:05",
+            "date": "(17/01/19)"
+        },
+        {
+            "id": 6,
+            "log_symbol": "phone-incoming",
+            "log_type": "incoming call",
+            "time": "15 Minutes ago 15:20",
+            "date": "(28/02/20)"
+        },
+        {
+            "id": 7,
+            "log_symbol": "phone-incoming",
+            "log_type": "incoming call",
+            "time": "10 Minutes ago 20m 26s",
+            "date": "10/3/20"
+        }
+    ]
+}

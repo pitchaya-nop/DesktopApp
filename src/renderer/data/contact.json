@@ -1,0 +1,193 @@
+{
+  "contacts": [
+    {
+      "id": 0,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "phone": "+21 3523 25544"
+    },
+    {
+      "id": 1,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "phone": "+54 541447 255"
+    },
+    {
+      "id": 2,
+      "name": "Jony Lynetin",
+      "img": "contact/3.jpg",
+      "status": "busy",
+      "phone": "+58 2564 02554"
+    },
+    {
+      "id": 3,
+      "name": "Jony Lynetin",
+      "img": "contact/4.jpg",
+      "status": "unreachable",
+      "phone": "+44 55124 2524"
+    },
+    {
+      "id": 4,
+      "name": "Jony Lynetin",
+      "img": "contact/4.jpg",
+      "status": "online",
+      "phone": "+54 541447 255"
+    }
+  ],
+  "allCalls": [
+    {
+      "id": 0,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:30 pm",
+      "misscall": false,
+      "log": "arrow-down-left",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 1,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:10 pm",
+      "misscall": false,
+      "log": "arrow-down-right",
+      "log_symbol": "video"
+    },
+    {
+      "id": 2,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:00 pm",
+      "misscall": true,
+      "log": "corner-left-down",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 3,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "misscall": false,
+      "log": "arrow-down-right",
+      "log_symbol": "video"
+    },
+    {
+      "id": 4,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:00 pm",
+      "misscall": false,
+      "log": "arrow-down-right",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 5,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "misscall": false,
+      "log": "arrow-down-right",
+      "log_symbol": "video"
+    }
+  ],
+  "received_Dail_Calls": [
+    {
+      "id": 0,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "online",
+      "time": "3:30 pm",
+      "log_symbol": "video"
+    },
+    {
+      "id": 1,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "offline",
+      "time": "3:10 pm",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 2,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "log_symbol": "video"
+    },
+    {
+      "id": 3,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "offline",
+      "time": "3:00 pm",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 4,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "log_symbol": "video"
+    }
+  ],
+  "missedCalls": [
+    {
+      "id": 0,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:30 pm",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 1,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:10 pm",
+      "log_symbol": "video"
+    },
+    {
+      "id": 2,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:00 pm",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 3,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "log_symbol": "video"
+    },
+    {
+      "id": 4,
+      "name": "Jony Lynetin",
+      "img": "contact/2.jpg",
+      "status": "offline",
+      "time": "3:00 pm",
+      "log_symbol": "phone"
+    },
+    {
+      "id": 5,
+      "name": "Jony Lynetin",
+      "img": "contact/1.jpg",
+      "status": "online",
+      "time": "3:00 pm",
+      "log_symbol": "video"
+    }
+  ]
+}

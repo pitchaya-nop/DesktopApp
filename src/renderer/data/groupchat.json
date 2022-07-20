@@ -1,0 +1,157 @@
+{
+  "data": [
+    {
+      "id": 0,
+      "name": "Tech Ninjas",
+      "img": "avtar/teq.jpg",
+      "status": "Lorem Ipsum is simply dummy text the printing and typesetting industry.",
+      "group" : 35,
+      "online" : true
+    },
+    {
+      "id": 1,
+      "name": "Family Ties",
+      "img": "avtar/family.jpg",
+      "status": "Lorem Ipsum is simply dummy text the printing and typesetting industry.",
+      "group" : 12,
+      "online" : false
+    },
+    {
+      "id": 2,
+      "name": "Hungry for Trouble",
+      "img": "",
+      "profile": "bg-danger",
+      "profile_tag": "HT",
+      "status": "Lorem Ipsum is simply dummy text the printing and typesetting industry.",
+      "online" : false
+    },
+    {
+      "id": 3,
+      "name": "Staunch Ladies",
+      "img": "avtar/girls.jpg",
+      "status": "Lorem Ipsum is simply dummy text the printing and typesetting industry.",
+      "online" : false
+    },
+    {
+      "id": 4,
+      "name": "Crazy Engineers",
+      "img": "",
+      "profile": "bg-success",
+      "profile_tag": "CE",
+      "status": "Lorem Ipsum is simply dummy text the printing and typesetting industry.",
+      "online" : false
+    }
+  ],
+  "groupchatusers": [
+    {
+      "id": 0,
+      "name": "Josephin water",
+      "img": "contact/1.jpg",
+      "place": "Alabma , USA",
+      "profile": "offline"
+    },
+    {
+      "id": 1,
+      "name": "Josephin water",
+      "img": "contact/2.jpg",
+      "place": "Alabma , USA",
+      "profile": ""
+    },
+    {
+      "id": 2,
+      "name": "Josephin water",
+      "img": "contact/3.jpg",
+      "place": "Alabma , USA",
+      "profile": ""
+    },
+    {
+      "id": 3,
+      "name": "Josephin water",
+      "img": "contact/4.jpg",
+      "place": "Alabma , USA",
+      "profile": "unreachable"
+    }
+  ],
+  "chat": [
+    {
+      "id": 0,
+      "users": [
+        0,
+        1
+      ],
+      "lastMessageTime":"Last seen yesterday 05:14",
+      "messages": [
+        {
+          "sender": 1,
+          "img":"contact/1.jpg",
+          "name":"Josephin water",
+          "time":"01:35 AM",
+          "text":"Hi I am Josephin, can you help me to find best chat app?.",
+          "text2":"it should from elite auther",
+          "read":"R",
+          "lastmsg" : false
+        },
+        {
+          "sender": 0,
+          "img":"contact/2.jpg",
+          "name":"Alan josheph",
+          "time":"01:40 AM",
+          "text":" Sure, chitchat is best theme for chating project, you can check it",
+          "path":"https://themeforest.net/user/pixelstrap/portfolio",
+          "document":"../assets/doc/Document.xlsx",
+          "read":"D",
+          "lastmsg" : false
+        },
+        {
+          "sender": 1,
+          "img":"contact/3.jpg",
+          "name":"Sufiya Elija",
+          "time":"01:42 AM",
+          "text":"I think it's best for my project.",
+          "gallery1":"media/1.jpg",
+          "gallery2":"media/2.jpg",
+          "gallery3":"media/3.jpg",
+          "lastmsg" : false
+        },
+        {
+          "sender": 0,
+          "img":"contact/2.jpg",
+          "name":"Alan josheph",
+          "time":"01:45 AM",
+          "text":"If you have any other query then feel free to ask us.",
+          "lastmsg" : true
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "users": [0,2],
+      "lastMessageTime":"",
+      "messages": []
+    },
+    {
+      "id": 2,
+      "users": [],
+      "lastMessageTime":"",
+      "messages": []
+    },
+    {
+      "id": 3,
+      "users": [],
+      "lastMessageTime":"",
+      "messages": []
+    },
+    {
+      "id": 4,
+      "users": [],
+      "lastMessageTime":"",
+      "messages": []
+    },
+    {
+      "id": 5,
+      "users": [],
+      "lastMessageTime":"",
+      "messages": []
+    }
+  ]
+}

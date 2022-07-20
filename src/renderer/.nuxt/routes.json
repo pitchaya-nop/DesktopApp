@@ -1,0 +1,107 @@
+[
+  {
+    "name": "pagenotfound",
+    "path": "/pagenotfound",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/pagenotfound/index.vue",
+    "chunkName": "pages/pagenotfound/index",
+    "_name": "_3c788ab0"
+  },
+  {
+    "name": "realm",
+    "path": "/realm",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/realm.vue",
+    "chunkName": "pages/realm",
+    "_name": "_88c75960"
+  },
+  {
+    "name": "authentication-login",
+    "path": "/authentication/login",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/authentication/login.vue",
+    "chunkName": "pages/authentication/login",
+    "_name": "_b24e2c3e"
+  },
+  {
+    "name": "authentication-login-2",
+    "path": "/authentication/login-2",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/authentication/login-2.vue",
+    "chunkName": "pages/authentication/login-2",
+    "_name": "_4eb2e6c6"
+  },
+  {
+    "name": "authentication-signup",
+    "path": "/authentication/signup",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/authentication/signup.vue",
+    "chunkName": "pages/authentication/signup",
+    "_name": "_fec38160"
+  },
+  {
+    "name": "authentication-signup-2",
+    "path": "/authentication/signup-2",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/authentication/signup-2.vue",
+    "chunkName": "pages/authentication/signup-2",
+    "_name": "_670ec716"
+  },
+  {
+    "name": "blogs-blog_details",
+    "path": "/blogs/blog_details",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/blogs/blog_details/index.vue",
+    "chunkName": "pages/blogs/blog_details/index",
+    "_name": "_538b9df5"
+  },
+  {
+    "name": "blogs-blog_left-sidebar",
+    "path": "/blogs/blog_left-sidebar",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/blogs/blog_left-sidebar/index.vue",
+    "chunkName": "pages/blogs/blog_left-sidebar/index",
+    "_name": "_0aee09ce"
+  },
+  {
+    "name": "blogs-blog_no-sidebar",
+    "path": "/blogs/blog_no-sidebar",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/blogs/blog_no-sidebar/index.vue",
+    "chunkName": "pages/blogs/blog_no-sidebar/index",
+    "_name": "_a6a1ef5a"
+  },
+  {
+    "name": "blogs-blog_right-sidebar",
+    "path": "/blogs/blog_right-sidebar",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/blogs/blog_right-sidebar/index.vue",
+    "chunkName": "pages/blogs/blog_right-sidebar/index",
+    "_name": "_66749f1e"
+  },
+  {
+    "name": "bonus-about",
+    "path": "/bonus/about",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/bonus/about.vue",
+    "chunkName": "pages/bonus/about",
+    "_name": "_67e256c4"
+  },
+  {
+    "name": "bonus-elements",
+    "path": "/bonus/elements",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/bonus/elements.vue",
+    "chunkName": "pages/bonus/elements",
+    "_name": "_544c4476"
+  },
+  {
+    "name": "bonus-faq",
+    "path": "/bonus/faq",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/bonus/faq.vue",
+    "chunkName": "pages/bonus/faq",
+    "_name": "_204b39e7"
+  },
+  {
+    "name": "bonus-price",
+    "path": "/bonus/price",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/bonus/price.vue",
+    "chunkName": "pages/bonus/price",
+    "_name": "_c597b74c"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/pitchaya/projects/pitchaya-nop/src/renderer/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_810a6fda"
+  }
+]

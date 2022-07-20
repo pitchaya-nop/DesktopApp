@@ -1,0 +1,24 @@
+{
+    "wallpaper": [
+        {
+            "id": 1,
+            "img": "wallpaper/2.jpg"
+        },
+        {
+            "id": 2,
+            "img": "wallpaper/3.jpg"
+        },
+        {
+            "id": 3,
+            "img": "wallpaper/4.jpg"
+        },
+        {
+            "id": 4,
+            "img": "wallpaper/5.jpg"
+        },
+        {
+            "id": 5,
+            "img": "wallpaper/1.jpg"
+        }
+    ]
+}

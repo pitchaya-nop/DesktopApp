@@ -1,0 +1,170 @@
+// switch css
+.custom-control-label {
+    font-size: calc(13px + (14 - 13) * ((100vw - 320px) / (1920 - 320)));
+    color: $muted-font;
+    font-weight: 600;
+    line-height: 1.9;
+    padding-left: 10px;
+}
+.custom-switch {
+    .custom-control-label {
+        &::before {
+            border-radius: 20px;
+            height: 19px;
+            width: 34px;
+            box-shadow: rgb(223, 223, 223) 0px 0px 0px 0px inset;
+            border-color: rgb(223, 223, 223);
+            cursor: pointer;
+        }
+        &::after {
+            top: calc(0.25rem + 3px);
+            left: calc(-2.25rem + 1px);
+            width: calc(1rem - 3px);
+            border-radius: 100%;
+            height: calc(1rem - 3px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            background-color: transparent;
+            cursor: pointer;
+        }
+    }
+    .custom-control-input {
+        &:checked {
+            ~ .custom-control-label {
+                &::before {
+                    background-color: rgb(63, 204, 53);
+                    border-color: rgb(63, 204, 53);
+                    box-shadow: rgb(63, 204, 53) 0px 0px 0px 10px inset;
+                }
+                &::after {
+                    transform: translateX(1.15rem);
+                }
+            }
+        }
+        &:focus {
+            ~ .custom-control-label {
+                &::before {
+                    box-shadow: none;
+                }
+            }
+        }
+        &:not(:disabled):active {
+            ~ .custom-control-label {
+                &::before {
+                    background-color: unset;
+                    border-color: rgb(223, 223, 223);
+                }
+            }
+        }
+    }
+    &.custom-switch-primary {
+        .custom-control-label {
+            &::before {
+                transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s;
+            }
+            &::after {
+                transition: background-color 0.4s ease 0s, transform 0.2s ease 0s;
+            }
+        }
+        .custom-control-input {
+            &:checked {
+                ~ .custom-control-label {
+                    &::before {
+                        background-color: $primary-color;
+                        border-color: $primary-color;
+                        box-shadow: $primary-color 0px 0px 0px 10px inset;
+                        transition: border 0.4s ease 0s, box-shadow 0.4s ease 0s, background-color 1.2s ease 0s;
+                    }
+                    &::after {
+                        background-color: $white;
+                        transition: background-color 0.4s ease 0s, transform 0.2s ease 0s;
+                    }
+                }
+            }
+        }
+    }
+}
+// zoom gallery css
+.vue-lb-container {
+    .vue-lb-arrow {
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+    .vue-lb-header {
+        .vue-lb-button-close {
+            svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    }
+}
+// datepicker css
+.vdp-datepicker {
+    .datepicker-here {
+        background: transparent;
+    }                  
+}
+.vfc-navigation-buttons, .vfc-separately-navigation-buttons {
+    div {
+        .vfc-arrow-right, .vfc-arrow-left {
+            width: 8px;
+            height: 8px;
+        }
+    }
+}
+.vdp-datepicker__calendar {
+  border: none !important;
+  box-shadow: 0 0 37px rgba(8,21,66,0.05) !important;
+  span {
+    + span {
+        padding-left: 5px !important;
+        margin-left: 0 !important;
+    }
+  }
+  span {
+      border: none !important;
+  }
+    header {
+        display: flex !important;
+       padding-top: unset;
+        position: unset;
+        top: unset;
+        width: unset;
+        z-index: 1;
+      .day__month_btn {
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+    .cell {
+    //   font-family: $font-roboto, $font-serif;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: 0.22px;
+      width: 10%;
+      color: #000;
+      border-radius: 100%;
+      &.day-header {
+        font-size: 80%;
+      }
+      &.selected {
+        background: $primary-color !important;
+        color: $white;
+      }
+      &.today {
+          border: 1px solid $primary-color;
+      }
+     &:not(.blank):not(.disabled).day:hover, &:not(.blank):not(.disabled).month:hover, &:not(.blank):not(.disabled).year:hover {
+        border: 1px solid $primary-color !important;
+     }
+    }
+    .day-header {
+    //   font-family: $font-rubik, $font-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+    }
+  }
+

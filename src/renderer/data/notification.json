@@ -1,0 +1,49 @@
+{
+    "notification_data": [
+        {
+            "id": 0,
+            "name": "Josephin water",
+            "img": "contact/1.jpg",
+            "profile": "offline",
+            "status": "Upload New Photos",
+            "desc": "Lorem Ipsum is simply dummy text of the printing.",
+            "time": "Now"
+        },
+        {
+            "id": 1,
+            "name": "Jony Today Birthday",
+            "profile_tag" : "J",
+            "profile": "bg-success offline",
+            "status": "Upload New Photos",
+            "desc": "Lorem Ipsum is simply dummy text of the printing.",
+            "time": "1 hour ago"
+        },
+        {
+            "id": 2,
+            "name": "Sufiya Elija",
+            "img": "contact/2.jpg",
+            "profile": "offline",
+            "status": "Comment On your Photo",
+            "desc": "Lorem Ipsum is simply dummy text of the printing.",
+            "time": "5 hour ago"
+        },
+        {
+            "id": 3,
+            "name": "Pabelo Mukrani",
+            "img": "contact/3.jpg",
+            "profile": "unreachable",
+            "status": "Invite Your New Friend",
+            "desc": "Lorem Ipsum is simply dummy text of the printing.",
+            "time": "6 hour ago"
+        },
+        {
+            "id": 4,
+            "name": "Pabelo Mukrani",
+            "profile_tag" : "PM",
+            "profile": "bg-success offline",
+            "status": "Update Profile Picture",
+            "desc": "Lorem Ipsum is simply dummy text of the printing.",
+            "time": "6 hour ago"
+        }
+    ]
+}
