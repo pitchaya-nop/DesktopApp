@@ -34,26 +34,26 @@
 
 // export default new SocketioService();
 
-import Vue from "vue";
-import VueSocketIO from "vue-socket.io";
+// import Vue from "vue";
+// import VueSocketIO from "vue-socket.io";
+// import store from '../store/modules/auth'
 
+// const socket = new VueSocketIO({
+//   connection: "https://dev.apigochat.com/",
+//   options: {
+//     path: "/socket/socket.io",
+//     autoConnect: false,
+//     transports: ["polling"],
+//     transportOptions: {
+//       polling: {
+//         extraHeaders: {
+//           Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
+//           Platform: "WebNop",
+//         },
+//       },
+//     },
 
-const socket = new VueSocketIO({
-  connection: "https://dev.apigochat.com/",
-  options: {
-        path: "/socket/socket.io",
+//   },
+// });
 
-        transports: ["polling"],
-        transportOptions: {
-          polling: {
-            extraHeaders: {
-              Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-              Platform: "WebNop",
-            },
-          },
-    },
-        
-  },
-});
-
-Vue.use(socket);
+// Vue.use(socket);

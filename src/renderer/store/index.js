@@ -13,24 +13,24 @@ import official from './modules/official'
 
 Vue.use(Vuex);
 
-Vue.use(
-  new VueSocketIO({
-    debug: false,
-    connection: "https://dev.apigochat.com/",
-    options: {
-      path: "/socket/socket.io",
-      transports: ["polling"],
-      transportOptions: {
-        polling: {
-          extraHeaders: {
-            Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-            Platform: "WebNop",
-          },
-        },
-      },
-    },
-  })
-);
+// Vue.use(
+//   new VueSocketIO({
+//     debug: false,
+//     connection: "https://dev.apigochat.com/",
+//     options: {
+//       path: "/socket/socket.io",
+//       transports: ["polling"],
+//       transportOptions: {
+//         polling: {
+//           extraHeaders: {
+//             Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
+//             Platform: "WebNop",
+//           },
+//         },
+//       },
+//     },
+//   })
+// );
 
 const createStore = () => {
   return new Vuex.Store({

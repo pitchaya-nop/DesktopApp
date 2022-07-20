@@ -234,6 +234,10 @@ Vue.mixin({
         getProfile: function () {
             const profile = this.$store.getters['auth/profile']
             return profile
+        },
+        getToken: function () {
+            const token = this.$store.getters['auth/token']
+            return token
         }
     },
     methods: {
