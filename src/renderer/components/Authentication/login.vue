@@ -210,12 +210,8 @@ import VueSocketIO from "vue-socket.io";
 export default {
   data() {
     return {
-      //dev
-      email: "nop1000@mail.com",
+      email: "testoa2@mail.com",
       password: "Aa1234",
-      //sit
-      // email: "juhand@gochat.com",
-      // password: "P@ssw0rd",
     };
   },
   methods: {

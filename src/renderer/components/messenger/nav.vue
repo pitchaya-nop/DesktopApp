@@ -95,6 +95,7 @@
 <script>
 import { mapState } from "vuex";
 // const Realm = require("realm");
+import { socketDisconnect } from "../../plugins/socketio.service";
 export default {
   data() {
     return {
@@ -172,17 +173,17 @@ export default {
     },
 
     async handleSingOut() {
-      await this.getdataDB.then((data) => {
-        let rooms = data.objects("ROOM");
-        rooms.map((data) => {
-          this.sockets.unsubscribe(`messages:${data.sessionId}`);
-          this.sockets.unsubscribe(`messages:update:${data.sessionId}`);
-          this.sockets.unsubscribe(`messages:read:${data.sessionId}`);
-        });
-      });
+      // await this.getdataDB.then((data) => {
+      //   let rooms = data.objects("ROOM");
+      //   rooms.map((data) => {
+      //     this.sockets.unsubscribe(`messages:${data.sessionId}`);
+      //     this.sockets.unsubscribe(`messages:update:${data.sessionId}`);
+      //     this.sockets.unsubscribe(`messages:read:${data.sessionId}`);
+      //   });
+      // });
 
-      this.$socket.disconnect();
-
+      // this.$socket.disconnect();
+      socketDisconnect()
       this.$store.state.common.activesidebar = 0;
       this.$store.state.common.iscontact = false;
       this.$store.dispatch("chat/resetState");
@@ -193,8 +194,8 @@ export default {
       this.$router.push("/authentication/login");
       this.$store.dispatch("auth/setToken", "");
       this.$store.dispatch("auth/setProfile", "");
-      this.sockets.unsubscribe("socketId");
-      this.sockets.unsubscribe(`rooms:${window.localStorage.getItem("_ref")}`);
+      // this.sockets.unsubscribe("socketId");
+      // this.sockets.unsubscribe(`rooms:${window.localStorage.getItem("_ref")}`);
       window.localStorage.removeItem("auth");
     },
   },

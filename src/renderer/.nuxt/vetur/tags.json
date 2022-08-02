@@ -26,6 +26,27 @@
   "BlogsRightSidebar": {
     "description": "Auto imported from components/blogs/right-sidebar.vue"
   },
+  "PagenotfoundErrorpage": {
+    "description": "Auto imported from components/pagenotfound/errorpage.vue"
+  },
+  "Pagenotfound": {
+    "description": "Auto imported from components/pagenotfound/index.vue"
+  },
+  "MessengerChat": {
+    "description": "Auto imported from components/messenger/chat.vue"
+  },
+  "Messenger": {
+    "description": "Auto imported from components/messenger/index.vue"
+  },
+  "MessengerLeftSidebar": {
+    "description": "Auto imported from components/messenger/left-sidebar.vue"
+  },
+  "MessengerNav": {
+    "description": "Auto imported from components/messenger/nav.vue"
+  },
+  "MessengerStickers": {
+    "description": "Auto imported from components/messenger/stickers.vue"
+  },
   "LandingPageAppDesign": {
     "description": "Auto imported from components/landing-page/app-design.vue"
   },
@@ -59,27 +80,6 @@
   "LandingPageTestimonial": {
     "description": "Auto imported from components/landing-page/testimonial.vue"
   },
-  "MessengerChat": {
-    "description": "Auto imported from components/messenger/chat.vue"
-  },
-  "Messenger": {
-    "description": "Auto imported from components/messenger/index.vue"
-  },
-  "MessengerLeftSidebar": {
-    "description": "Auto imported from components/messenger/left-sidebar.vue"
-  },
-  "MessengerNav": {
-    "description": "Auto imported from components/messenger/nav.vue"
-  },
-  "MessengerStickers": {
-    "description": "Auto imported from components/messenger/stickers.vue"
-  },
-  "PagenotfoundErrorpage": {
-    "description": "Auto imported from components/pagenotfound/errorpage.vue"
-  },
-  "Pagenotfound": {
-    "description": "Auto imported from components/pagenotfound/index.vue"
-  },
   "BonusPageAboutPage": {
     "description": "Auto imported from components/bonus_page/about/about-page.vue"
   },
@@ -88,6 +88,12 @@
   },
   "BonusPageAbout": {
     "description": "Auto imported from components/bonus_page/about/index.vue"
+  },
+  "BonusPagePriceBonusprice": {
+    "description": "Auto imported from components/bonus_page/price/bonusprice.vue"
+  },
+  "BonusPagePrice": {
+    "description": "Auto imported from components/bonus_page/price/index.vue"
   },
   "BonusPageFaq": {
     "description": "Auto imported from components/bonus_page/faq/index.vue"
@@ -152,12 +158,6 @@
   "BonusPageElementsTypography": {
     "description": "Auto imported from components/bonus_page/elements/typography.vue"
   },
-  "BonusPagePriceBonusprice": {
-    "description": "Auto imported from components/bonus_page/price/bonusprice.vue"
-  },
-  "BonusPagePrice": {
-    "description": "Auto imported from components/bonus_page/price/index.vue"
-  },
   "BlogsCommonBlogFollowUs": {
     "description": "Auto imported from components/blogs/Common/blog_follow_us.vue"
   },
@@ -182,17 +182,17 @@
   "BlogsBlogDetail": {
     "description": "Auto imported from components/blogs/blog_details/blog_detail.vue"
   },
-  "BlogsBlogCard": {
-    "description": "Auto imported from components/blogs/blog_card/blog_card.vue"
-  },
   "BlogsBlogNoSidebar": {
     "description": "Auto imported from components/blogs/blog_no-sidebar/blog_no-sidebar.vue"
   },
-  "BlogsComments": {
-    "description": "Auto imported from components/blogs/comments/comments.vue"
+  "BlogsBlogCard": {
+    "description": "Auto imported from components/blogs/blog_card/blog_card.vue"
   },
   "BlogsBlogSidebar": {
     "description": "Auto imported from components/blogs/blog_sidebar/blog_sidebar.vue"
+  },
+  "BlogsComments": {
+    "description": "Auto imported from components/blogs/comments/comments.vue"
   },
   "BlogsLeaveComments": {
     "description": "Auto imported from components/blogs/leave_coments/leave_comments.vue"
@@ -347,15 +347,6 @@
   "MessengerChatDirectChatDirectcustomchat": {
     "description": "Auto imported from components/messenger/chat/DirectChat/directcustomchat.vue"
   },
-  "MessengerChatOfficialChatOfficialchatheader": {
-    "description": "Auto imported from components/messenger/chat/OfficialChat/officialchatheader.vue"
-  },
-  "MessengerChatOfficialChatOfficialchatuser": {
-    "description": "Auto imported from components/messenger/chat/OfficialChat/officialchatuser.vue"
-  },
-  "MessengerChatOfficialChatOfficialcustomchat": {
-    "description": "Auto imported from components/messenger/chat/OfficialChat/officialcustomchat.vue"
-  },
   "MessengerChatGroupChatGroupchatheader": {
     "description": "Auto imported from components/messenger/chat/GroupChat/groupchatheader.vue"
   },
@@ -364,6 +355,15 @@
   },
   "MessengerChatGroupChatGroupcustomchat": {
     "description": "Auto imported from components/messenger/chat/GroupChat/groupcustomchat.vue"
+  },
+  "MessengerChatOfficialChatOfficialchatheader": {
+    "description": "Auto imported from components/messenger/chat/OfficialChat/officialchatheader.vue"
+  },
+  "MessengerChatOfficialChatOfficialchatuser": {
+    "description": "Auto imported from components/messenger/chat/OfficialChat/officialchatuser.vue"
+  },
+  "MessengerChatOfficialChatOfficialcustomchat": {
+    "description": "Auto imported from components/messenger/chat/OfficialChat/officialcustomchat.vue"
   },
   "MessengerContactsFriendContactFriendcontactchat": {
     "description": "Auto imported from components/messenger/contacts/FriendContact/friendcontactchat.vue"
@@ -416,6 +416,9 @@
   "MessengerRightsidebarNotes": {
     "description": "Auto imported from components/messenger/rightsidebar/notes/index.vue"
   },
+  "MessengerRightsidebarTodo": {
+    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
+  },
   "MessengerRightsidebarReminder": {
     "description": "Auto imported from components/messenger/rightsidebar/reminder/index.vue"
   },
@@ -439,8 +442,5 @@
   },
   "MessengerRightsidebarProfileStatus": {
     "description": "Auto imported from components/messenger/rightsidebar/profile/status.vue"
-  },
-  "MessengerRightsidebarTodo": {
-    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
   }
 }
