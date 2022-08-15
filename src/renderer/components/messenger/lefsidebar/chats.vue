@@ -9,16 +9,16 @@
         <div class="media">
           <div v-if="officialprofile == null">
             <h2>Chats</h2>
-            <button type="button" @click="clearallDB()">
+            <!-- <button type="button" @click="clearallDB()">
               clear before addnew filed
-            </button>
-            <button type="button" @click="clearDB()">Clear DB</button>
-            <button type="button" @click="checkdata()">check room</button>
+            </button> -->
+            <!-- <button type="button" @click="clearDB()">Clear DB</button>
+            <button type="button" @click="checkdata()">check room</button> -->
           </div>
           <div v-if="officialprofile != null">
             <h3 class="mb-2">{{ officialprofile.displayname }}</h3>
             <!-- <button @click="chkmessage()">check message</button> -->
-            <button @click="checkroom()">check room</button>
+            <!-- <button @click="checkroom()">check room</button> -->
           </div>
           
           <!-- <div class="media-body">

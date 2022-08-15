@@ -100,6 +100,7 @@
 <script>
 import { mapState } from "vuex";
 import Vue from "vue";
+import {socket} from '../../../../plugins/socketio.service'
 export default {
   data() {
     return {
@@ -228,9 +229,9 @@ export default {
               ` sessionid == "${sessionid}" AND oaid != "${this.profile.id}" AND status == "SENT"`
             );
           if (lastmsg[0]) {
-            this.$socket.emit(
+            socket.emit(
               "messages:read",
-              `{"sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
+              `{"auth":"Bearer ${this.$store.getters['auth/token']}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
             );
           }
         });
@@ -242,9 +243,9 @@ export default {
               ` sessionid == "${sessionid}" AND senderid != "${this.profile.id}" AND status == "SENT"`
             );
           if (lastmsg[0]) {
-            this.$socket.emit(
+            socket.emit(
               "messages:read",
-              `{"sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
+              `{"auth":"Bearer ${this.$store.getters['auth/token']}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
             );
           }
         });

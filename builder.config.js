@@ -4,11 +4,14 @@ const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
     publisherName: 'michal',
-    target: 'nsis'
+    target: 'nsis',
   },
 
   nsis: {
-    differentialPackage: true
+    differentialPackage: true,
+    oneClick: false,
+    perMachine: false,
+    allowToChangeInstallationDirectory: true
   }
 }
 
@@ -42,7 +45,7 @@ const macOS = {
 }
 
 module.exports = {
-  productName: 'chatapp',
+  productName: 'Goochat',
   appId: 'com.example.app',
   artifactName: 'setup-${version}.${ext}',
   directories: {

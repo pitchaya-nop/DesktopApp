@@ -364,7 +364,6 @@ Vue.mixin({
                             })
                             break;
                         case 'addRooms':
-                            console.log(data);
                             data.map((item) => {
                                 realm.write(() => {
                                     realm.create('ROOM', {

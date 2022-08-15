@@ -9,55 +9,7 @@
 import Vue from "vue";
 import Chat from "@/components/messenger/chat.vue";
 import { mapState } from "vuex";
-import VueSocketIO from "vue-socket.io";
-import io from "socket.io-client";
-import SocketioService from "../plugins/socketio.service.js";
 import { socket, socketAuth } from "../plugins/socketio.service.js";
-
-// socket.connect();
-// console.log(socket);
-// var socket = io()
-// Vue.use(
-//       new VueSocketIO({
-//         debug: true,
-//          autoConnect: false,
-//         connection: "https://dev.apigochat.com/",
-//         options: {
-//           path: "/socket/socket.io/",
-//           // withCredentials: true,
-//            extraHeaders: {
-//                 Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-//                 Platform: "WebNop",
-//               },
-//           transports: ["polling"],
-//           transportOptions: {
-//             polling: {
-//               extraHeaders: {
-//                 Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-//                 Platform: "WebNop",
-//               }
-//             },
-//           },
-//         },
-//       })
-//     );
-// var socket = io("https://dev.apigochat.com", {
-//       path: "/socket/socket.io",
-//       extraHeaders: {
-//         Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-//       },
-//       secure: true,
-//       reconnection: true,
-//       rejectUnauthorized: false,
-//       transports: ["polling"],
-//       transportOptions: {
-//         polling: {
-//           extraHeaders: {
-//             Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-//           },
-//         },
-//       },
-//     });
 export default {
   components: {
     Chat,
@@ -65,6 +17,7 @@ export default {
   data() {
     return {
       syncTime: "",
+      token: this.$store.getters["auth/token"],
     };
   },
   computed: {
@@ -72,65 +25,328 @@ export default {
       sesssionid: (state) => state.chat.session,
     }),
   },
-  // created() {
-
-  //   socket.connect();
-  // },
   created() {
-    
     // SocketioService.setupSocketConnection();
-    socketAuth(this.$store.getters["auth/token"]);
+    socketAuth();
   },
-  // sockets: {
-  //   connect() {
-  //     console.log("connect socket");
-  //   },
-  // },
   async mounted() {
-    // console.log(socket);
-    // console.log(window.location)
-    
-    socket.on("socketId", (data) => {
-      console.log(data);
-      socket.emit(
-        "officials:user",
-        `{"syncTime":"0001-01-01 00:00:00","page":1}`
-      );
-      socket.on(`officials:user:${this.getProfile.id}`, function (data) {
-        console.log(data);
-      });
-    });
     if (this.getProfile == null) {
       await this.getMe();
     }
-    // Vue.use(
-    //   new VueSocketIO({
-    //     debug: false,
-    //     connection: "https://dev.apigochat.com/",
-    //     options: {
-    //       path: "/socket/socket.io",
-    //       transports: ["polling"],
-    //       transportOptions: {
-    //         polling: {
-    //           extraHeaders: {
-    //             Authorization: `Bearer ${window.localStorage.getItem("auth")}`,
-    //             Platform: "WebNop",
-    //           },
-    //         },
-    //       },
-    //     },
-    //   })
-    // );
-
     this.getContact();
     this.getRooms();
     this.getOfficial();
+
+    socket.on("connect_error", (error) => {
+      alert('connect error')
+    });
+    socket.on("disconnect", (disconnect) => {
+      alert('disconnect')
+    });
+
+    socket.on("socketId", (data) => {
+      socket.emit(
+        "web:auth",
+        `{"userId": "${this.$store.getters["auth/profile"].id}","auth":"Bearer ${this.token}"}`
+      );
+      socket.on(
+        `web:auth:${this.$store.getters["auth/profile"].id}`,
+        (data) => {
+          console.log("authen");
+          console.log(data);
+          this.syncTime = data.syncTime;
+          socket.emit(
+            "officials:user",
+            `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1}`
+          );
+          // console.log(this.getProfile.id);
+          // socket.on(`officials:user:${this.getProfile.id}`,(data)=>{
+          //   console.log('on official');
+          //   console.log(data);
+          // })
+
+          socket.on(`officials:user:${this.getProfile.id}`, (data) => {
+            console.log(data);
+            data.data.map((officialdata) => {
+              socket.emit(
+                "oa:auth",
+                `{"auth":"Bearer ${this.token}","userId":"${officialdata.id}"}`
+              );
+              socket.on(`me:official:update:${officialdata.id}`, (data) => {
+                console.log("me official update");
+                console.log(data);
+                let updatedata = data.data[0];
+                if (updatedata.isBlock == true) {
+                  if (updatedata.sessionId == this.sesssionid) {
+                    this.$store.state.common.isblockroom = true;
+                  }
+                  this.addDataToRealm(updatedata.id, "blockOfficial");
+                } else if (updatedata.isBlock == false) {
+                  if (updatedata.sessionId == this.sesssionid) {
+                    this.$store.state.common.isblockroom = false;
+                  }
+                  this.addDataToRealm(updatedata.id, "unblockOfficial");
+                }
+                setTimeout(() => {
+                  this.setRooms();
+                }, 50);
+                // if (this.checkDuplicateRoom(data.data[0].id)) {
+                //   // this.addDataToRealm(data.data, "addRooms");
+                //   console.log(true);
+                // }else{
+                //   // this.addDataToRealm(data.data, "updateDuplicateroom");
+                //   console.log(false);
+                // }
+              });
+              socket.on(`rooms:official:update:${officialdata.id}`, (data) => {
+                console.log("room data");
+                console.log(data);
+                data.data.map((item) => {
+                  console.log("room update");
+                  console.log(item);
+                  item.roomtype = "official";
+                  item.idofficialroom = officialdata.id;
+                  if (this.checkDuplicateRoom(item.id)) {
+                    socket.emit(
+                      `join:room`,
+                      `{"auth":"Bearer ${this.token}","userId":"${officialdata.id}","sessionId":"${item.sessionId}"}`
+                    );
+                  }
+                });
+                this.UpdateAddRoom(data.data);
+                socket.on(`messages:${data.data[0].sessionId}`, (data) => {
+                  console.log(data);
+                  this.addDataToRealm(data.data, "addMessage");
+                  // this.addDataToRealm(data.data, "updateShow");
+                  this.addDataToRealm(officialdata, "updateUnreadcount");
+                  this.addDataToRealm(officialdata, "updateLastmessage");
+                });
+                socket.on(`messages:read:${data.data[0].sessionId}`, (data) => {
+                  this.addDataToRealm(data.data, "updateRead");
+                  if (this.sesssionid == data.data.sessionId) {
+                    setTimeout(() => {
+                      this.setMessage(this.sesssionid);
+                    }, 1000);
+                  }
+                });
+                socket.on(
+                  `messages:update:${data.data[0].sessionId}`,
+                  (msgupdate) => {
+                    msgupdate.data.map((data) => {
+                      if (this.sesssionid == data.sessionId) {
+                        socket.emit(
+                          "messages:read",
+                          `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
+                        );
+                      }
+                    });
+                    this.addDataToRealm(msgupdate.data, "updateDummyMesaage");
+                    this.addDataToRealm(msgupdate.data, "addMessage");
+                    this.addDataToRealm(this.getProfile, "updateUnreadcount");
+                    this.addDataToRealm(this.getProfile, "updateLastmessage");
+                    this.addDataToRealm(msgupdate.data, "updateShow");
+                    setTimeout(() => {
+                      this.setRooms();
+                    }, 50);
+                    if (this.sesssionid) {
+                      if (this.sesssionid == data.data[0].sessionId) {
+                        this.setMessage(this.sesssionid);
+                      }
+                    }
+                  }
+                );
+                socket.emit(
+                  `messages`,
+                  `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${data.data[0].sessionId}"}`
+                );
+                setTimeout(() => {
+                  this.setRooms();
+                }, 50);
+              });
+
+              //////////////////////------------change socket to api rooms and join all rooms[OAID]
+
+              socket.emit(
+                `join:all:rooms`,
+                `{"auth":"Bearer ${this.token}","userId":"${officialdata.id}"}`
+              );
+
+              this.getOfficialRoom(officialdata.id).then((responseOaRoom) => {
+                // console.log(responseOaRoom);
+                responseOaRoom.map(
+                  (dataroomofficial) => (
+                    (dataroomofficial.roomtype = "official"),
+                    (dataroomofficial.idofficialroom = officialdata.id)
+                  )
+                );
+                // console.log(responseOaRoom);
+                if (responseOaRoom.length > 0) {
+                  this.addDataToRealm(responseOaRoom, "addRooms");
+                }
+                socket.on(
+                  `official:contacts:${officialdata.id}`,
+                   (data)=> {
+                    data.data.map((contactsoa) => {
+                      if (contactsoa.isBlock == true) {
+                        this.addDataToRealm(contactsoa.id, "blockOfficial");
+                      }
+                    });
+                  }
+                );
+                socket.emit(
+                  `official:contacts`,
+                  `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1,"userId":"${officialdata.id}"}`
+                );
+                responseOaRoom.map((item) => {
+                  console.log(item);
+                  socket.on(`messages:${item.sessionId}`, (data) => {
+                    console.log("message");
+                    console.log(data);
+                    this.addDataToRealm(data.data, "addMessage");
+                    this.addDataToRealm(data.data, "updateShow");
+                    this.addDataToRealm(officialdata, "updateUnreadcount");
+                    this.addDataToRealm(officialdata, "updateLastmessage");
+                    setTimeout(() => {
+                      this.setRooms();
+                    }, 50);
+                  });
+                  socket.on(`messages:read:${item.sessionId}`, (data) => {
+                    this.addDataToRealm(data.data, "updateRead");
+                    if (this.sesssionid == data.data.sessionId) {
+                      setTimeout(() => {
+                        this.setMessage(this.sesssionid);
+                      }, 1000);
+                    }
+                  });
+                  socket.on(
+                    `messages:update:${item.sessionId}`,
+                    (msgupdate)=> {
+                      console.log("message update");
+                      console.log(msgupdate);
+                      msgupdate.data.map((data) => {
+                        if (this.sesssionid == data.sessionId) {
+                          socket.emit(
+                            "messages:read",
+                            `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
+                          );
+                        }
+                      });
+                      this.addDataToRealm(msgupdate.data, "updateDummyMesaage");
+                      this.addDataToRealm(msgupdate.data, "addMessage");
+                      this.addDataToRealm(this.getProfile, "updateUnreadcount");
+                      this.addDataToRealm(this.getProfile, "updateLastmessage");
+                      this.addDataToRealm(msgupdate.data, "updateShow");
+                      setTimeout(() => {
+                        this.setRooms();
+                      }, 50);
+                      if (this.sesssionid) {
+                        if (this.sesssionid == item.sessionId) {
+                          this.setMessage(this.sesssionid);
+                        }
+                      }
+                    }
+                  );
+                  socket.emit(
+                    `messages`,
+                    `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${item.sessionId}"}`
+                  );
+                });
+              });
+              // console.log(responseOaRoom);
+
+              // socket.on(`rooms:${officialdata.id}`, (data) => {
+              //   console.log("rommmmmmmmmmmmmmmmmmm");
+              //   console.log(data);
+              //   data.data.map(
+              //     (dataroomofficial) => (
+              //       (dataroomofficial.roomtype = "official"),
+              //       (dataroomofficial.idofficialroom = officialdata.id)
+              //     )
+              //   );
+              //   if (data.data.length > 0) {
+              //     this.addDataToRealm(data.data, "addRooms");
+              //   }
+              //   socket.on(
+              //     `official:contacts:${officialdata.id}`,
+              //     function (data) {
+              //       data.data.map((contactsoa) => {
+              //         if (contactsoa.isBlock == true) {
+              //           this.addDataToRealm(contactsoa.id, "blockOfficial");
+              //         }
+              //       });
+              //     }
+              //   );
+              //   socket.emit(
+              //     `official:contacts`,
+              //     `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1,"userId":"${officialdata.id}"}`
+              //   );
+              //   data.data.map((item) => {
+              //     socket.on(`messages:${item.sessionId}`, (data) => {
+              //       console.log(data);
+              //       this.addDataToRealm(data.data, "addMessage");
+              //       this.addDataToRealm(data.data, "updateShow");
+              //       this.addDataToRealm(officialdata, "updateUnreadcount");
+              //       this.addDataToRealm(officialdata, "updateLastmessage");
+              //       setTimeout(() => {
+              //         this.setRooms();
+              //       }, 50);
+              //     });
+              //     socket.on(`messages:read:${item.sessionId}`, (data) => {
+              //       this.addDataToRealm(data.data, "updateRead");
+              //       if (this.sesssionid == data.data.sessionId) {
+              //         setTimeout(() => {
+              //           this.setMessage(this.sesssionid);
+              //         }, 1000);
+              //       }
+              //     });
+              //     socket.on(
+              //       `messages:update:${item.sessionId}`,
+              //       function (msgupdate) {
+              //         msgupdate.data.map((data) => {
+              //           if (this.sesssionid == data.sessionId) {
+              //             socket.emit(
+              //               "messages:read",
+              //               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
+              //             );
+              //           }
+              //         });
+              //         this.addDataToRealm(msgupdate.data, "updateDummyMesaage");
+              //         this.addDataToRealm(msgupdate.data, "addMessage");
+              //         this.addDataToRealm(this.getProfile, "updateUnreadcount");
+              //         this.addDataToRealm(this.getProfile, "updateLastmessage");
+              //         this.addDataToRealm(msgupdate.data, "updateShow");
+              //         setTimeout(() => {
+              //           this.setRooms();
+              //         }, 50);
+              //         if (this.sesssionid) {
+              //           if (this.sesssionid == item.sessionId) {
+              //             this.setMessage(this.sesssionid);
+              //           }
+              //         }
+              //       }
+              //     );
+              //     socket.emit(
+              //       `messages`,
+              //       `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${item.sessionId}"}`
+              //     );
+              //   });
+              // });
+              // socket.emit(
+              //   "rooms",
+              //   `{"auth":"Bearer ${this.token}","syncTime":"${this.syncTime}","page":1,"userId":"${officialdata.id}"}`
+              // );
+              //--------------------------------
+            });
+          });
+        }
+      );
+    });
     // this.sockets.subscribe("socketId", function (data) {
     //   this.syncTime = data.syncTime;
-    //   this.$socket.emit(
-    //     "officials:user",
-    //     `{"syncTime":"0001-01-01 00:00:00","page":1}`
-    //   );
+    // this.$socket.emit(
+    //   "officials:user",
+    //   `{"syncTime":"0001-01-01 00:00:00","page":1}`
+    // );
 
     //   //socket gochat
     //   this.$socket.emit(
@@ -166,12 +382,12 @@ export default {
     //         function (msgupdate) {
     //           msgupdate.data.map((data) => {
     //             if (this.sesssionid == data.sessionId) {
-    //               this.$socket.emit(
-    //                 "messages:read",
-    //                 `{"sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
-    //               );
-    //             }
-    //           });
+    //     this.$socket.emit(
+    //       "messages:read",
+    //       `{"sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
+    //     );
+    //   }
+    // });
 
     //           this.addDataToRealm(msgupdate.data, "updateDummyMesaage");
     //           this.addDataToRealm(msgupdate.data, "addMessage");
@@ -505,6 +721,23 @@ export default {
         }
       } catch (error) {
         console.log(error);
+      }
+    },
+    async getOfficialRoom(OAID) {
+      try {
+        const payload = {
+          page: 1,
+          limit: 100,
+          userId: OAID,
+          dateTime: "0001-01-01 00:00:00",
+        };
+        const response = await this.$store.dispatch(
+          "official/requestOfficialRoom",
+          payload
+        );
+        return response.data.data;
+      } catch (error) {
+        return error;
       }
     },
   },

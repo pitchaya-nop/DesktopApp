@@ -53,6 +53,16 @@ const actions = {
           }
         });
       },
+  requestOfficialRoom({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      try {
+        const response = this.$axios.post(`/oa/rooms`, payload);
+        resolve(response);
+      } catch (e) {
+        reject(e);
+      }
+    });
+  },
 };
 
 export default {
