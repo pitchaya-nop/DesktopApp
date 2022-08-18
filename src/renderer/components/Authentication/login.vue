@@ -14,7 +14,7 @@
                   alt="images"
                 />
               </div>
-              <h3>Hello Everyone , We are GoChat</h3>
+              <h3>Hello Everyone , We are GooChat</h3>
               <h4>Welcome to GoChat please login to your account.</h4>
 
               <form class="form1">
