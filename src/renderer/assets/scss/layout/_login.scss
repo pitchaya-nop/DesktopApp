@@ -1,7 +1,14 @@
 //****lOGIN-1*****//
 .login-content {
+  background-color: $white;
+  padding: 2rem 2rem 0;
+  border-radius: 5px;
   width: 450px;
   margin:  0 auto;
+  .error-label-login{
+    text-align: center;
+    color: $red;
+  }
   .login-content-header{
     img {
       height:50px;
@@ -27,9 +34,9 @@
         font-size: calc(14px + (16 - 14) * ((100vw - 320px) / (1920 - 320)));
         color:$dark-color;
         font-family: $font-1;
-        font-weight: 600;
+        // font-weight: 600;
         padding-top: 0;
-        padding-bottom: 15px;
+        padding-bottom: 10px;
         line-height: 1;
       }
       .buttons{
@@ -65,9 +72,12 @@
         height: auto;
         &::placeholder {
           font-size: 15px;
-          color:$dark-color;
+          color:$light-gray;
           font-family: $font-2;
           font-weight: 400;}
+        &:focus{
+          box-shadow: none;
+          }
       }
       .form-check-label {
         font-size: 12px;
@@ -157,12 +167,12 @@
   }
   .boy-logo{
     position: absolute;
-    left: 36%;
+    left: 20%;
     top: 52%;
   }
   .girl-logo{
     top: 27%;
-    right: 27%;
+    right: 20%;
     position: absolute;
   }
   .heart-logo{
@@ -313,7 +323,7 @@
   .left-page {
     position: relative;
     z-index: 10;
-    width:34%;
+    width:45%;
     height: 100%;
     padding: 50px;
     display: flex;
@@ -330,7 +340,7 @@
     height: 100vh;
     position: fixed;
     right: 0;
-    width: 66%;
+    width: 100%;
     min-height: 780px;
     .animation-block {
       z-index: 1;
@@ -345,6 +355,7 @@
   .login-contain-main {
     display: flex;
     height: 100vh;
+    justify-content: center;
     align-items: center;
     min-height: 780px;
   }
@@ -544,7 +555,7 @@
 @media (max-width:1470px){
    .login-page1  {
      .right-page {
-      width: 60%;
+      width: 100%;
     }
   }
 
@@ -586,7 +597,7 @@
 @media (max-width:1367px){
   .login-page1 {
     .left-page {
-      width: 36%;
+      width: 45%;
     }
   }
   .login-page2  {
@@ -619,12 +630,12 @@
   }
   .right-login {
     .boy-logo{
-      left: 29%;
+      left: 20%;
       top: 50%;
     }
     .girl-logo{
       right: 14%;
-      top: 27%;
+      top: 20%;
     }
     .has-logo1{
       left: 12%;
@@ -647,7 +658,7 @@
           padding: 15px;
         }
         .col-form-label {
-          padding-bottom: 16px;
+          padding-bottom: 10px;
         }
         .form-check {
           margin-bottom: 30px;
@@ -669,7 +680,7 @@
 @media (max-width: 1199px) {
   .login-page1 {
     .left-page {
-      width: 40%;
+      width: 45%;
     }
   }
 }
@@ -691,7 +702,7 @@
       right: 3%;
     }
     .boy-logo{
-      left: 21%;
+      left: 20%;
       top: 45%;
       width: 27%;
     }
@@ -704,10 +715,10 @@
   // login page 1 //
   .login-page1  {
     .left-page {
-      width: 50%;
+      width: 60%;
     }
     .right-page {
-      width: 50%;
+      width: 100%;
     }
   }
   .login-content {
@@ -738,7 +749,7 @@
   }
   .right-login{
     .boy-logo{
-      left: 23%;
+      left: 20%;
       top:43%;
       width: 24%;
     }
@@ -750,8 +761,9 @@
 }
 @media (max-width: 767px) {
   .right-page{
-    position: absolute;
-    opacity: 0.05;
+    // position: absolute;
+    // opacity: 0.05;
+    width: 100%;
   }
   .login-content {
     width: auto;
@@ -790,7 +802,7 @@
   // login page 1 //
   .login-page1  {
     .left-page {
-      width: 100%;
+      width: 80%;
     }
     .right-page {
       width: 100%;

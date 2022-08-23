@@ -2,14 +2,20 @@
   <!--Direct Chat User start -->
   <div>
     <div class="search2">
-      <!-- <div>
+      <div>
         <div class="input-group">
           <div class="input-group-append">
-            <span class="input-group-text"><i class="fa fa-search"></i></span>
+            <span class="input-group-text"><feather type="search" size="15" height="15"></feather
+            ></span>
           </div>
-          <input class="form-control" type="text" placeholder="Search" />
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Search"
+            v-model="Findroom"
+          />
         </div>
-      </div> -->
+      </div>
     </div>
     <li
       :class="{ active: sessionroom === user.sessionid }"
@@ -39,7 +45,7 @@
                   : [
                       {
                         'background-image':
-                          'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                          'url(' + getImgUrl() + ')',
                       },
                       styleObject,
                     ]
@@ -55,14 +61,14 @@
                   : [
                       {
                         'background-image':
-                          'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                          'url(' + getImgUrl() + ')',
                       },
                       styleObject,
                     ]
                 : [
                     {
                       'background-image':
-                        'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                        'url(' + getImgUrl() + ')',
                     },
                     styleObject,
                   ]
@@ -100,7 +106,7 @@
 <script>
 import { mapState } from "vuex";
 import Vue from "vue";
-import {socket} from '../../../../plugins/socketio.service'
+import { socket } from "../../../../plugins/socketio.service";
 export default {
   data() {
     return {
@@ -108,9 +114,10 @@ export default {
       styleObject: {
         "background-size": "cover",
         "background-position": "center",
-        display: "block",
+        "display": "block",
       },
       chatUser: [],
+      Findroom: "",
     };
   },
   mounted() {},
@@ -124,7 +131,34 @@ export default {
       },
     }),
   },
+  watch: {
+    Findroom: function (val, oldVal) {
+      console.log(val);
+      if (val.length > 0) {
+        this.getdataDB.then((data) => {
+          let objs = data
+            .objects("ROOM")
+            .filtered(`idofficialroom =="${this.getProfile.id}"`);
+          objs.map((data) => {
+            if (data.user.displayName.includes(`${val}`)) {
+              console.log(data);
+            }
+          });
+        });
+      } else {
+        this.getdataDB.then((data) => {
+          let objs = data
+            .objects("ROOM")
+            .filtered(`idofficialroom =="${this.getProfile.id}"`);
+          console.log(objs);
+        });
+      }
+    },
+  },
   methods: {
+    getImgUrl(path) {
+      return require("../../../../assets/images/avtar/defaultimageoa.png");
+    },
     setBlockroom(isblock) {
       if (isblock == true) {
         this.$store.state.common.isblockroom = true;
@@ -132,6 +166,18 @@ export default {
         this.$store.state.common.isblockroom = false;
       }
     },
+    // searchofficial() {
+    //   this.getdataDB.then((data) => {
+    //     let objs = data
+    //       .objects("ROOM")
+    //       .filtered(`idofficialroom =="${this.getProfile.id}"`);
+    //     objs.map((data) => {
+    //       if (data.user.displayName.includes("i")) {
+    //         console.log(data);
+    //       }
+    //     });
+    //   });
+    // },
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
       this.getdataDB.then((data) => {
@@ -197,11 +243,10 @@ export default {
           }
         }
       });
+      console.log(this.profile);
       this.addDataToRealm(this.profile, "updateUnreadcount");
       this.addDataToRealm(this.profile, "updateLastmessage");
-      setTimeout(() => {
-        this.setRooms();
-      }, 50);
+      this.setRooms();
       setTimeout(() => {
         if (document.querySelector(".unreadmessage")) {
           const contain = document.querySelector(".scrolltopdirectchat");
@@ -231,7 +276,7 @@ export default {
           if (lastmsg[0]) {
             socket.emit(
               "messages:read",
-              `{"auth":"Bearer ${this.$store.getters['auth/token']}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
+              `{"auth":"Bearer ${this.$store.getters["auth/token"]}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
             );
           }
         });
@@ -245,7 +290,7 @@ export default {
           if (lastmsg[0]) {
             socket.emit(
               "messages:read",
-              `{"auth":"Bearer ${this.$store.getters['auth/token']}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
+              `{"auth":"Bearer ${this.$store.getters["auth/token"]}","sessionId": "${sessionid}","readTime":"${lastmsg[0].createdtime}"}`
             );
           }
         });

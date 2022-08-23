@@ -504,7 +504,6 @@ export default {
     },
   },
   mounted() {
-    console.log("firsttime");
     document
       .querySelector(".scrolltopdirectchat")
       .addEventListener("scroll", this.addMessage, false);

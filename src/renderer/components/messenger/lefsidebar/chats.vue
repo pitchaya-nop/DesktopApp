@@ -16,9 +16,10 @@
             <button type="button" @click="checkdata()">check room</button> -->
           </div>
           <div v-if="officialprofile != null">
-            <h3 class="mb-2">{{ officialprofile.displayname }}</h3>
+            <h2 class="mb-2">{{ officialprofile.displayname }}</h2>
             <!-- <button @click="chkmessage()">check message</button> -->
             <!-- <button @click="checkroom()">check room</button> -->
+            
           </div>
           
           <!-- <div class="media-body">
@@ -70,6 +71,7 @@
         </div>
       </div> -->
     </div>
+    
     <div class="chat custom-scroll">
       <!-- <ul class="chat-cont-setting" :class="opeNewchat ? 'open' : ''">
         <li>

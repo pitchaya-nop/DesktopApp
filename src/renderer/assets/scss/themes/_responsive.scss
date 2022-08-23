@@ -386,7 +386,8 @@
     .main-nav:not(.on) {
       & ~ .chitchat-main {
         &.small-sidebar {
-          width: calc(100% - 390px);
+          // width: calc(100% - 390px);
+          width: 100%;
         }
       }
     }

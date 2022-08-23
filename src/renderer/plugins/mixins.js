@@ -99,7 +99,7 @@ const RoomSchema = {
         isshow: 'bool',
         showtime: 'string',
         roomtype: 'string',
-        isblock:'bool',
+        isblock: 'bool',
         idofficialroom: 'string',
         unreadcount: 'int',
         lastmessage: "string",
@@ -339,28 +339,31 @@ Vue.mixin({
                             break;
                         case 'addOfficial':
                             data.map((item) => {
-
-                                realm.write(() => {
-                                    realm.create('OFFICIAL', {
-                                        adminuserids: item.adminUserIds,
-                                        companyemail: item.companyEmail,
-                                        companyname: item.companyName,
-                                        createdtime: item.createdTime,
-                                        displayname: item.displayName,
-                                        friendcount: item.friendCount,
-                                        gochatid: item.gochatId,
-                                        id: item.id,
-                                        package: item.package,
-                                        role: item.role,
-                                        updatedtime: item.updatedTime,
-                                        avatars: {
-                                            thumbnail: item.avatars.thumbnail ? item.avatars.thumbnail : 'null',
-                                            source: item.avatars.source ? item.avatars.source : 'null',
-                                            medium: item.avatars.medium ? item.avatars.medium : 'null',
-                                        },
+                                let official = realm.objects("OFFICIAL").filtered(`id == "${item.id}" `)
+                                if (official.length > 0) {
+                                    return false
+                                } else {
+                                    realm.write(() => {
+                                        realm.create('OFFICIAL', {
+                                            adminuserids: item.adminUserIds,
+                                            companyemail: item.companyEmail,
+                                            companyname: item.companyName,
+                                            createdtime: item.createdTime,
+                                            displayname: item.displayName,
+                                            friendcount: item.friendCount,
+                                            gochatid: item.gochatId,
+                                            id: item.id,
+                                            package: item.package,
+                                            role: item.role,
+                                            updatedtime: item.updatedTime,
+                                            avatars: {
+                                                thumbnail: item.avatars.thumbnail ? item.avatars.thumbnail : 'null',
+                                                source: item.avatars.source ? item.avatars.source : 'null',
+                                                medium: item.avatars.medium ? item.avatars.medium : 'null',
+                                            },
+                                        })
                                     })
-                                })
-
+                                }
                             })
                             break;
                         case 'addRooms':
@@ -373,7 +376,7 @@ Vue.mixin({
                                         idofficialroom: item.idofficialroom ? item.idofficialroom : 'null',
                                         unreadcount: 0,
                                         lastmessage: "",
-                                        isblock:false,
+                                        isblock: false,
                                         admincount: item.adminCount,
                                         adminUserIds: item.adminUserIds ? item.adminUserIds : [],
                                         allowlinkinvite: item.allowLinkInvite,
@@ -438,9 +441,9 @@ Vue.mixin({
                                         const message = realm.objects("MESSAGE").filtered(`messageid == "${msg.messageId}" `)
 
                                         if (message.length > 0) {
-                                            message.map((msgup, index) => {
-                                                return false
-                                            })
+                                            // message.map((msgup, index) => {
+                                            return false
+                                            // })
                                         } else {
                                             realm.create('MESSAGE', {
                                                 id: item.id,
@@ -591,19 +594,27 @@ Vue.mixin({
                             })
                             break;
                         case 'updateUnreadcount':
+                            // checkunreadcount
+                            // console.log('update unreadcount');
+                            // console.log(data);
                             realm.write(() => {
                                 const session = realm.objects("ROOM").filtered(`isshow == true`)
+                                // console.log(session);
                                 session.map((sessionroom) => {
-                                    if (sessionroom.roomtype == 'official') {
-                                        const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND oaid != "${data.id}"`)
-                                        sessionroom.unreadcount = unreadcount.length
-                                    } else if (sessionroom.roomtype == 'user') {
-                                        const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND senderid != "${data.id}"`)
-                                        sessionroom.unreadcount = unreadcount.length
-                                    }
+                                    // console.log(sessionroom);
+                                    // if (sessionroom.roomtype == 'official') {
+                                    const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND oaid != "${data.id}"`)
+                                    sessionroom.unreadcount = unreadcount.length
+                                    // } else if (sessionroom.roomtype == 'user') {
+                                    //     const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND senderid != "${data.id}"`)
+                                    //     sessionroom.unreadcount = unreadcount.length
+                                    // }
                                 })
                             })
                             break;
+                        // case 'updateUnreadcountAfterSetuser':
+                        //     const session = realm.objects("ROOM").filtered(`isshow == true AND `)
+                        //     break;
                         case 'updateLastmessage':
                             realm.write(() => {
                                 const session = realm.objects("ROOM").filtered(`isshow == true`)
@@ -645,22 +656,22 @@ Vue.mixin({
                             break;
                         case 'blockOfficial':
                             const blcokroom = realm.objects("ROOM").filtered(`user.id == "${data}"`)
-                            realm.write(()=>{
-                                blcokroom.map((contacts)=>{
+                            realm.write(() => {
+                                blcokroom.map((contacts) => {
                                     contacts.isblock = true
                                     console.log(contacts.user.displayName);
                                 })
                             })
-                        break;
+                            break;
                         case 'unblockOfficial':
                             const unblockroom = realm.objects("ROOM").filtered(`user.id == "${data}"`)
-                            realm.write(()=>{
-                                unblockroom.map((contacts)=>{
+                            realm.write(() => {
+                                unblockroom.map((contacts) => {
                                     contacts.isblock = false
                                     console.log(contacts.user.displayName);
                                 })
                             })
-                        break;
+                            break;
                         // case 'updateDuplicateroom':
                         //     const updateroom = realm.objects("ROOM").filtered(`sessionid == "${data.sessionId}" `)
                         //     console.log(updateroom);

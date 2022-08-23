@@ -5,9 +5,12 @@ export const socket = io('https://dev.apigochat.com:443', {
     path: "/socket/socket.io",
     transports: ['websocket'],
     autoConnect: false,
-    reconnection: false,
-    withCredentials: true,
-    debug: false
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: Infinity
+    // withCredentials: true,
+    // debug: false
 });
 export const socketAuth = () => {
     socket.connect()

@@ -38,12 +38,18 @@ export default {
     this.getOfficial();
 
     socket.on("connect_error", (error) => {
-      alert('connect error')
+      // socket.removeAllListeners()
+      // alert("connect error");
+      console.log('connect error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"')
     });
     socket.on("disconnect", (disconnect) => {
-      alert('disconnect')
+      
+      console.log(
+        "disconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
+      // socketAuth()
     });
-
+    
     socket.on("socketId", (data) => {
       socket.emit(
         "web:auth",
@@ -66,6 +72,7 @@ export default {
           // })
 
           socket.on(`officials:user:${this.getProfile.id}`, (data) => {
+            console.log("official user");
             console.log(data);
             data.data.map((officialdata) => {
               socket.emit(
@@ -172,7 +179,8 @@ export default {
               );
 
               this.getOfficialRoom(officialdata.id).then((responseOaRoom) => {
-                // console.log(responseOaRoom);
+                console.log("responseOaRoom");
+                console.log(responseOaRoom);
                 responseOaRoom.map(
                   (dataroomofficial) => (
                     (dataroomofficial.roomtype = "official"),
@@ -181,18 +189,20 @@ export default {
                 );
                 // console.log(responseOaRoom);
                 if (responseOaRoom.length > 0) {
-                  this.addDataToRealm(responseOaRoom, "addRooms");
+                  this.UpdateAddRoom(responseOaRoom);
+                  //                   if(){
+                  // this.addDataToRealm(responseOaRoom, "addRooms");
+                  //                   }
                 }
-                socket.on(
-                  `official:contacts:${officialdata.id}`,
-                   (data)=> {
-                    data.data.map((contactsoa) => {
-                      if (contactsoa.isBlock == true) {
-                        this.addDataToRealm(contactsoa.id, "blockOfficial");
-                      }
-                    });
-                  }
-                );
+                socket.on(`official:contacts:${officialdata.id}`, (data) => {
+                  console.log("official contact");
+                  console.log(data);
+                  data.data.map((contactsoa) => {
+                    if (contactsoa.isBlock == true) {
+                      this.addDataToRealm(contactsoa.id, "blockOfficial");
+                    }
+                  });
+                });
                 socket.emit(
                   `official:contacts`,
                   `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1,"userId":"${officialdata.id}"}`
@@ -200,17 +210,24 @@ export default {
                 responseOaRoom.map((item) => {
                   console.log(item);
                   socket.on(`messages:${item.sessionId}`, (data) => {
-                    console.log("message");
+                    console.log("messages");
                     console.log(data);
+
+                    // this.checkDuplicateMessage(data.data, officialdata);
                     this.addDataToRealm(data.data, "addMessage");
                     this.addDataToRealm(data.data, "updateShow");
-                    this.addDataToRealm(officialdata, "updateUnreadcount");
-                    this.addDataToRealm(officialdata, "updateLastmessage");
+                    if (this.checkDuplicateMessage(data.data)) {
+                      this.addDataToRealm(officialdata, "updateUnreadcount");
+                      this.addDataToRealm(officialdata, "updateLastmessage");
+                    }
+
                     setTimeout(() => {
                       this.setRooms();
                     }, 50);
                   });
                   socket.on(`messages:read:${item.sessionId}`, (data) => {
+                    console.log("message read");
+                    console.log(data);
                     this.addDataToRealm(data.data, "updateRead");
                     if (this.sesssionid == data.data.sessionId) {
                       setTimeout(() => {
@@ -220,7 +237,7 @@ export default {
                   });
                   socket.on(
                     `messages:update:${item.sessionId}`,
-                    (msgupdate)=> {
+                    (msgupdate) => {
                       console.log("message update");
                       console.log(msgupdate);
                       msgupdate.data.map((data) => {
@@ -640,16 +657,19 @@ export default {
         }
       });
     },
-    checkDuplicateMessage(sessionfromupdate) {
+    checkDuplicateMessage(msgdata) {
       this.getdataDB.then((data) => {
-        let msg = data.objects("MESSAGE");
-        msg.map((item) => {
-          // console.log(item);
-          // if () {
-          //   return false;
-          // } else {
-          //   return true;
-          // }
+        msgdata.map((item) => {
+          item.messages.map((msg) => {
+            let message = data
+              .objects("MESSAGE")
+              .filtered(`messageid == "${msg.messageId}" `);
+            if (message.length > 0) {
+              return false;
+            } else {
+              return true
+            }
+          });
         });
       });
     },
@@ -735,6 +755,8 @@ export default {
           "official/requestOfficialRoom",
           payload
         );
+        console.log('get Officialroom');
+        console.log(response.data.data);
         return response.data.data;
       } catch (error) {
         return error;

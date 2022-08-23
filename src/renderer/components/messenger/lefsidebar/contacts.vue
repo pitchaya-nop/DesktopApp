@@ -9,7 +9,7 @@
         <div class="media">
           <div>
             <h2>Contacts</h2>
-            <button @click="clearDB">clear db </button>
+            <!-- <button @click="clearDB">clear db </button> -->
             <!-- <h4>Chat from your friends &#128536;</h4> -->
           </div>
           <!-- <div class="media-body">

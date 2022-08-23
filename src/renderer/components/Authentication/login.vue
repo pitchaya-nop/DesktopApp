@@ -7,7 +7,7 @@
         <div class="login-contain-main">
           <div class="left-page">
             <div class="login-content">
-              <div class="login-content-header mt-3 mb-3">
+              <!-- <div class="login-content-header mt-3 mb-3">
                 <img
                   class="image-fluid my-auto"
                   src="../../assets/images/logo/logo-circle.png"
@@ -15,11 +15,14 @@
                 />
               </div>
               <h3>Hello Everyone , We are GooChat</h3>
-              <h4>Welcome to GoChat please login to your account.</h4>
+              <h4>Welcome to GoChat please login to your account.</h4> -->
 
               <form class="form1">
                 <div class="form-group">
-                  <label class="col-form-label" for="inputEmail3"
+                  <label
+                    class="col-form-label"
+                    for="inputEmail3"
+                    style="font-weight: 400; font-size: 14px"
                     >Email Address</label
                   >
                   <input
@@ -33,7 +36,10 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label class="col-form-label" for="inputPassword3"
+                  <label
+                    class="col-form-label"
+                    for="inputPassword3"
+                    style="font-weight: 400; font-size: 14px"
                     >Password</label
                   ><span> </span>
 
@@ -46,7 +52,7 @@
                     placeholder="Password"
                   />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="rememberchk">
                     <div class="form-check pl-0">
                       <input
@@ -64,22 +70,33 @@
                       </h6>
                     </div>
                   </div>
-                </div>
+                </div> -->
+                <template v-if="this.loginfailed">
+                  <p class="error-label-login">{{this.errorlogin}}</p>
+                </template>
+                
                 <div class="form-group">
                   <div class="buttons">
                     <a
                       class="btn btn-primary button-effect"
+                      style="width: 100%; border-radius: 0"
                       href="javascript:void(0)"
                       @click="handleLogin"
-                      >Login</a
                     >
-                    <nuxt-link
+                      <!-- {{this.loginloading?<div><b-spinner label="Loading..."></b-spinner></div>:'failed'}}  -->
+                      <template v-if="this.loginloading">
+                        <b-spinner label="Loading..." style="border-color:white;border-right-color: transparent;"></b-spinner>
+                      </template>
+                      <template v-else> Login </template>
+                    </a>
+                    <!-- <nuxt-link
                       class="btn button-effect btn-signup"
                       to="/authentication/signup"
                     >
                       SignUp
-                    </nuxt-link>
+                    </nuxt-link> -->
                   </div>
+                  
                 </div>
               </form>
 
@@ -141,14 +158,14 @@
                 <div class="cross2"></div>
                 <div class="dot"></div>
                 <div class="dot1"></div>
-                <div class="maincircle"></div>
+                <!-- <div class="maincircle"></div> -->
                 <div class="top-circle"></div>
                 <div class="center-circle"></div>
                 <div class="bottom-circle"></div>
                 <div class="bottom-circle1"></div>
                 <div class="right-circle"></div>
                 <div class="right-circle1"></div>
-                <img
+                <!-- <img
                   class="heart-logo"
                   src="../../assets/images/login_signup/5.png"
                   alt="login logo"
@@ -156,11 +173,13 @@
                   class="has-logo"
                   src="../../assets/images/login_signup/4.png"
                   alt="login logo"
-                /><img
+                /> -->
+                <!-- <img
                   class="login-img"
                   src="../../assets/images/login_signup/1.png"
                   alt="login logo"
-                /><img
+                /> -->
+                <img
                   class="boy-logo"
                   src="../../assets/images/login_signup/6.png"
                   alt="login boy logo"
@@ -168,7 +187,8 @@
                   class="girl-logo"
                   src="../../assets/images/login_signup/7.png"
                   alt="girllogo"
-                /><img
+                />
+                <img
                   class="cloud-logo"
                   src="../../assets/images/login_signup/2.png"
                   alt="login logo"
@@ -188,11 +208,12 @@
                   class="cloud-logo4"
                   src="../../assets/images/login_signup/2.png"
                   alt="login logo"
-                /><img
+                />
+                <!-- <img
                   class="has-logo1"
                   src="../../assets/images/login_signup/4.png"
                   alt="login logo"
-                />
+                /> -->
               </div>
             </div>
           </div>
@@ -210,14 +231,19 @@ import VueSocketIO from "vue-socket.io";
 export default {
   data() {
     return {
-      email: "testoa2@mail.com",
-      password: "Aa1234",
+      email: "",
+      password: "",
+      loginloading: false,
+      loginfailed:false,
+      errorlogin:'error login naja'
     };
   },
   methods: {
     async handleLogin() {
       console.log("email", this.email);
       console.log("password", this.password);
+      this.loginloading = true
+      this.loginfailed = false
       try {
         var keyHex = CryptoJS.enc.Utf8.parse(
           "4a310288218c3394d829e49bd187c395"
@@ -240,16 +266,23 @@ export default {
         console.log("response", response);
 
         if (response.code === "0000") {
+          console.log('success');
           const data = response.data;
           await this.$store.dispatch("auth/setToken", data.accessToken);
           await this.$store.dispatch("auth/setProfile", data.userProfile);
-          
+
           this.$router.push("/");
+          // this.loginloading = false
+        }else{
+          this.loginloading = false
+          this.loginfailed = true
+          this.errorlogin = response.message
         }
         console.log(data);
         console.log(response);
       } catch {
-        console.log("err");
+        // console.log("err");
+
       }
     },
   },

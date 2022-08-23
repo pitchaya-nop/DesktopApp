@@ -1,18 +1,16 @@
 <template>
   <!-- Main Left Sidebar Menu start -->
   <nav class="main-nav custom-scroll" :class="toggleleftside">
-    <div class="logo-warpper">
+    <!-- <div class="logo-warpper">
       <a>
         <nuxt-link to="/">
-          <!-- <img src="../../assets/images/logo/logo.png" alt="logo" />
-           -->
           <img src="../../assets/images/logo/logo-circle.png" alt="logo" />
         </nuxt-link>
       </a>
-    </div>
+    </div> -->
     <div class="sidebar-main">
       <ul class="sidebar-top">
-        <li>
+        <!-- <li>
           <a
             class="icon-btn btn-light button-effect"
             :class="activesidebar == 1 ? 'active' : ''"
@@ -22,7 +20,6 @@
             title="Contacts"
             data-tippy-content="Contacts"
           >
-            <!-- <i class="fa fa-users"> </i> -->
             <feather type="users"></feather>
           </a>
         </li>
@@ -39,11 +36,11 @@
             title="Chats"
             data-tippy-content="Chats"
           >
-            <!-- <i class="fa fa-users"> </i> -->
+            
             <feather type="message-square"></feather>
           </a>
-        </li>
-        <hr />
+        </li> -->
+        <!-- <hr /> -->
         <template>
           <li v-for="(oa, index) in currentOfficial.listoa" :key="index">
             <a

@@ -168,10 +168,10 @@ const actions = {
   // addSticker: (context, payload) => {
   //   context.commit("addSticker", payload);
   // },
-  setScroll() {
-    const contain = document.querySelector('.scrolltopdirectchat')
-    contain.scrollTop = contain.scrollHeight;
-  },
+  // setScroll() {
+  //   const contain = document.querySelector('.scrolltopdirectchat')
+  //   contain.scrollTop = contain.scrollHeight;
+  // },
   uploadImage({ commit }, payload) {
     return new Promise((resolve, reject) => {
       try {

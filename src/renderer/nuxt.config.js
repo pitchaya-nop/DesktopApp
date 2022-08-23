@@ -9,7 +9,7 @@ module.exports = {
   ssr: false,
   target: 'static',
   head: {
-    title: 'chatapp',
+    title: 'GOOCHAT',
     meta: [{ charset: "utf-8" }]
   },
   loading: false,

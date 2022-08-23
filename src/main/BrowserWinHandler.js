@@ -45,8 +45,9 @@ export default class BrowserWinHandler {
           nodeIntegration: true, // allow loading modules via the require () function
           contextIsolation: false, // https://github.com/electron/electron/issues/18037#issuecomment-806320028
         },
-        width: 1400,
-        height: 1000
+        width: 1200,
+        height: 800
+        // fullscreen: true
       }
     )
     // this.browserWindow.webcontents.on("did-finish-load",()=>{

@@ -75,7 +75,7 @@
           </ul>
         </div>  -->
 
-        <DirectChatHeader />
+        <!-- <DirectChatHeader /> -->
         <DirectCustomChat />
         <!-- new message when scrolling top -->
         <!-- <div
@@ -520,12 +520,12 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-          console.log(res);
+           this.scrollbottom();
           if (res.data.message != "success") {
             this.addDataToRealm(payload, "failedUpdateDummyMesaage");
             this.setMessage(this.sessionID);
           }
-          this.scrollbottom();
+          
 
           // var container = this.$el.querySelector(".scrolltopdirectchat");
           // container.scrollTop = container.scrollHeight;
@@ -584,6 +584,7 @@ export default {
     },
     scrollbottom() {
       var container = this.$el.querySelector(".scrolltopdirectchat");
+      console.log('scrol to bottom');
       container.scrollTop = container.scrollHeight;
     },
     getImgUrl(path) {
