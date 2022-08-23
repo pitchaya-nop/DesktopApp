@@ -159,12 +159,12 @@
                 <div class="dot"></div>
                 <div class="dot1"></div>
                 <!-- <div class="maincircle"></div> -->
-                <div class="top-circle"></div>
+                <!-- <div class="top-circle"></div>
                 <div class="center-circle"></div>
                 <div class="bottom-circle"></div>
                 <div class="bottom-circle1"></div>
                 <div class="right-circle"></div>
-                <div class="right-circle1"></div>
+                <div class="right-circle1"></div> -->
                 <!-- <img
                   class="heart-logo"
                   src="../../assets/images/login_signup/5.png"
@@ -188,7 +188,7 @@
                   src="../../assets/images/login_signup/7.png"
                   alt="girllogo"
                 />
-                <img
+                <!-- <img
                   class="cloud-logo"
                   src="../../assets/images/login_signup/2.png"
                   alt="login logo"
@@ -207,6 +207,31 @@
                 /><img
                   class="cloud-logo4"
                   src="../../assets/images/login_signup/2.png"
+                  alt="login logo"
+                /> -->
+                <img
+                  class="cloud-logo"
+                  src="../../assets/images/logo/logo-circle.png"
+                  alt="login logo"
+                />
+                <img
+                  class="cloud-logo1"
+                  src="../../assets/images/logo/logo-circle.png"
+                  alt="login logo"
+                />
+                <img
+                  class="cloud-logo2"
+                  src="../../assets/images/logo/logo-circle.png"
+                  alt="login logo"
+                />
+                <img
+                  class="cloud-logo3"
+                  src="../../assets/images/logo/logo-circle.png"
+                  alt="login logo"
+                />
+                <img
+                  class="cloud-logo4"
+                  src="../../assets/images/logo/logo-circle.png"
                   alt="login logo"
                 />
                 <!-- <img

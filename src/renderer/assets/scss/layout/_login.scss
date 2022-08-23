@@ -198,29 +198,34 @@
     left : 0;
     animation: homecloud 90s linear infinite;
     transform: scale(0.15);
+    height:100px;
   }
   .cloud-logo1{
     position  :absolute;
     bottom: 10%;
     animation: animateCloud 25s linear infinite;
-    height: 25px;
+    // height: 25px;
+    transform: scale(0.8);
+    height:100px;
   }
   .cloud-logo2{
     position  :absolute;
     top: 2%;
+    height:80px;
     animation: homecloud 60s linear infinite;
-    transform: scale(0.5);
+    transform: scale(0.3);
   }
   .cloud-logo3{
     position  :absolute;
     top:31%;
     animation: animateCloud 45s linear infinite;
-    transform: scaleX(-1);
+    transform: scaleX(1);
     height:30px;
   }
   .cloud-logo4{
     position  :absolute;
-    animation: animateCloud 80s linear infinite;
+    animation: homecloud 40s linear infinite;
+    height:100px;
     transform: scale(0.55);
   }
   .maincircle {
@@ -508,7 +513,8 @@
 /* KEYFRAMES */
 @keyframes animateCloud {
   0% {
-    margin-left: -700px;
+    // margin-left: -700px;
+    margin-left: -100%;
   }
   100% {
     margin-left: 100%;
