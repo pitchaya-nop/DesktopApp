@@ -2,10 +2,8 @@
   <!-- Main Left Sidebar Menu start -->
   <nav class="main-nav custom-scroll" :class="toggleleftside">
     <!-- <div class="logo-warpper">
-      <a>
-        <nuxt-link to="/">
-          <img src="../../assets/images/logo/logo-circle.png" alt="logo" />
-        </nuxt-link>
+      <a @click="openUrl">
+        <img src="../../assets/images/logo/logo-circle.png" alt="logo" />
       </a>
     </div> -->
     <div class="sidebar-main">
@@ -54,8 +52,7 @@
                     ]
                   : [
                       {
-                        'background-image':
-                          'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                        'background-image': 'url(' + getImgUrl() + ')',
                       },
                       styleObject,
                     ]
@@ -117,8 +114,11 @@ export default {
     }),
   },
   methods: {
-    getImgUrl(path) {
-      return require("@/assets/images/" + path);
+    getImgUrl() {
+      return require("../../assets/images/avtar/defaultimageoa.png");
+    },
+    openUrl() {
+      require("electron").shell.openExternal('https://official-dev.goochat.net');
     },
     setOfficial(data) {
       this.$store.dispatch("auth/setOfficialProfile", data);
@@ -180,7 +180,7 @@ export default {
       // });
 
       // this.$socket.disconnect();
-      socketDisconnect()
+      socketDisconnect();
       this.$store.state.common.activesidebar = 0;
       this.$store.state.common.iscontact = false;
       this.$store.dispatch("chat/resetState");

@@ -10,8 +10,9 @@
         overflow: auto;
         overflow-x: hidden;
         overflow-y: auto;
-        border-right:1px solid $border-color;
-        padding: $sidebar-spacing 0;
+        border-right:1px solid $bordergray;
+        // padding: $sidebar-spacing 0;
+        padding: 0;
     }
     .chitchat-left-sidebar{
         min-width: $left-sidebar-width;

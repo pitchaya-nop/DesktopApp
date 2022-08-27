@@ -7,6 +7,7 @@
     }
   }
   .main-nav {
+    background-color:#f8f9fa;
     .logo-warpper {
       text-align: center;
       padding-bottom: 35px;
@@ -16,8 +17,9 @@
       }
     }
     .sidebar-main {
+      height: calc(100vh - 15px);
       // height: calc(100vh - 186px);
-      height: calc(100vh - 80px);
+      // height: calc(100vh - 80px);
       display: inline-flex;
       flex-direction: column;
       width: 100%;
@@ -45,7 +47,7 @@
         }
         li {
           text-align: center;
-          padding-top: 30px;
+          padding-top: 15px;
           position: relative;
         }
       }
@@ -68,6 +70,7 @@
       top: 0;
       bottom: 0;
       background-color: $white;
+      border-right: 1px solid #dee2e6;
       z-index: 0;
       width: 400px;
       min-width: 400px;
@@ -192,11 +195,12 @@
         position: fixed;
         width: 400px;
         top: 0;
-        background-color: $white;
+        // background-color: $white;
         padding-top: $sidebar-spacing;
         z-index: 1;
         .theme-title {
-          padding: 0 $sidebar-spacing;
+          // padding: 0 $sidebar-spacing;
+          padding: 0 20px;
         }
         .recent-slider {
           padding: 20px $sidebar-spacing 0 $sidebar-spacing;
@@ -252,6 +256,7 @@
         overflow-y: auto;
         > .theme-tab {
           padding: $sidebar-spacing;
+          padding-top: 20px;
           &.tab-sm {
             > .nav-tabs {
               padding-bottom: 30px;

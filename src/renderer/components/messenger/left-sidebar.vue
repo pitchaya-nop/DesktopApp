@@ -1,7 +1,7 @@
 <template>
   <!-- Main Chat Left Sidebar start -->
-  <aside class="chitchat-left-sidebar left-disp">
-    <div v-if="activesidebar == 1">
+  <aside class="chitchat-left-sidebar left-disp" >
+    <div v-if="activesidebar == 1" >
       <Contacts />
     </div>
     <div v-if="activesidebar == 2 || activesidebar == 3">

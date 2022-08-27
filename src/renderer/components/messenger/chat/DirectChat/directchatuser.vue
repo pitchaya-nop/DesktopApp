@@ -156,7 +156,7 @@ export default {
     },
   },
   methods: {
-    getImgUrl(path) {
+    getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
     setBlockroom(isblock) {

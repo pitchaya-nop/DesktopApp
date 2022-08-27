@@ -9,6 +9,75 @@
     text-align: center;
     color: $red;
   }
+  .snippet {
+    // position: relative;
+    // background:transparent;
+    // padding: 2rem 5%;
+    // margin: 1.5rem 0;
+    // box-shadow: 0 .4rem .8rem -.1rem rgba(0, 32, 128, .1), 0 0 0 1px #f0f2f7;
+    // border-radius: .25rem;
+    width: 100%;
+  }
+
+  .examples .snippet:before {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0 5px;
+    width: 100%;
+    content: attr(data-title);
+    font-size: .75rem;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: white;
+    background-color: rgb(255, 25, 100);
+    border-radius: .25rem 0 .25rem 0;
+  }
+
+  .stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 9.5px 0;
+    margin: 0 -5%;
+    overflow: hidden;
+  }
+  .dot-typing {
+    position: relative;
+    left: -9999px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: $white;
+    color: $white;
+    box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    animation: dotTyping 1.5s infinite linear;
+  }
+  
+  @keyframes dotTyping {
+    0% {
+      box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    }
+    16.667% {
+      box-shadow: 9984px -10px 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    }
+    33.333% {
+      box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    }
+    50% {
+      box-shadow: 9984px 0 0 0 $white, 9999px -10px 0 0 $white, 10014px 0 0 0 $white;
+    }
+    66.667% {
+      box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    }
+    83.333% {
+      box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px -10px 0 0 $white;
+    }
+    90% {
+      box-shadow: 9984px 0 0 0 $white, 9999px 0 0 0 $white, 10014px 0 0 0 $white;
+    }
+  }
   .login-content-header{
     img {
       height:50px;
@@ -203,7 +272,7 @@
   .cloud-logo1{
     position  :absolute;
     bottom: 10%;
-    animation: animateCloud 25s linear infinite;
+    animation: animateCloud 45s linear infinite;
     // height: 25px;
     transform: scale(0.8);
     height:100px;

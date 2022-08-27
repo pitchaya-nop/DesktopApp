@@ -6,9 +6,11 @@
   >
     <div class="recent">
       <div class="theme-title">
-        <div class="media">
-          <div>
-            <h2>Contacts</h2>
+        <div class="media" >
+          <div style="margin:auto">
+            <h2>Welcome Goochat</h2>
+            <p style=text-align:center>Select official to start</p>
+            <!-- <h2>Contacts</h2> -->
             <!-- <button @click="clearDB">clear db </button> -->
             <!-- <h4>Chat from your friends &#128536;</h4> -->
           </div>
@@ -251,6 +253,8 @@
                   >
                 </li>
               </ul> -->
+
+              <!-- contact room
               <div class="tab-content" id="myTabContent1">
                 <div
                   class="tab-pane fade"
@@ -265,7 +269,8 @@
                 </div>
                 <GroupContactUsers />
                 <OfficialContactUsers />
-              </div>
+              </div> -->
+
             </div>
           </div>
         </div>

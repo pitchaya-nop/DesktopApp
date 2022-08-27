@@ -26,6 +26,12 @@
   "BlogsRightSidebar": {
     "description": "Auto imported from components/blogs/right-sidebar.vue"
   },
+  "PagenotfoundErrorpage": {
+    "description": "Auto imported from components/pagenotfound/errorpage.vue"
+  },
+  "Pagenotfound": {
+    "description": "Auto imported from components/pagenotfound/index.vue"
+  },
   "MessengerChat": {
     "description": "Auto imported from components/messenger/chat.vue"
   },
@@ -74,12 +80,6 @@
   "LandingPageTestimonial": {
     "description": "Auto imported from components/landing-page/testimonial.vue"
   },
-  "PagenotfoundErrorpage": {
-    "description": "Auto imported from components/pagenotfound/errorpage.vue"
-  },
-  "Pagenotfound": {
-    "description": "Auto imported from components/pagenotfound/index.vue"
-  },
   "BlogsCommonBlogFollowUs": {
     "description": "Auto imported from components/blogs/Common/blog_follow_us.vue"
   },
@@ -107,14 +107,14 @@
   "BlogsBlogDetail": {
     "description": "Auto imported from components/blogs/blog_details/blog_detail.vue"
   },
+  "BlogsBlogNoSidebar": {
+    "description": "Auto imported from components/blogs/blog_no-sidebar/blog_no-sidebar.vue"
+  },
   "BlogsComments": {
     "description": "Auto imported from components/blogs/comments/comments.vue"
   },
   "BlogsBlogSidebar": {
     "description": "Auto imported from components/blogs/blog_sidebar/blog_sidebar.vue"
-  },
-  "BlogsBlogNoSidebar": {
-    "description": "Auto imported from components/blogs/blog_no-sidebar/blog_no-sidebar.vue"
   },
   "BlogsLeaveComments": {
     "description": "Auto imported from components/blogs/leave_coments/leave_comments.vue"
@@ -196,6 +196,24 @@
   },
   "BonusPagePrice": {
     "description": "Auto imported from components/bonus_page/price/index.vue"
+  },
+  "CommonBreadcrumbBreadCrumbs": {
+    "description": "Auto imported from components/common/breadcrumb/bread_crumbs.vue"
+  },
+  "CommonFooter": {
+    "description": "Auto imported from components/common/footer/footer.vue"
+  },
+  "CommonHeader": {
+    "description": "Auto imported from components/common/header/header.vue"
+  },
+  "CommonLogo": {
+    "description": "Auto imported from components/common/logo/logo.vue"
+  },
+  "CommonNavbar": {
+    "description": "Auto imported from components/common/navbar/navbar.vue"
+  },
+  "CommonTapToTopTaptop": {
+    "description": "Auto imported from components/common/tap-to-top/taptop.vue"
   },
   "MessengerCallsAllcalls": {
     "description": "Auto imported from components/messenger/calls/allcalls.vue"
@@ -320,24 +338,6 @@
   "MessengerRightsidebar": {
     "description": "Auto imported from components/messenger/rightsidebar/index.vue"
   },
-  "CommonBreadcrumbBreadCrumbs": {
-    "description": "Auto imported from components/common/breadcrumb/bread_crumbs.vue"
-  },
-  "CommonFooter": {
-    "description": "Auto imported from components/common/footer/footer.vue"
-  },
-  "CommonHeader": {
-    "description": "Auto imported from components/common/header/header.vue"
-  },
-  "CommonLogo": {
-    "description": "Auto imported from components/common/logo/logo.vue"
-  },
-  "CommonNavbar": {
-    "description": "Auto imported from components/common/navbar/navbar.vue"
-  },
-  "CommonTapToTopTaptop": {
-    "description": "Auto imported from components/common/tap-to-top/taptop.vue"
-  },
   "MessengerChatDirectChatDirectchatheader": {
     "description": "Auto imported from components/messenger/chat/DirectChat/directchatheader.vue"
   },
@@ -413,8 +413,14 @@
   "MessengerRightsidebarFilesMedia": {
     "description": "Auto imported from components/messenger/rightsidebar/files/media.vue"
   },
+  "MessengerRightsidebarReminder": {
+    "description": "Auto imported from components/messenger/rightsidebar/reminder/index.vue"
+  },
   "MessengerRightsidebarNotes": {
     "description": "Auto imported from components/messenger/rightsidebar/notes/index.vue"
+  },
+  "MessengerRightsidebarTodo": {
+    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
   },
   "MessengerRightsidebarProfileCommongroup": {
     "description": "Auto imported from components/messenger/rightsidebar/profile/commongroup.vue"
@@ -436,11 +442,5 @@
   },
   "MessengerRightsidebarProfileStatus": {
     "description": "Auto imported from components/messenger/rightsidebar/profile/status.vue"
-  },
-  "MessengerRightsidebarReminder": {
-    "description": "Auto imported from components/messenger/rightsidebar/reminder/index.vue"
-  },
-  "MessengerRightsidebarTodo": {
-    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
   }
 }

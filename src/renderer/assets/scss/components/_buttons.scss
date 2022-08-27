@@ -77,14 +77,15 @@
 .btn-light{
 	color: $dark-color !important;
 	&:focus,&:active,&.active{
+		border-radius: $radious100;
 		box-shadow: 0 0 3px 2px $light-color;
 	}
 }
 
 // Icon buttons
 .icon-btn{
-	height: 42px;
-	width: 42px;
+	height: 50px;
+	width: 50px;
 	border-radius: $radious100;
 	font-weight: 800;
 	align-items: center;
@@ -278,10 +279,10 @@
 }
 
 .profile{
-	width: 60px;
-	height: 60px;
+	width: 42px;
+	height: 42px;
 	display: inline-block;
-	border-radius:  $radious20;
+	border-radius:  $radious100;
 	position: relative;
 	span{
 		font-size: 22px;

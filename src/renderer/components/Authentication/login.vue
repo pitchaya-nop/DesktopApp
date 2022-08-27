@@ -17,7 +17,7 @@
               <h3>Hello Everyone , We are GooChat</h3>
               <h4>Welcome to GoChat please login to your account.</h4> -->
 
-              <form class="form1">
+              <form class="form1" v-on:submit.prevent="handleLogin">
                 <div class="form-group">
                   <label
                     class="col-form-label"
@@ -30,10 +30,10 @@
                     id="inputEmail3"
                     type="email"
                     v-model="email"
-                    required
-                    email
                     placeholder="Demo@123gmail.com"
                   />
+                  <!-- required
+                    email -->
                 </div>
                 <div class="form-group">
                   <label
@@ -48,7 +48,6 @@
                     id="inputPassword3"
                     type="password"
                     v-model="password"
-                    required
                     placeholder="Password"
                   />
                 </div>
@@ -72,23 +71,37 @@
                   </div>
                 </div> -->
                 <template v-if="this.loginfailed">
-                  <p class="error-label-login">{{this.errorlogin}}</p>
+                  <p class="error-label-login">{{ this.errorlogin }}</p>
                 </template>
-                
+
                 <div class="form-group">
                   <div class="buttons">
-                    <a
+                    <button
                       class="btn btn-primary button-effect"
                       style="width: 100%; border-radius: 0"
+                      :style="[
+                        this.loginloading
+                          ? { padding: '11px 65px' }
+                          : { padding: '14px 65px' },
+                      ]"
                       href="javascript:void(0)"
                       @click="handleLogin"
+                      :disabled="this.password == '' || this.email == ''"
                     >
-                      <!-- {{this.loginloading?<div><b-spinner label="Loading..."></b-spinner></div>:'failed'}}  -->
                       <template v-if="this.loginloading">
-                        <b-spinner label="Loading..." style="border-color:white;border-right-color: transparent;"></b-spinner>
+                        <div class="snippet" data-title=".dot-typing">
+                          <div class="stage">
+                            <div class="dot-typing"></div>
+                          </div>
+                        </div>
+                        <!-- <b-spinner label="Loading..." style="border-color:white;border-right-color: transparent;"></b-spinner> -->
+                        <!-- <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div> -->
                       </template>
                       <template v-else> Login </template>
-                    </a>
+                    </button>
+
                     <!-- <nuxt-link
                       class="btn button-effect btn-signup"
                       to="/authentication/signup"
@@ -96,7 +109,6 @@
                       SignUp
                     </nuxt-link> -->
                   </div>
-                  
                 </div>
               </form>
 
@@ -259,55 +271,57 @@ export default {
       email: "",
       password: "",
       loginloading: false,
-      loginfailed:false,
-      errorlogin:'error login naja'
+      loginfailed: false,
+      errorlogin: "error login naja",
     };
   },
   methods: {
     async handleLogin() {
-      console.log("email", this.email);
-      console.log("password", this.password);
-      this.loginloading = true
-      this.loginfailed = false
-      try {
-        var keyHex = CryptoJS.enc.Utf8.parse(
-          "4a310288218c3394d829e49bd187c395"
-        );
-        console.log(keyHex);
-        var encrypted = CryptoJS.AES.encrypt(this.password, keyHex, {
-          mode: CryptoJS.mode.ECB,
-          padding: CryptoJS.pad.Pkcs7,
-        });
-        console.log("qwe", encrypted);
+      // console.log("email", this.email);
+      // console.log("password", this.password);
+      if (this.email !== "" && this.password !== "") {
+        this.loginloading = true;
+        this.loginfailed = false;
+        try {
+          var keyHex = CryptoJS.enc.Utf8.parse(
+            "4a310288218c3394d829e49bd187c395"
+          );
+          console.log(keyHex);
+          var encrypted = CryptoJS.AES.encrypt(this.password, keyHex, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7,
+          });
+          // console.log("qwe", encrypted);
 
-        const payload = new FormData();
-        payload.append("email", this.email);
-        payload.append("password", encrypted);
+          const payload = new FormData();
+          payload.append("email", this.email);
+          payload.append("password", encrypted);
 
-        const response = await this.$store.dispatch(
-          "auth/requestSignInViaEmail",
-          payload
-        );
-        console.log("response", response);
+          const response = await this.$store.dispatch(
+            "auth/requestSignInViaEmail",
+            payload
+          );
+          // console.log("response", response);
 
-        if (response.code === "0000") {
-          console.log('success');
-          const data = response.data;
-          await this.$store.dispatch("auth/setToken", data.accessToken);
-          await this.$store.dispatch("auth/setProfile", data.userProfile);
+          if (response.code === "0000") {
+            // console.log('success');
+            console.log(response.data.accessToken);
+            const data = response.data;
+            await this.$store.dispatch("auth/setToken", data.accessToken);
+            await this.$store.dispatch("auth/setProfile", data.userProfile);
 
-          this.$router.push("/");
-          // this.loginloading = false
-        }else{
-          this.loginloading = false
-          this.loginfailed = true
-          this.errorlogin = response.message
+            this.$router.push("/");
+            // this.loginloading = false
+          } else {
+            this.loginloading = false;
+            this.loginfailed = true;
+            this.errorlogin = response.message;
+          }
+          // console.log(data);
+          // console.log(response);
+        } catch {
+          // console.log("err");
         }
-        console.log(data);
-        console.log(response);
-      } catch {
-        // console.log("err");
-
       }
     },
   },
