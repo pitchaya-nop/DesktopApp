@@ -169,6 +169,7 @@
             id="fileimage"
             type="file"
             ref="file"
+            accept="image/png, image/jpeg"
             @change="onFileChange"
             hidden
             multiple
@@ -555,6 +556,9 @@ export default {
 
           // this.text = "";
           // this.emogiarray = [];
+          if(this.$store.state.common.showemogi === true){
+          this.$store.state.common.showemogi = false
+        }
         }
       }
     },
@@ -580,6 +584,9 @@ export default {
           this.setMessage(this.sessionID);
         }
         this.scrollbottom();
+        if(this.$store.state.common.showemogi === true){
+          this.$store.state.common.showemogi = false
+        }
       }
     },
     scrollbottom() {
@@ -598,7 +605,7 @@ export default {
         this.emogiarray.push(emogi);
         this.text = this.emogiarray.join(" ");
       }
-      this.$store.state.common.showemogi = false;
+      // this.$store.state.common.showemogi = false;
     },
   },
   mounted() {

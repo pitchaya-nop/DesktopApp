@@ -7,7 +7,7 @@
       </a>
     </div> -->
     <div class="sidebar-main">
-      <ul class="sidebar-top">
+      <ul class="sidebar-top custom-scroll">
         <!-- <li>
           <a
             class="icon-btn btn-light button-effect"

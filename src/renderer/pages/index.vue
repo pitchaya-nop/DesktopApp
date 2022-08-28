@@ -40,6 +40,7 @@ export default {
     this.getRooms();
     this.getOfficial();
     socket.on("reconnect", (data) => {
+      this.unsubSocketEvent()
       console.log(
         "reconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
