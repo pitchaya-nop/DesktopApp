@@ -39,6 +39,11 @@ export default {
     this.getContact();
     this.getRooms();
     this.getOfficial();
+    socket.on("connect",(data)=>{
+      console.log(
+        "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
+    })
     socket.on("reconnect", (data) => {
       this.unsubSocketEvent()
       console.log(
