@@ -45,7 +45,6 @@ export default {
       );
     })
     socket.on("reconnect", (data) => {
-      this.unsubSocketEvent()
       console.log(
         "reconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
