@@ -33,11 +33,12 @@ export default {
     socketAuth();
   },
   async mounted() {
+    // localStorage.debug = false
     if (this.getProfile == null) {
       await this.getMe();
     }
     this.getContact();
-    this.getRooms();
+    // this.getRooms();
     this.getOfficial();
     socket.on("connect",(data)=>{
       console.log(
@@ -60,24 +61,24 @@ export default {
   },
   methods: {
     unsubSocketEvent(){
-      socket.off("socketId");
-      socket.off(`web:auth:${this.$store.getters["auth/profile"].id}`);
-      socket.off(`officials:user:${this.getProfile.id}`);
+      socket.removeAllListeners("socketId");
+      socket.removeAllListeners(`web:auth:${this.$store.getters["auth/profile"].id}`);
+      socket.removeAllListeners(`officials:user:${this.getProfile.id}`);
       this.Officialuser.map((officialdata) => {
-        socket.off(`me:official:update:${officialdata.id}`);
-        socket.off(`rooms:official:update:${officialdata.id}`);
-        socket.off(`official:contacts:${officialdata.id}`);
+        socket.removeAllListeners(`me:official:update:${officialdata.id}`);
+        socket.removeAllListeners(`rooms:official:update:${officialdata.id}`);
+        socket.removeAllListeners(`official:contacts:${officialdata.id}`);
       });
       this.Responseoaroom.map((item) => {
-        socket.off(`messages:${item.sessionId}`);
-        socket.off(`messages:update:${item.sessionId}`);
-        socket.off(`messages:read:${item.sessionId}`);
+        socket.removeAllListeners(`messages:${item.sessionId}`);
+        socket.removeAllListeners(`messages:update:${item.sessionId}`);
+        socket.removeAllListeners(`messages:read:${item.sessionId}`);
       });
       if (this.Roomofficialdataupdate.length) {
         this.Roomofficialdataupdate.map((data) => {
-          socket.off(`messages:${data.data[0].sessionId}`);
-          socket.off(`messages:read:${data.data[0].sessionId}`);
-          socket.off(`messages:update:${data.data[0].sessionId}`);
+          socket.removeAllListeners(`messages:${data.data[0].sessionId}`);
+          socket.removeAllListeners(`messages:read:${data.data[0].sessionId}`);
+          socket.removeAllListeners(`messages:update:${data.data[0].sessionId}`);
         });
       }
     },
@@ -104,8 +105,11 @@ export default {
             // })
 
             socket.on(`officials:user:${this.getProfile.id}`, (data) => {
+              console.log('getprofile id');
+              console.log(this.getProfile.id);
               console.log("official user");
-
+              console.log(data.data);
+              
               this.Officialuser = data.data;
 
               data.data.map((officialdata) => {

@@ -273,14 +273,20 @@ Vue.mixin({
         },
         setRooms() {
             this.getdataDB.then((data) => {
+                console.log('setroom');
                 // console.log(this.$store.state.auth.profile.id);
                 // AND owner == "${this.$store.state.auth.profile.id}"
                 let room
                 if (this.$store.state.room.roomtype == 'official') {
+                    console.log('roomofficial');
+                    console.log(this.getProfile.id);
+
                     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
                 } else {
                     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}"`).sorted('showtime', true)
                 }
+
+
                 this.$store.dispatch("room/setRoom", room)
             })
         },

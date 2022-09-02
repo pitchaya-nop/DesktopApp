@@ -11,7 +11,7 @@
       <template v-if="currentChat.chat">
         <li
           :class="
-            chat.senderid == userprofile.id || checksender(chat.senderid)
+            chat.senderid == userprofile.id || chat.oaid !== '' || checksender(chat.senderid,chat)
               ? 'sent'
               : 'replies'
           "
@@ -69,7 +69,7 @@
             <div
               class="profile mr-4"
               :style="
-                chat.senderid == userprofile.id || checksender(chat.senderid)
+                chat.senderid == userprofile.id || chat.oaid !== '' || checksender(chat.senderid)
                   ? [
                       {
                         'background-image':
@@ -94,7 +94,7 @@
               <div class="contact-name">
                 <h5>
                   {{
-                    chat.senderid == userprofile.id ||
+                    chat.senderid == userprofile.id || chat.oaid !== '' ||
                     checksender(chat.senderid)
                       ? ""
                       : chat.displayname
@@ -117,7 +117,7 @@
                     <div
                       v-if="chat.contenttype == 'IMAGE'"
                       :style="
-                        chat.senderid == userprofile.id ||
+                        chat.senderid == userprofile.id || chat.oaid !== '' ||
                         checksender(chat.senderid)
                           ? `background:transparent;border-radius:6px 2px 6px 6px`
                           : `background:transparent;border-radius:2px 6px 6px 6px;`
@@ -149,7 +149,7 @@
                               max-height: 346px;
                             "
                             :style="
-                              chat.senderid == userprofile.id ||
+                              chat.senderid == userprofile.id || chat.oaid !== '' ||
                               checksender(chat.senderid)
                                 ? 'border-radius:6px 2px 6px 6px'
                                 : 'border-radius:2px 6px 6px 6px'
@@ -181,7 +181,7 @@
                       <div
                         v-if="
                           chat.status == 'READ' &&
-                          (chat.senderid == userprofile.id ||
+                          (chat.senderid == userprofile.id || chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
                         class="badge sm ml-2"
@@ -198,7 +198,7 @@
                       <div
                         v-if="
                           chat.status == 'SENT' &&
-                          (chat.senderid == userprofile.id ||
+                          (chat.senderid == userprofile.id || chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
                         class="badge sm ml-2"
@@ -214,7 +214,7 @@
                     <div
                       v-if="
                         chat.status == 'WAITING' &&
-                        (chat.senderid == userprofile.id ||
+                        (chat.senderid == userprofile.id || chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
                       class="badge sm ml-2"
@@ -231,7 +231,7 @@
                       "
                       v-if="
                         chat.status == 'FAILED' &&
-                        (chat.senderid == userprofile.id ||
+                        (chat.senderid == userprofile.id || chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
                     >
@@ -479,7 +479,14 @@ export default {
         }, 10);
       }
     },
-    checksender(senderid) {
+    checksender(senderid,chat) {
+      console.log(chat);
+      console.log(this.userprofile.adminuserids);
+      this.userprofile.adminuserids.map((item)=>{
+        console.log(item);
+        console.log(senderid);
+      })
+
       if (this.userprofile.adminuserids) {
         if (this.userprofile.adminuserids.indexOf(senderid) != -1) {
           return true;

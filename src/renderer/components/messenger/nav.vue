@@ -149,6 +149,7 @@ export default {
       }
     },
     setProfileOa(data) {
+      console.log(data);
       this.$store.dispatch("auth/setProfile", data);
     },
 
