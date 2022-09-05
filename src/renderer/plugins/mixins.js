@@ -442,11 +442,8 @@ Vue.mixin({
                                 data.map((item) => {
                                     item.messages.map((msg) => {
                                         const message = realm.objects("MESSAGE").filtered(`messageid == "${msg.messageId}" `)
-
                                         if (message.length > 0) {
-                                            // message.map((msgup, index) => {
-                                            return false
-                                            // })
+                                            return false         
                                         } else {
                                             realm.create('MESSAGE', {
                                                 id: item.id,

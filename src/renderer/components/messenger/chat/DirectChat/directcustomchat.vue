@@ -79,9 +79,7 @@
                   ? 
                   [
                       {
-                        'width':'0',
-                        'height':'0',
-                        'margin':'0' 
+                        'display':'none',
                       },
                     ]
                   : 

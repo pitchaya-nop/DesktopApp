@@ -61,28 +61,25 @@ export default {
   },
   methods: {
     unsubSocketEvent() {
-      socket.removeAllListeners("socketId");
-      socket.removeAllListeners(
-        `web:auth:${this.$store.getters["auth/profile"].id}`
-      );
-      socket.removeAllListeners(`officials:user:${this.getProfile.id}`);
+      socket.off("socketId");
+      socket.off(`web:auth:${this.$store.getters["auth/profile"].id}`);
+      socket.off(`officials:user:${this.getProfile.id}`);
       this.Officialuser.map((officialdata) => {
-        socket.removeAllListeners(`me:official:update:${officialdata.id}`);
-        socket.removeAllListeners(`rooms:official:update:${officialdata.id}`);
-        socket.removeAllListeners(`official:contacts:${officialdata.id}`);
+        socket.off(`me:official:update:${officialdata.id}`);
+        socket.off(`rooms:official:update:${officialdata.id}`);
+        socket.off(`official:contacts:${officialdata.id}`);
+        socket.off(`friends:update:${officialdata.id}`);
       });
       this.Responseoaroom.map((item) => {
-        socket.removeAllListeners(`messages:${item.sessionId}`);
-        socket.removeAllListeners(`messages:update:${item.sessionId}`);
-        socket.removeAllListeners(`messages:read:${item.sessionId}`);
+        socket.off(`messages:${item.sessionId}`);
+        socket.off(`messages:update:${item.sessionId}`);
+        socket.off(`messages:read:${item.sessionId}`);
       });
       if (this.Roomofficialdataupdate.length) {
         this.Roomofficialdataupdate.map((data) => {
-          socket.removeAllListeners(`messages:${data.data[0].sessionId}`);
-          socket.removeAllListeners(`messages:read:${data.data[0].sessionId}`);
-          socket.removeAllListeners(
-            `messages:update:${data.data[0].sessionId}`
-          );
+          socket.off(`messages:${data.data[0].sessionId}`);
+          socket.off(`messages:read:${data.data[0].sessionId}`);
+          socket.off(`messages:update:${data.data[0].sessionId}`);
         });
       }
     },
@@ -162,26 +159,26 @@ export default {
                     console.log("room data");
                     console.log(data);
                     this.Roomofficialdataupdate.push(data.data[0]);
-                    data.data.map((item) => {
-                      console.log("room update");
-                      console.log(item);
-                      item.roomtype = "official";
-                      item.idofficialroom = officialdata.id;
-                      if (this.checkDuplicateRoom(item.id)) {
-                        socket.emit(
-                          `join:room`,
-                          `{"auth":"Bearer ${this.token}","userId":"${officialdata.id}","sessionId":"${item.sessionId}"}`
-                        );
-                      }
-                    });
+
+                    data.data[0].roomtype = "official";
+                    data.data[0].idofficialroom = officialdata.id;
+                    if (this.checkDuplicateRoom(data.data[0].id)) {
+                      socket.emit(
+                        `join:room`,
+                        `{"auth":"Bearer ${this.token}","userId":"${officialdata.id}","sessionId":"${data.data[0].sessionId}"}`
+                      );
+                    }
                     this.UpdateAddRoom(data.data);
                     socket.on(`messages:${data.data[0].sessionId}`, (data) => {
+                      console.log("message");
                       console.log(data);
+
                       this.addDataToRealm(data.data, "addMessage");
-                      // this.addDataToRealm(data.data, "updateShow");
-                      this.addDataToRealm(officialdata, "updateUnreadcount");
-                      this.addDataToRealm(officialdata, "updateLastmessage");
+                      this.addDataToRealm(data.data, "updateShow");
+                      this.addDataToRealm(this.getProfile, "updateUnreadcount");
+                      this.addDataToRealm(this.getProfile, "updateLastmessage");
                     });
+
                     socket.on(
                       `messages:read:${data.data[0].sessionId}`,
                       (data) => {
@@ -196,6 +193,8 @@ export default {
                     socket.on(
                       `messages:update:${data.data[0].sessionId}`,
                       (msgupdate) => {
+                        console.log("message update");
+                        console.log(msgupdate);
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
                             socket.emit(
@@ -234,7 +233,7 @@ export default {
                     );
                     setTimeout(() => {
                       this.setRooms();
-                    }, 50);
+                    }, 1000);
                   }
                 );
 
