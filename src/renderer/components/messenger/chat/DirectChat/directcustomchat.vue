@@ -31,7 +31,7 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: #fff;
+              background-color: rgba(255, 255, 255,0.4);
               color: #2a2a54;
               border-radius: 10px;
             "
@@ -50,7 +50,7 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: #fff;
+              background-color: rgba(255, 255, 255,0.4);
               color: #2a2a54;
               border-radius: 10px;
             "

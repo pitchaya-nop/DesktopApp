@@ -46,7 +46,7 @@ export default class BrowserWinHandler {
           contextIsolation: false, // https://github.com/electron/electron/issues/18037#issuecomment-806320028
         },
         width: 1200,
-        height: 800
+        height: 800,
         // fullscreen: true
       }
     )

@@ -148,7 +148,6 @@ export default {
                   this.addDataToRealm(data.userProfile, "updateRoom");
                   this.addDataToRealm(data.userProfile, "updateMessageInRoom");
                   this.setRooms();
-                  // if session id === active
                   if (this.sesssionid) {
                     this.setMessage(this.sesssionid);
                   }

@@ -65,7 +65,6 @@
                   setProfileOa(oa),
                   setroom();
               "
-              
               v-b-tooltip.hover.bottomleft
               :title="oa.displayname"
               data-tippy-content="Chats"
@@ -119,7 +118,9 @@ export default {
       return require("../../assets/images/avtar/defaultimageoa.png");
     },
     openUrl() {
-      require("electron").shell.openExternal('https://official-dev.goochat.net');
+      require("electron").shell.openExternal(
+        "https://official-dev.goochat.net"
+      );
     },
     setOfficial(data) {
       this.$store.dispatch("auth/setOfficialProfile", data);
@@ -172,30 +173,20 @@ export default {
     },
 
     async handleSingOut() {
-      // await this.getdataDB.then((data) => {
-      //   let rooms = data.objects("ROOM");
-      //   rooms.map((data) => {
-      //     this.sockets.unsubscribe(`messages:${data.sessionId}`);
-      //     this.sockets.unsubscribe(`messages:update:${data.sessionId}`);
-      //     this.sockets.unsubscribe(`messages:read:${data.sessionId}`);
-      //   });
-      // });
+      if (window.confirm('Do you really want to log out?')) {
+        socketDisconnect();
+        this.$store.state.common.activesidebar = 0;
+        this.$store.state.common.iscontact = false;
+        this.$store.dispatch("chat/resetState");
+        this.$store.dispatch("contact/resetState");
+        this.$store.dispatch("room/resetState");
 
-      // this.$socket.disconnect();
-      socketDisconnect();
-      this.$store.state.common.activesidebar = 0;
-      this.$store.state.common.iscontact = false;
-      this.$store.dispatch("chat/resetState");
-      this.$store.dispatch("contact/resetState");
-      this.$store.dispatch("room/resetState");
-
-      this.addDataToRealm("", "deleteData");
-      this.$router.push("/authentication/login");
-      this.$store.dispatch("auth/setToken", "");
-      this.$store.dispatch("auth/setProfile", "");
-      // this.sockets.unsubscribe("socketId");
-      // this.sockets.unsubscribe(`rooms:${window.localStorage.getItem("_ref")}`);
-      window.localStorage.removeItem("auth");
+        this.addDataToRealm("", "deleteData");
+        this.$router.push("/authentication/login");
+        this.$store.dispatch("auth/setToken", "");
+        this.$store.dispatch("auth/setProfile", "");
+        window.localStorage.removeItem("auth");
+      }
     },
   },
 };

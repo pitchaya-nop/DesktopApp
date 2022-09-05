@@ -659,7 +659,9 @@ Vue.mixin({
                             realm.write(() => {
                                 for (let i = 0; i < updateroom.length; i++) {
                                     updateroom[i].user.displayName = data.displayName
-                                    updateroom[i].user.avatar = data.avatars.source
+                                    if (data.avatars.source) {
+                                        updateroom[i].user.avatar = data.avatars.source
+                                    }
                                 }
                             })
                             break;
@@ -670,7 +672,9 @@ Vue.mixin({
                                     const updatemessageinroom = realm.objects("MESSAGE").filtered(`sessionid == "${updateroomtomessage[i].sessionid}"`)
                                     for (let j = 0; j < updatemessageinroom.length; j++) {
                                         updatemessageinroom[j].displayname = data.displayName
-                                        updatemessageinroom[j].avatar = data.avatars.source
+                                        if (data.avatars.source) {
+                                            updatemessageinroom[j].avatar = data.avatars.source
+                                        }
                                     }
                                 }
                             })
