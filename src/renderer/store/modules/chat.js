@@ -158,6 +158,7 @@ const actions = {
   chatRead: (context, payload) => {
     this.$socket.emit('message:read', payload)
   },
+
   resetState({ commit }) {
     commit('RESET_STATE')
   },

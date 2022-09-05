@@ -64,27 +64,36 @@
           >
             Unread message below
           </p>
-
+<!-- {
+                        'background-image':
+                          userprofile.avatars.source != 'null'
+                            ? `url(${userprofile.avatars.source})`
+                            : 'url(' + getImgUrl() + ')',
+                      },
+                      styleObject, -->
           <div class="media">
             <div
               class="profile mr-4"
               :style="
                 chat.senderid == userprofile.id || chat.oaid !== '' || checksender(chat.senderid)
-                  ? [
+                  ? 
+                  [
                       {
-                        'background-image':
-                          userprofile.avatars.source != 'null'
-                            ? `url(${userprofile.avatars.source})`
-                            : 'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                        'width':'0',
+                        'height':'0',
+                        'margin':'0' 
                       },
-                      styleObject,
                     ]
-                  : [
+                  : 
+                  [
                       {
                         'background-image':
                           chat.avatar != 'null'
                             ? `url(${chat.avatar})`
-                            : 'url(/_nuxt/src/renderer/assets/images/media/1.jpg)',
+                            : 'url(' + getImgUrl() + ')',
+                        'border':
+                        chat.avatar != 'null'
+                          ?'none':'1px solid #edeff0'
                       },
                       styleObject,
                     ]
@@ -444,6 +453,9 @@ export default {
         "_blank"
       );
     },
+    getImgUrl() {
+      return require("../../../../assets/images/avtar/defaultimageoa.png");
+    },
     async resendfailed(failedmessage) {
       console.log(failedmessage);
       if (failedmessage.contenttype == "TEXT") {
@@ -480,13 +492,6 @@ export default {
       }
     },
     checksender(senderid,chat) {
-      console.log(chat);
-      console.log(this.userprofile.adminuserids);
-      this.userprofile.adminuserids.map((item)=>{
-        console.log(item);
-        console.log(senderid);
-      })
-
       if (this.userprofile.adminuserids) {
         if (this.userprofile.adminuserids.indexOf(senderid) != -1) {
           return true;
@@ -495,9 +500,7 @@ export default {
         }
       }
     },
-    getImgUrl(path) {
-      return require("../../../../assets/images/" + path);
-    },
+    
     infoTime(time) {
       var stillUtc = moment.utc(time).toDate();
       if (

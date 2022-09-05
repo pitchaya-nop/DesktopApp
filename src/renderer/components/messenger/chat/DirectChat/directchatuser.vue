@@ -30,7 +30,7 @@
       "
     >
       <div class="chat-box">
-        <div class="media">
+        <div class="media" style="align-items:center">
           <div
             class="profile"
             :style="
@@ -135,6 +135,7 @@ export default {
     Findroom: function (val, oldVal) {
       console.log(val);
       if (val.length > 0) {
+        let arr = []
         this.getdataDB.then((data) => {
           let objs = data
             .objects("ROOM")
@@ -142,16 +143,19 @@ export default {
           objs.map((data) => {
             if (data.user.displayName.includes(`${val}`)) {
               console.log(data);
+              arr.push(data)
             }
           });
         });
+        this.$store.dispatch("room/setRoom", arr)
       } else {
-        this.getdataDB.then((data) => {
-          let objs = data
-            .objects("ROOM")
-            .filtered(`idofficialroom =="${this.getProfile.id}"`);
-          console.log(objs);
-        });
+        this.setRooms()
+        // this.getdataDB.then((data) => {
+        //   let objs = data
+        //     .objects("ROOM")
+        //     .filtered(`idofficialroom =="${this.getProfile.id}"`);
+        //   console.log(objs);
+        // });
       }
     },
   },

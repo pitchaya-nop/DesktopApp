@@ -273,14 +273,8 @@ Vue.mixin({
         },
         setRooms() {
             this.getdataDB.then((data) => {
-                console.log('setroom');
-                // console.log(this.$store.state.auth.profile.id);
-                // AND owner == "${this.$store.state.auth.profile.id}"
                 let room
                 if (this.$store.state.room.roomtype == 'official') {
-                    console.log('roomofficial');
-                    console.log(this.getProfile.id);
-
                     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
                 } else {
                     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}"`).sorted('showtime', true)
@@ -289,6 +283,9 @@ Vue.mixin({
 
                 this.$store.dispatch("room/setRoom", room)
             })
+        },
+        setFilterRoom() {
+
         },
         setOfficial() {
             this.getdataDB.then((data) => {
@@ -660,6 +657,27 @@ Vue.mixin({
                                 }
                             })
                             break;
+                        case 'updateRoom':
+                            const updateroom = realm.objects("ROOM").filtered(`user.id =="${data.id}"`)
+                            realm.write(() => {
+                                for (let i = 0; i < updateroom.length; i++) {
+                                    updateroom[i].user.displayName = data.displayName
+                                    updateroom[i].user.avatar = data.avatars.source
+                                }
+                            })
+                            break;
+                        case 'updateMessageInRoom':
+                            const updateroomtomessage = realm.objects("ROOM").filtered(`user.id =="${data.id}"`)
+                            realm.write(() => {
+                                for (let i = 0; i < updateroomtomessage.length; i++) {
+                                    const updatemessageinroom = realm.objects("MESSAGE").filtered(`sessionid == "${updateroomtomessage[i].sessionid}"`)
+                                    for (let j = 0; j < updatemessageinroom.length; j++) {
+                                        updatemessageinroom[j].displayname = data.displayName
+                                        updatemessageinroom[j].avatar = data.avatars.source
+                                    }
+                                }
+                            })
+                            break;    
                         case 'blockOfficial':
                             const blcokroom = realm.objects("ROOM").filtered(`user.id == "${data}"`)
                             realm.write(() => {

@@ -65,7 +65,8 @@
                   setProfileOa(oa),
                   setroom();
               "
-              v-b-tooltip.hover.topleft
+              
+              v-b-tooltip.hover.bottomleft
               :title="oa.displayname"
               data-tippy-content="Chats"
             >

@@ -71,7 +71,8 @@ h1{
 }
 h2{
     font-family: $font-1;
-    font-size: calc(20px + (28 - 20) * ((100vw - 320px) / (1920 - 320)));
+    // font-size: calc(20px + (28 - 20) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(14px + (28 - 20) * ((100vw - 320px) / (1920 - 320)));
     font-weight: 800;
     color: $dark-color;
     margin: 0;
