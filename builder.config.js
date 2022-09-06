@@ -2,7 +2,7 @@ const ICONS_DIR = 'build/icons/'
 
 const windowsOS = {
   win: {
-    icon: ICONS_DIR + 'goochaticon.ico',
+    icon: ICONS_DIR + 'win-icon.ico',
     publisherName: 'michal',
     target: 'nsis',
   },

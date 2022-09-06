@@ -6,6 +6,42 @@
     id="content"
   >
     <div
+      v-if="this.currentRoom.roomdisplay"
+      style="
+        display: flex;
+        height: 65px;
+        background: white;
+        width: 100%;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom:1px solid #eff1f2
+      "
+    >
+      <div
+        class="profile"
+        :style="
+          this.currentRoom.roomdisplay.user.avatar != 'null'
+            ? [
+                {
+                  'background-image':
+                    'url(' + this.currentRoom.roomdisplay.user.avatar + ')',
+                },
+                styleObjectTitle,
+              ]
+            : [
+                {
+                  'background-image': 'url(' + getImgUrl() + ')',
+                },
+                styleObjectTitle,
+              ]
+        "
+      ></div>
+      <h2 style="font-weight:500"
+        >{{this.currentRoom.roomdisplay.user.displayName}}</h2
+      >
+    </div>
+
+    <div
       v-if="checkactive == null"
       class="chat-content tabto"
       :class="'active'"
@@ -150,10 +186,14 @@
         <OfficialCustomChat />
       </div>
       <div v-if="this.isblockroom" class="message-input-block">
-        You can't message this user because they either blocked you or deleted their account.
+        You can't message this user because they either blocked you or deleted
+        their account.
       </div>
-      <div v-if="!this.isblockroom" class="message-input" style="padding-top: 15px">
-        
+      <div
+        v-if="!this.isblockroom"
+        class="message-input"
+        style="padding-top: 15px"
+      >
         <div class="wrap emojis-main">
           <div class="mr-3">
             <!-- class:dot-btn dot-primary  -->
@@ -385,10 +425,18 @@ export default {
       emogi: emogi,
       emogiarray: [],
       testdata: [],
-      blockroom:false,
+      blockroom: false,
+      roomdisplay: null,
       styleObject: {
         "background-color": "transparent",
         "background-blend-mode": "unset",
+      },
+      styleObjectTitle: {
+        "background-size": "cover",
+        "background-position": "center",
+        "display": "block",
+        "margin-right":"0.5rem"
+
       },
     };
   },
@@ -455,7 +503,6 @@ export default {
     },
 
     async onFileChange(e) {
-      
       let arrimg = [];
       for (let i = 0; i < e.target.files.length; i++) {
         const formdata = new FormData();
@@ -480,7 +527,7 @@ export default {
       const res = await this.$store.dispatch("chat/addChat", payload);
       console.log(res);
       this.scrollbottom();
-      document.getElementById("fileimage").value = ""
+      document.getElementById("fileimage").value = "";
       // if(resimg.data.code === '0000'){
       //   console.log(true);
       //   let arrimg = []
@@ -521,12 +568,11 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-           this.scrollbottom();
+          this.scrollbottom();
           if (res.data.message != "success") {
             this.addDataToRealm(payload, "failedUpdateDummyMesaage");
             this.setMessage(this.sessionID);
           }
-          
 
           // var container = this.$el.querySelector(".scrolltopdirectchat");
           // container.scrollTop = container.scrollHeight;
@@ -556,9 +602,9 @@ export default {
 
           // this.text = "";
           // this.emogiarray = [];
-          if(this.$store.state.common.showemogi === true){
-          this.$store.state.common.showemogi = false
-        }
+          if (this.$store.state.common.showemogi === true) {
+            this.$store.state.common.showemogi = false;
+          }
         }
       }
     },
@@ -584,18 +630,18 @@ export default {
           this.setMessage(this.sessionID);
         }
         this.scrollbottom();
-        if(this.$store.state.common.showemogi === true){
-          this.$store.state.common.showemogi = false
+        if (this.$store.state.common.showemogi === true) {
+          this.$store.state.common.showemogi = false;
         }
       }
     },
     scrollbottom() {
       var container = this.$el.querySelector(".scrolltopdirectchat");
-      console.log('scrol to bottom');
+      console.log("scrol to bottom");
       container.scrollTop = container.scrollHeight;
     },
-    getImgUrl(path) {
-      return require("@/assets/images/" + path);
+    getImgUrl() {
+      return require("../../assets/images/avtar/defaultimageoa.png");
     },
     addemogi(emogi) {
       if (this.text === "") {
@@ -641,7 +687,11 @@ export default {
       activecontact: (state) => state.contact.activecontact,
       sessionID: (state) => state.chat.session,
       profile: (state) => state.auth.profile,
-      isblockroom:(state) =>state.common.isblockroom
+      isblockroom: (state) => state.common.isblockroom,
+      
+      currentRoom() {
+        return (this.roomdisplay = this.$store.getters["room/currentRoom"]);
+      },
     }),
   },
 };

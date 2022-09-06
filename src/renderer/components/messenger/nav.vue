@@ -152,6 +152,8 @@ export default {
     },
     setProfileOa(data) {
       console.log(data);
+  
+      this.$store.dispatch("room/setRoomDisplay",null)
       this.$store.dispatch("auth/setProfile", data);
     },
 

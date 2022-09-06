@@ -23,7 +23,7 @@
       :key="index"
       @click="
         setActive(index),
-          setActiveuser(user.id),
+          setActiveuser(user.id,user),
           setSeesionuser(user.sessionid),
           setBlockroom(user.isblock);
         setChatuser(user.sessionid, user.roomtype), readMessage(user.sessionid);
@@ -118,6 +118,7 @@ export default {
       },
       chatUser: [],
       Findroom: "",
+      userDetail:null
     };
   },
   mounted() {},
@@ -133,7 +134,7 @@ export default {
   },
   watch: {
     Findroom: function (val, oldVal) {
-      console.log(val);
+      
       if (val.length > 0) {
         let arr = []
         this.getdataDB.then((data) => {
@@ -247,7 +248,7 @@ export default {
           }
         }
       });
-      console.log(this.profile);
+      // console.log(this.profile);
       this.addDataToRealm(this.profile, "updateUnreadcount");
       this.addDataToRealm(this.profile, "updateLastmessage");
       this.setRooms();
@@ -300,9 +301,11 @@ export default {
         });
       }
     },
-    setActiveuser: function (id) {
+    setActiveuser: function (id,userdata) {
+      
       this.$store.dispatch("chat/setActiveuser", id);
-
+      this.$store.dispatch("room/setRoomDisplay",userdata)
+      console.log(userdata);
       if (process.client) {
         this.width = window.innerWidth;
         if (this.width < 992) {

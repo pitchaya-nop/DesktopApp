@@ -197,7 +197,7 @@
         top: 0;
         // background-color: $white;
         // padding-top: $sidebar-spacing;
-        padding-top: 20px;
+        padding-top: 25px;
         z-index: 1;
         .theme-title {
           // padding: 0 $sidebar-spacing;
@@ -246,7 +246,7 @@
           }
         }
         & ~ .chat {
-          margin-top: 50px;
+          margin-top: 60px;
           // height: calc(100vh - 82px);
           // min-height: calc(100vh - 82px);
           height: calc(100vh - 50px);

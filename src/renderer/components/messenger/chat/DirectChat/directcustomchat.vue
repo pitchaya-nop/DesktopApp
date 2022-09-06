@@ -1,6 +1,7 @@
 <template>
   <!--Direct Chat start -->
   <div class="contact-chat">
+    
     <ul class="chatappend" style="position: relative;">
       <div
         class="text-center loadchat"

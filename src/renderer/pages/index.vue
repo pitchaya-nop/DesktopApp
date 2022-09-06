@@ -33,6 +33,7 @@ export default {
     socketAuth();
   },
   async mounted() {
+    this.socketEvent();
     // localStorage.debug = false
     if (this.getProfile == null) {
       await this.getMe();
@@ -57,7 +58,7 @@ export default {
       );
       this.unsubSocketEvent();
     });
-    this.socketEvent();
+    
   },
   methods: {
     unsubSocketEvent() {
