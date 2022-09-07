@@ -51,7 +51,11 @@ export default class BrowserWinHandler {
         width: 1200,
         height: 800,
         titleBarStyle: 'hidden',
-        titleBarOverlay: true
+        // titleBarOverlay: true
+        titleBarOverlay: {
+          color: 'transparent',
+          height: '15px'
+        }
 
         // fullscreen: true
       }
