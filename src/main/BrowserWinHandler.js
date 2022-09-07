@@ -51,11 +51,12 @@ export default class BrowserWinHandler {
         width: 1200,
         height: 800,
         titleBarStyle: 'hidden',
-        titleBarOverlay: win.setWindowButtonVisibility(true)
+        titleBarOverlay: true
 
         // fullscreen: true
       }
     )
+    this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
     //   dialog.showOpenDialog();
     // })
