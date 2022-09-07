@@ -51,7 +51,8 @@ export default class BrowserWinHandler {
         width: 1200,
         height: 800,
         titleBarStyle: 'hidden',
-        titleBarOverlay: true
+        titleBarOverlay: true,
+        setWindowButtonVisibility = true
         // fullscreen: true
       }
     )
