@@ -50,17 +50,18 @@ export default class BrowserWinHandler {
         },
         width: 1200,
         height: 800,
-        titleBarStyle: 'hidden',
+        titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
-        titleBarOverlay: {
-          color: 'transparent',
-          height: '15px'
-        }
+        // titleBarOverlay: {
+        //   symbolColor: 'red',
+        //   color: 'blue',
+        //   height: '15px'
+        // }
 
         // fullscreen: true
       }
     )
-    this.browserWindow.setWindowButtonVisibility(true)
+    // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
     //   dialog.showOpenDialog();
     // })
