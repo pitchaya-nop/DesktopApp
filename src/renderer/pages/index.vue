@@ -58,7 +58,18 @@ export default {
       );
       this.unsubSocketEvent();
     });
-    
+    socket.on("reconnecting", function () {
+      console.log("reconnecting @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    });
+
+    socket.on("reconnect_error", function (obj) {
+      console.log("reconnection error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    });
+
+    socket.on("reconnect_failed", function () {
+      console.log("reconnection failed @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    });
+
   },
   methods: {
     unsubSocketEvent() {
