@@ -61,7 +61,7 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
-    this.browserWindow.setMenu(null)
+    // this.browserWindow.setMenu(null)
     // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
     //   dialog.showOpenDialog();
