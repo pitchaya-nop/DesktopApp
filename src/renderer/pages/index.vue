@@ -10,6 +10,7 @@ import Vue from "vue";
 import Chat from "@/components/messenger/chat.vue";
 import { mapState } from "vuex";
 import { socket, socketAuth } from "../plugins/socketio.service.js";
+
 export default {
   components: {
     Chat,
@@ -20,7 +21,7 @@ export default {
       token: this.$store.getters["auth/token"],
       Officialuser: null,
       Roomofficialdataupdate: [],
-      Responseoaroom: null,
+      Responseoaroom: [],
     };
   },
   computed: {
@@ -33,7 +34,7 @@ export default {
     socketAuth();
   },
   async mounted() {
-    this.socketEvent();
+    // this.socketEvent();
     // localStorage.debug = false
     if (this.getProfile == null) {
       await this.getMe();
@@ -45,34 +46,45 @@ export default {
       console.log(
         "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
+      this.socketEvent();
     });
     socket.on("reconnect", (data) => {
       console.log(
         "reconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
-      this.socketEvent();
     });
-    socket.on("disconnect", (disconnect) => {
+    socket.on("disconnect", async (disconnect) => {
+      console.log(disconnect.message);
       console.log(
         "disconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
-      this.unsubSocketEvent();
+      await this.unsubSocketEvent();
+      
     });
     socket.on("reconnecting", function () {
-      console.log("reconnecting @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      console.log(
+        "reconnecting @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
     });
 
     socket.on("reconnect_error", function (obj) {
-      console.log("reconnection error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      console.log(
+        "reconnection error @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
     });
 
     socket.on("reconnect_failed", function () {
-      console.log("reconnection failed @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+      console.log(
+        "reconnection failed @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+      );
     });
-
+    socket.on("connect_error", (err) => {
+      console.log("connect error@@@@@@@@@@@@@@@@@@@");
+      console.log(`connect_error due to ${err.message}`);
+    });
   },
   methods: {
-    unsubSocketEvent() {
+    async unsubSocketEvent() {
       socket.off("socketId");
       socket.off(`web:auth:${this.$store.getters["auth/profile"].id}`);
       socket.off(`officials:user:${this.getProfile.id}`);
@@ -82,16 +94,21 @@ export default {
         socket.off(`official:contacts:${officialdata.id}`);
         socket.off(`friends:update:${officialdata.id}`);
       });
-      this.Responseoaroom.map((item) => {
-        socket.off(`messages:${item.sessionId}`);
-        socket.off(`messages:update:${item.sessionId}`);
-        socket.off(`messages:read:${item.sessionId}`);
+      this.Responseoaroom.map((data) => {
+        data.map((item) => {
+          socket.off(`messages:${item.sessionId}`);
+          socket.off(`messages:update:${item.sessionId}`);
+          socket.off(`messages:read:${item.sessionId}`);
+        });
       });
+      
       if (this.Roomofficialdataupdate.length) {
         this.Roomofficialdataupdate.map((data) => {
-          socket.off(`messages:${data.data[0].sessionId}`);
-          socket.off(`messages:read:${data.data[0].sessionId}`);
-          socket.off(`messages:update:${data.data[0].sessionId}`);
+          console.log("roomofficialupdate");
+          console.log(data.sessionId);
+          socket.off(`messages:${data.sessionId}`);
+          socket.off(`messages:read:${data.sessionId}`);
+          socket.off(`messages:update:${data.sessionId}`);
         });
       }
     },
@@ -167,12 +184,15 @@ export default {
                 socket.on(
                   `rooms:official:update:${officialdata.id}`,
                   (data) => {
-                    console.log("room data");
+                    console.log("room official update data");
                     console.log(data);
                     this.Roomofficialdataupdate.push(data.data[0]);
 
                     data.data[0].roomtype = "official";
                     data.data[0].idofficialroom = officialdata.id;
+
+                    // data.data[0].permission = "null"
+
                     if (this.checkDuplicateRoom(data.data[0].id)) {
                       socket.emit(
                         `join:room`,
@@ -183,11 +203,18 @@ export default {
                     socket.on(`messages:${data.data[0].sessionId}`, (data) => {
                       console.log("message");
                       console.log(data);
-
-                      this.addDataToRealm(data.data, "addMessage");
-                      this.addDataToRealm(data.data, "updateShow");
-                      this.addDataToRealm(this.getProfile, "updateUnreadcount");
-                      this.addDataToRealm(this.getProfile, "updateLastmessage");
+                      if (data.data != null) {
+                        this.addDataToRealm(data.data, "addMessage");
+                        this.addDataToRealm(data.data, "updateShow");
+                        this.addDataToRealm(
+                          this.getProfile,
+                          "updateUnreadcount"
+                        );
+                        this.addDataToRealm(
+                          this.getProfile,
+                          "updateLastmessage"
+                        );
+                      }
                     });
 
                     socket.on(
@@ -258,7 +285,8 @@ export default {
                 this.getOfficialRoom(officialdata.id).then((responseOaRoom) => {
                   console.log("responseOaRoom");
                   console.log(responseOaRoom);
-                  this.Responseoaroom = responseOaRoom;
+                  this.Responseoaroom.push(responseOaRoom);
+
                   responseOaRoom.map(
                     (dataroomofficial) => (
                       (dataroomofficial.roomtype = "official"),
@@ -288,15 +316,23 @@ export default {
                   responseOaRoom.map((item) => {
                     console.log(item);
                     socket.on(`messages:${item.sessionId}`, (data) => {
-                      console.log("messages");
-                      console.log(data);
+                      // console.log("messages");
+                      // console.log(data);
 
                       // this.checkDuplicateMessage(data.data, officialdata);
-                      this.addDataToRealm(data.data, "addMessage");
-                      this.addDataToRealm(data.data, "updateShow");
-                      if (this.checkDuplicateMessage(data.data)) {
-                        this.addDataToRealm(officialdata, "updateUnreadcount");
-                        this.addDataToRealm(officialdata, "updateLastmessage");
+                      if (data.data != null) {
+                        this.addDataToRealm(data.data, "addMessage");
+                        this.addDataToRealm(data.data, "updateShow");
+                        if (this.checkDuplicateMessage(data.data)) {
+                          this.addDataToRealm(
+                            officialdata,
+                            "updateUnreadcount"
+                          );
+                          this.addDataToRealm(
+                            officialdata,
+                            "updateLastmessage"
+                          );
+                        }
                       }
 
                       setTimeout(() => {

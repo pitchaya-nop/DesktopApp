@@ -5,7 +5,8 @@
       <div>
         <div class="input-group">
           <div class="input-group-append">
-            <span class="input-group-text"><feather type="search" size="15" height="15"></feather
+            <span class="input-group-text"
+              ><feather type="search" size="15" height="15"></feather
             ></span>
           </div>
           <input
@@ -23,14 +24,14 @@
       :key="index"
       @click="
         setActive(index),
-          setActiveuser(user.id,user),
+          setActiveuser(user.id, user),
           setSeesionuser(user.sessionid),
           setBlockroom(user.isblock);
         setChatuser(user.sessionid, user.roomtype), readMessage(user.sessionid);
       "
     >
       <div class="chat-box">
-        <div class="media" style="align-items:center">
+        <div class="media" style="align-items: center">
           <div
             class="profile"
             :style="
@@ -44,12 +45,26 @@
                     ]
                   : [
                       {
-                        'background-image':
-                          'url(' + getImgUrl() + ')',
+                        'background-image': 'url(' + getImgUrl() + ')',
                       },
                       styleObject,
                     ]
-                : user.sessiontype == 'GROUP'
+                : user.sessiontype == 'GUEST'
+                ? [
+                    {
+                      'background-image': 'url(' + getImgUrl() + ')',
+                    },
+                    styleObject,
+                  ]
+                : [
+                    {
+                      'background-image': 'url(' + getImgUrl() + ')',
+                    },
+                    styleObject,
+                  ]
+            "
+          >
+            <!-- user.sessiontype == 'GROUP'
                 ? user.groupavatar.source
                   ? [
                       {
@@ -71,9 +86,8 @@
                         'url(' + getImgUrl() + ')',
                     },
                     styleObject,
-                  ]
-            "
-          ></div>
+                  ] -->
+          </div>
           <div class="details">
             <h5>
               {{
@@ -83,7 +97,8 @@
                   ? user.user.displayName
                   : user.sessiontype == "GROUP"
                   ? user.groupname
-                  : ""
+                  : user.sessiontype == "GUEST"
+                  ? user.guestUniqueName :''
               }}
             </h5>
             <h6>{{ user.lastmessage }}</h6>
@@ -114,11 +129,11 @@ export default {
       styleObject: {
         "background-size": "cover",
         "background-position": "center",
-        "display": "block",
+        display: "block",
       },
       chatUser: [],
       Findroom: "",
-      userDetail:null
+      userDetail: null,
     };
   },
   mounted() {},
@@ -134,9 +149,8 @@ export default {
   },
   watch: {
     Findroom: function (val, oldVal) {
-      
       if (val.length > 0) {
-        let arr = []
+        let arr = [];
         this.getdataDB.then((data) => {
           let objs = data
             .objects("ROOM")
@@ -144,13 +158,13 @@ export default {
           objs.map((data) => {
             if (data.user.displayName.includes(`${val}`)) {
               console.log(data);
-              arr.push(data)
+              arr.push(data);
             }
           });
         });
-        this.$store.dispatch("room/setRoom", arr)
+        this.$store.dispatch("room/setRoom", arr);
       } else {
-        this.setRooms()
+        this.setRooms();
         // this.getdataDB.then((data) => {
         //   let objs = data
         //     .objects("ROOM")
@@ -301,10 +315,10 @@ export default {
         });
       }
     },
-    setActiveuser: function (id,userdata) {
-      
+    setActiveuser: function (id, userdata) {
       this.$store.dispatch("chat/setActiveuser", id);
-      this.$store.dispatch("room/setRoomDisplay",userdata)
+      this.$store.dispatch("room/setRoomDisplay", userdata);
+      console.log(userdata);
       console.log(userdata);
       if (process.client) {
         this.width = window.innerWidth;

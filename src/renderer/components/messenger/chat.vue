@@ -37,7 +37,7 @@
         "
       ></div>
       <h2 style="font-weight:500"
-        >{{this.currentRoom.roomdisplay.user.displayName}}</h2
+        >{{this.currentRoom.roomdisplay.sessiontype == "GUEST"?this.currentRoom.roomdisplay.guestUniqueName :this.currentRoom.roomdisplay.user.displayName}} </h2
       >
     </div>
 

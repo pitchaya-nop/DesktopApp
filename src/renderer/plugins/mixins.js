@@ -116,6 +116,9 @@ const RoomSchema = {
         invitelink: 'string',
         isfavorite: 'bool',
         ishidden: 'bool',
+        isclose: 'bool',
+        guestid: 'string',
+        guestUniqueName: 'string',
         ismarkasunread: 'bool',
         ismute: 'bool',
         ispin: 'bool',
@@ -400,12 +403,15 @@ Vue.mixin({
                                         ismarkasunread: item.isMarkAsUnread,
                                         ismute: item.isMute,
                                         ispin: item.isPin,
+                                        isclose: item.isClose,
+                                        guestid: item.guest.guestId,
+                                        guestUniqueName: item.guest.guestUniqueName,
                                         membercount: item.memberCount,
                                         memberuserids: item.memberUserIds ? item.memberUserIds : [],
                                         owneruserid: item.ownerUserId ? item.ownerUserId : 'null',
                                         pendingcount: item.pendingCount,
                                         pendinguserids: item.pendingUserIds ? item.pendingUserIds : [],
-                                        permission: item.permission,
+                                        permission: item.permission ? item.permission : 'null',
                                         pinmessage: item.pinMessage ? item.pinMessage : [],
                                         sessionid: item.sessionId,
                                         sessionname: item.sessionName,
@@ -415,12 +421,12 @@ Vue.mixin({
                                         userids: item.userIds ? item.userIds : ['null'],
                                         user: item.user ? {
                                             avatar: item.user.avatar ? item.user.avatar : 'null',
-                                            dialCode: item.user.dialCode,
-                                            displayName: item.user.displayName,
+                                            dialCode: item.user.dialCode ? item.user.dialCode : "null",
+                                            displayName: item.user.displayName ? item.user.displayName : "null",
                                             id: item.user.id ? item.user.id : 'null',
-                                            mobile: item.user.mobile,
-                                            permission: item.user.permission,
-                                            rename: item.user.rename ? item.user.rename : "",
+                                            mobile: item.user.mobile ? item.user.mobile : 'null',
+                                            permission: item.user.permission ? item.user.permission : "null",
+                                            rename: item.user.rename ? item.user.rename : "null",
                                         } :
                                             {
                                                 avatar: 'null',
@@ -443,7 +449,7 @@ Vue.mixin({
                                     item.messages.map((msg) => {
                                         const message = realm.objects("MESSAGE").filtered(`messageid == "${msg.messageId}" `)
                                         if (message.length > 0) {
-                                            return false         
+                                            return false
                                         } else {
                                             realm.create('MESSAGE', {
                                                 id: item.id,
@@ -678,7 +684,7 @@ Vue.mixin({
                                     }
                                 }
                             })
-                            break;    
+                            break;
                         case 'blockOfficial':
                             const blcokroom = realm.objects("ROOM").filtered(`user.id == "${data}"`)
                             realm.write(() => {
