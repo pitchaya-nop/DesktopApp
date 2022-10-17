@@ -40,6 +40,7 @@
         </li> -->
         <!-- <hr /> -->
         <template>
+          <li @click="clearDb">clear db</li>
           <li v-for="(oa, index) in currentOfficial.listoa" :key="index">
             <a
               class="icon-btn btn-light button-effect active-official"
@@ -152,8 +153,8 @@ export default {
     },
     setProfileOa(data) {
       console.log(data);
-  
-      this.$store.dispatch("room/setRoomDisplay",null)
+
+      this.$store.dispatch("room/setRoomDisplay", null);
       this.$store.dispatch("auth/setProfile", data);
     },
 
@@ -173,18 +174,19 @@ export default {
       }
       this.$store.dispatch("layout/setLayout", this.mixLayout);
     },
-
+    clearDb() {
+      this.ClearRealm()
+    },
     async handleSingOut() {
-      if (window.confirm('Do you really want to log out?')) {
+      if (window.confirm("Do you really want to log out?")) {
         socketDisconnect();
         this.$store.state.common.activesidebar = 0;
         this.$store.state.common.iscontact = false;
         this.$store.dispatch("chat/resetState");
         this.$store.dispatch("contact/resetState");
         this.$store.dispatch("room/resetState");
-        
+
         this.addDataToRealm("", "deleteData");
-        this.ClearRealm()
         this.$router.push("/authentication/login");
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
