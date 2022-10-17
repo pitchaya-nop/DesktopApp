@@ -182,8 +182,9 @@ export default {
         this.$store.dispatch("chat/resetState");
         this.$store.dispatch("contact/resetState");
         this.$store.dispatch("room/resetState");
-
+        
         this.addDataToRealm("", "deleteData");
+        this.ClearRealm()
         this.$router.push("/authentication/login");
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
