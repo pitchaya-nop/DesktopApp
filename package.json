@@ -1,6 +1,6 @@
 {
   "name": "GOOCHAT",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "An electron-nuxt project",
   "main": "./dist/main/index.js",
   "scripts": {

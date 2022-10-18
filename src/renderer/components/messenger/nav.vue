@@ -40,7 +40,7 @@
         </li> -->
         <!-- <hr /> -->
         <template>
-          <li @click="clearDb">clear db</li>
+          <!-- <li @click="clearDb">clear db</li> -->
           <li v-for="(oa, index) in currentOfficial.listoa" :key="index">
             <a
               class="icon-btn btn-light button-effect active-official"
@@ -174,9 +174,9 @@ export default {
       }
       this.$store.dispatch("layout/setLayout", this.mixLayout);
     },
-    clearDb() {
-      this.ClearRealm()
-    },
+    // clearDb() {
+    //   this.ClearRealm()
+    // },
     async handleSingOut() {
       if (window.confirm("Do you really want to log out?")) {
         socketDisconnect();
