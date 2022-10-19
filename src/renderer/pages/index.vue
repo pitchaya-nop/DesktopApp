@@ -95,7 +95,9 @@ export default {
         socket.off(`friends:update:${officialdata.id}`);
       });
       this.Responseoaroom.map((data) => {
+        console.log(data);
         data.map((item) => {
+          console.log(item.sessionId);
           socket.off(`messages:${item.sessionId}`);
           socket.off(`messages:update:${item.sessionId}`);
           socket.off(`messages:read:${item.sessionId}`);
