@@ -284,7 +284,8 @@ export default {
         this.loginfailed = false;
         try {
           var keyHex = CryptoJS.enc.Utf8.parse(
-            "4a310288218c3394d829e49bd187c395"
+            // "4a310288218c3394d829e49bd187c395"
+            "a62d9f02d9412f4c724919362a5ad4fe"
           );
           console.log(keyHex);
           var encrypted = CryptoJS.AES.encrypt(this.password, keyHex, {

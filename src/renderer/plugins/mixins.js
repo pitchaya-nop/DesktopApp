@@ -297,7 +297,7 @@ Vue.mixin({
             })
         },
         addDataToRealm(data, action) {
-            Realm.open({ schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema] })
+            Realm.open({ schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema], deleteRealmIfMigrationNeeded: true, })
                 .then((realm) => {
                     switch (action) {
                         case 'addUser':
