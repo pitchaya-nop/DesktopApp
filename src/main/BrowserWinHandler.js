@@ -61,12 +61,17 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+    const ses = this.browserWindow.webContents.session
     // this.browserWindow.setMenu(null)
     // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
     //   dialog.showOpenDialog();
     // })
-    
+    ses.clearCache(() => {
+      // alert("Cache cleared!");
+      localStorage.removeItem('token')
+      this.ClearRealm()
+    });
     this.browserWindow.on('closed', () => {
       // Dereference the window object
       this.browserWindow = null
