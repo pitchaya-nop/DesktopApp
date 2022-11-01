@@ -11,7 +11,8 @@ const windowsOS = {
     differentialPackage: true,
     oneClick: false,
     perMachine: false,
-    allowToChangeInstallationDirectory: true
+    allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall: true
   }
 }
 

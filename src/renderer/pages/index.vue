@@ -775,7 +775,8 @@ export default {
     UpdateAddRoom(idroom) {
       this.getdataDB.then((data) => {
         let room = data.objects("ROOM").filtered(`id == "${idroom[0].id}"`);
-
+        console.log('room length');
+        console.log(room.length);
         if (room.length == 0) {
           this.addDataToRealm(idroom, "addRooms");
         }
