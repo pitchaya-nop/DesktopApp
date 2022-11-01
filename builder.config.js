@@ -12,7 +12,7 @@ const windowsOS = {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: true
+    deleteAppDataOnUninstall: true,
   }
 }
 
