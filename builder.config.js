@@ -12,7 +12,6 @@ const windowsOS = {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    deleteAppDataOnUninstall: true,
   }
 }
 
@@ -48,7 +47,7 @@ const macOS = {
 module.exports = {
   productName: 'Goochat',
   appId: 'com.example.app',
-  artifactName: 'setup-${version}.${ext}',
+  artifactName: 'goochatsetup-${version}.${ext}',
   directories: {
     output: 'build'
   },

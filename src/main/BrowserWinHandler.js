@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app , dialog } from 'electron'
-import { icons } from 'feather-icons'
+import { BrowserWindow, app, dialog, session } from 'electron'
+
 
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
@@ -19,7 +19,7 @@ export default class BrowserWinHandler {
     this.browserWindow = null
     this._createInstance()
   }
-
+ 
   _createInstance () {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
@@ -69,13 +69,21 @@ export default class BrowserWinHandler {
 
     this.browserWindow.on('closed', () => {
       // Dereference the window object
+      // this.addDataToRealm("", "deleteData");
+
+      session.defaultSession.clearStorageData(null, (error) => {
+
+      });
       this.browserWindow = null
+
+
     })
     this._eventEmitter.emit('created')
   }
 
   _recreate () {
     if (this.browserWindow === null) this._create()
+
   }
 
   /**
@@ -110,4 +118,6 @@ export default class BrowserWinHandler {
       this.onCreated(() => resolve(this.browserWindow))
     })
   }
+
+
 }
