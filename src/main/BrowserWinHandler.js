@@ -2,7 +2,6 @@
 import { EventEmitter } from 'events'
 import { BrowserWindow, app, dialog, session } from 'electron'
 
-
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
@@ -38,6 +37,7 @@ export default class BrowserWinHandler {
   }
 
   _create () {
+
     this.browserWindow = new BrowserWindow(
       { 
         ...this.options,
