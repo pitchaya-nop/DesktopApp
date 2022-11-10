@@ -31,6 +31,7 @@
                     type="email"
                     v-model="email"
                     placeholder="Demo@123gmail.com"
+                    autofocus
                   />
                   <!-- required
                     email -->
