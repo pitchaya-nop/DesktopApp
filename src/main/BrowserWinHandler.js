@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app, dialog, session } from 'electron'
+import { BrowserWindow, app, session } from 'electron'
 
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
