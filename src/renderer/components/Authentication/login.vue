@@ -313,7 +313,8 @@ export default {
             const data = response.data;
             await this.$store.dispatch("auth/setToken", data.accessToken);
             await this.$store.dispatch("auth/setProfile", data.userProfile);
-
+            this.email = ''
+            this.password = ''
             this.$router.push("/");
             // this.loginloading = false
           } else {
