@@ -51,8 +51,9 @@ export default class BrowserWinHandler {
   // }
   
   _create () {
-
+    
     this.browserWindow = new BrowserWindow(
+
       { 
         ...this.options,
         webPreferences: {
@@ -64,6 +65,9 @@ export default class BrowserWinHandler {
         },
         width: 1200,
         height: 800,
+        icon: '../../favicon.ico'
+        // icon: __dirname + '../renderer/assets/images/favicon/favicon.png',
+        // icon: path.join(__dirname, '/src/assets/images/favicon/favicon.png')
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
         // titleBarOverlay: {
