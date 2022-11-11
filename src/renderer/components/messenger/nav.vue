@@ -187,10 +187,10 @@ export default {
         this.$store.dispatch("room/resetState");
 
         this.addDataToRealm("", "deleteData");
-        this.$router.push("/authentication/login");
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
         window.localStorage.removeItem("auth");
+        this.$router.push("/authentication/login");
       }
     },
   },

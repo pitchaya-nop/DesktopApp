@@ -1,11 +1,15 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app, session } from 'electron'
+import { BrowserWindow, app, session, Notification, ipcMain } from 'electron'
 
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
+const NOTIFICATION_TITLE = 'Basic Notification'
+const NOTIFICATION_BODY = 'Notification from the Main process'
 process.chdir(app.getPath('userData'))
+
+
 export default class BrowserWinHandler {
   /**
    * @param [options] {object} - browser window options
@@ -18,14 +22,18 @@ export default class BrowserWinHandler {
     this.browserWindow = null
     this._createInstance()
   }
- 
+  
+
+
+
   _createInstance () {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    if (app.isReady()) this._create()
+    if (app.isReady()) this._create() 
     else {
       app.once('ready', () => {
+
         this._create()
       })
     }
@@ -35,7 +43,13 @@ export default class BrowserWinHandler {
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
   }
-
+  // showNotification() {
+  //   // new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
+  //   ipcMain.on('notify', (e, message) => {
+  //     new Notification({ title: "Notification", body: message }).show();
+  //   })
+  // }
+  
   _create () {
 
     this.browserWindow = new BrowserWindow(
@@ -61,6 +75,9 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+    ipcMain.on('notify', (e, message) => {
+      new Notification({ title: message.displayName, body: message.content }).show();
+    })
     // this.browserWindow.setMenu(null)
     // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
@@ -108,7 +125,14 @@ export default class BrowserWinHandler {
     const fullPath = serverUrl + '#' + pagePath;
     await this.browserWindow.loadURL(fullPath)
   }
-
+  
+  // noti() {
+  //   ipcMain.on('notification-show', function (event, arg) {
+  //     // tray.setImage(__dirname + "/images/favicon-notification.ico");
+  //     var notification = new VcpNotification(arg.title, arg.text);
+  //     notification.show();
+  //   });
+  // }
   /**
    *
    * @returns {Promise<BrowserWindow>}

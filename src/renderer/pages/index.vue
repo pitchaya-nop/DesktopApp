@@ -10,6 +10,7 @@ import Vue from "vue";
 import Chat from "@/components/messenger/chat.vue";
 import { mapState } from "vuex";
 import { socket, socketAuth } from "../plugins/socketio.service.js";
+const { ipcRenderer } = require("electron");
 
 export default {
   components: {
@@ -59,7 +60,6 @@ export default {
         "disconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
       await this.unsubSocketEvent();
-      
     });
     socket.on("reconnecting", function () {
       console.log(
@@ -103,7 +103,7 @@ export default {
           socket.off(`messages:read:${item.sessionId}`);
         });
       });
-      
+
       if (this.Roomofficialdataupdate.length) {
         this.Roomofficialdataupdate.map((data) => {
           console.log("roomofficialupdate");
@@ -235,6 +235,7 @@ export default {
                       (msgupdate) => {
                         console.log("message update");
                         console.log(msgupdate);
+
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
                             socket.emit(
@@ -356,14 +357,19 @@ export default {
                       (msgupdate) => {
                         console.log("message update");
                         console.log(msgupdate);
+
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
                             socket.emit(
                               "messages:read",
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
                             );
+                          } else {
+                            console.log("new message");
+                            ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
+
                         this.addDataToRealm(
                           msgupdate.data,
                           "updateDummyMesaage"
@@ -775,7 +781,7 @@ export default {
     UpdateAddRoom(idroom) {
       this.getdataDB.then((data) => {
         let room = data.objects("ROOM").filtered(`id == "${idroom[0].id}"`);
-        console.log('room length');
+        console.log("room length");
         console.log(room.length);
         if (room.length == 0) {
           this.addDataToRealm(idroom, "addRooms");
