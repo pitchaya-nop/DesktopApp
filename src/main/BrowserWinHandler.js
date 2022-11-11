@@ -2,11 +2,10 @@
 import { EventEmitter } from 'events'
 import { BrowserWindow, app, session, Notification, ipcMain } from 'electron'
 
+
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
-const NOTIFICATION_TITLE = 'Basic Notification'
-const NOTIFICATION_BODY = 'Notification from the Main process'
 process.chdir(app.getPath('userData'))
 
 
@@ -53,7 +52,6 @@ export default class BrowserWinHandler {
   _create () {
     
     this.browserWindow = new BrowserWindow(
-
       { 
         ...this.options,
         webPreferences: {
@@ -64,11 +62,7 @@ export default class BrowserWinHandler {
           devTools: true
         },
         width: 1200,
-        height: 800,
-        // icon: path.join(__dirname, 'favicon.ico'),
-        // icon: '../../favicon.ico'
-        // icon: __dirname + '../renderer/assets/images/favicon/favicon.png',
-        // icon: path.join(__dirname, '/src/assets/images/favicon/favicon.png')
+        height: 800
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
         // titleBarOverlay: {
@@ -83,11 +77,7 @@ export default class BrowserWinHandler {
     ipcMain.on('notify', (e, message) => {
       new Notification({ title: message.displayName, body: message.content }).show();
     })
-    ipcMain.on('app-ready', () => {
-      if (process.platform === 'win32') {
-        // somehow also change logo here? can't find it in the docs
-        app.setAppUserModelId('Awesome app');
-      }
+
     // this.browserWindow.setMenu(null)
     // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
