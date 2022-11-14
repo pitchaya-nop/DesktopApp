@@ -116,6 +116,7 @@
                     <!-- v-if="chat.contenttype == 'TEXT'" -->
                     <h5
                       v-if="chat.contenttype == 'TEXT'"
+                      v-linkify="{ className: 'colorLink', target: '_blank' }"
                       style="
                         white-space: pre-wrap;
                         text-align: left;

@@ -222,7 +222,10 @@ Vue.mixin({
     computed: {
 
         getdataDB: function () {
-            return Realm.open({ schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema] }).then(
+            return Realm.open({
+                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
+                schemaVersion: 2
+            }).then(
                 (realm) => {
                     return realm
 
@@ -297,7 +300,27 @@ Vue.mixin({
             })
         },
         addDataToRealm(data, action) {
-            Realm.open({ schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema] })
+
+            Realm.open({
+                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
+                schemaVersion: 2,
+                // migration: (oldRealm, newRealm) => {
+
+                //     if (oldRealm.schemaVersion < 1) { }
+                //     if (oldRealm.schemaVersion < 2) {
+
+                //         const oldObjects = oldRealm.objects('FILEDUMMY');
+                //         const newObjects = newRealm.objects('FILEDUMMY');
+                //         // // loop through all objects and set the _id property in the new schema
+                //         for (const objectIndex in oldObjects) {
+                //             const oldObject = oldObjects[objectIndex];
+                //             const newObject = newObjects[objectIndex];
+                //             newObject.filename = ``
+                //         }
+                //     }
+                //     // if (oldRealm.schemaVersion < 1) { }
+                // }
+            })
                 .then((realm) => {
                     switch (action) {
                         case 'addUser':
@@ -717,6 +740,7 @@ Vue.mixin({
                             })
                             break;
                     }
+
                 })
         },
         ClearRealm() {

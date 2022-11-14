@@ -9,8 +9,11 @@ import auth from "./modules/auth";
 import contact from "./modules/contact";
 import room from "./modules/room";
 import official from './modules/official'
+import vLinkify from 'v-linkify';
 
 Vue.use(Vuex);
+Vue.use(vLinkify)
+
 
 const createStore = () => {
   return new Vuex.Store({

@@ -9,6 +9,7 @@
               ><feather type="search" size="15" height="15"></feather
             ></span>
           </div>
+          
           <input
             class="form-control"
             type="text"
@@ -17,7 +18,9 @@
           />
         </div>
       </div>
+      <button @click="getdummyfiletest">test dummy file</button>
     </div>
+    
     <li
       :class="{ active: sessionroom === user.sessionid }"
       v-for="(user, index) in currentRoom.room"
@@ -31,7 +34,7 @@
       "
     >
       <div class="chat-box">
-        <div class="media" style="align-items: center">
+        <div class="media" style="align-items: center;overflow:hidden">
           <div
             class="profile"
             :style="
@@ -88,8 +91,8 @@
                     styleObject,
                   ] -->
           </div>
-          <div class="details">
-            <h5>
+          <div class="details" style="overflow:hidden">
+            <h5 style="overflow: hidden;text-overflow: ellipsis">
               {{
                 user.isblock
                   ? "UNKNOWN"
@@ -150,13 +153,14 @@ export default {
   watch: {
     Findroom: function (val, oldVal) {
       if (val.length > 0) {
+        console.log(val);
         let arr = [];
         this.getdataDB.then((data) => {
           let objs = data
             .objects("ROOM")
             .filtered(`idofficialroom =="${this.getProfile.id}"`);
           objs.map((data) => {
-            if (data.user.displayName.includes(`${val}`)) {
+            if (data.user.displayName.includes(`${val}`)  || data.guestUniqueName.includes(`${val}`)) {
               console.log(data);
               arr.push(data);
             }
@@ -177,6 +181,14 @@ export default {
   methods: {
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
+    },
+    getdummyfiletest(){
+      this.getdataDB.then((data) => {
+        let testmigrate = data.objects("MESSAGE")
+        console.log(testmigrate);
+        console.log(testmigrate.length);
+        testmigrate.map((item)=>{console.log(item.dummyfile.filename);})
+      })
     },
     setBlockroom(isblock) {
       if (isblock == true) {
