@@ -18,7 +18,6 @@
           />
         </div>
       </div>
-      <button @click="getdummyfiletest">test dummy file</button>
     </div>
     
     <li
@@ -182,14 +181,7 @@ export default {
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
-    getdummyfiletest(){
-      this.getdataDB.then((data) => {
-        let testmigrate = data.objects("MESSAGE")
-        console.log(testmigrate);
-        console.log(testmigrate.length);
-        testmigrate.map((item)=>{console.log(item.dummyfile.filename);})
-      })
-    },
+    
     setBlockroom(isblock) {
       if (isblock == true) {
         this.$store.state.common.isblockroom = true;
