@@ -1,18 +1,19 @@
 <template>
   <!--Direct Chat start -->
   <div class="contact-chat">
-    
-    <ul class="chatappend" style="position: relative;">
-      <div
-        class="text-center loadchat"
-        v-if="this.loading"
-      >
-        <b-spinner label="Loading..." style="position:fixed;width:4rem;height:4rem"></b-spinner>
+    <ul class="chatappend" style="position: relative">
+      <div class="text-center loadchat" v-if="this.loading">
+        <b-spinner
+          label="Loading..."
+          style="position: fixed; width: 4rem; height: 4rem"
+        ></b-spinner>
       </div>
       <template v-if="currentChat.chat">
         <li
           :class="
-            chat.senderid == userprofile.id || chat.oaid !== '' || checksender(chat.senderid,chat)
+            chat.senderid == userprofile.id ||
+            chat.oaid !== '' ||
+            checksender(chat.senderid, chat)
               ? 'sent'
               : 'replies'
           "
@@ -32,7 +33,7 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: rgba(255, 255, 255,0.4);
+              background-color: rgba(255, 255, 255, 0.4);
               color: #2a2a54;
               border-radius: 10px;
             "
@@ -51,7 +52,7 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: rgba(255, 255, 255,0.4);
+              background-color: rgba(255, 255, 255, 0.4);
               color: #2a2a54;
               border-radius: 10px;
             "
@@ -65,7 +66,7 @@
           >
             Unread message below
           </p>
-<!-- {
+          <!-- {
                         'background-image':
                           userprofile.avatars.source != 'null'
                             ? `url(${userprofile.avatars.source})`
@@ -74,25 +75,24 @@
                       styleObject, -->
           <div class="media">
             <div
-              class="profile mr-4"
+              class="profile mr-2"
               :style="
-                chat.senderid == userprofile.id || chat.oaid !== '' || checksender(chat.senderid)
-                  ? 
-                  [
+                chat.senderid == userprofile.id ||
+                chat.oaid !== '' ||
+                checksender(chat.senderid)
+                  ? [
                       {
-                        'display':'none',
+                        display: 'none',
                       },
                     ]
-                  : 
-                  [
+                  : [
                       {
                         'background-image':
                           chat.avatar != 'null'
                             ? `url(${chat.avatar})`
                             : 'url(' + getImgUrl() + ')',
-                        'border':
-                        chat.avatar != 'null'
-                          ?'none':'1px solid #edeff0'
+                        border:
+                          chat.avatar != 'null' ? 'none' : '1px solid #edeff0',
                       },
                       styleObject,
                     ]
@@ -100,20 +100,22 @@
             ></div>
             <div class="media-body">
               <div class="contact-name">
-                <h5>
+                <!-- <h5>
                   {{
-                    chat.senderid == userprofile.id || chat.oaid !== '' ||
+                    chat.senderid == userprofile.id ||
+                    chat.oaid !== "" ||
                     checksender(chat.senderid)
                       ? ""
                       : chat.displayname
                   }}
-                </h5>
+                </h5> -->
                 <!-- <h6>{{ chat.time }}</h6> -->
-                <ul class="msg-box">
+                <ul class="msg-box" >
                   <!-- v-if="currentChat.chat.id == 0 && !chat.stickerpath" -->
                   <li class="msg-setting-main">
                     <!-- <DropDown v-if="chat.sender == 0 && !chat.lastmsg" /> -->
                     <!-- v-if="chat.contenttype == 'TEXT'" -->
+                    <!-- <div style="height:200px">form</div> -->
                     <h5
                       v-if="chat.contenttype == 'TEXT'"
                       v-linkify="{ className: 'colorLink', target: '_blank' }"
@@ -126,45 +128,85 @@
                     <div
                       v-if="chat.contenttype == 'IMAGE'"
                       :style="
-                        chat.senderid == userprofile.id || chat.oaid !== '' ||
-                        checksender(chat.senderid)
+                        chat.senderid == userprofile.id ||
+                        chat.oaid !== '' ||
+                        checksender(chat.senderid) 
                           ? `background:transparent;border-radius:6px 2px 6px 6px`
                           : `background:transparent;border-radius:2px 6px 6px 6px;`
                       "
                     >
                       <div
-                        style="display: flex; flex-wrap: wrap; max-width: 257px"
-                        :style="chat.media.length > 1 ? 'width:257px' : ''"
+                        style="display: flex; flex-wrap: wrap; max-width: 268px"
+                        :style="chat.media.length > 1 ? 'width:268px' : ''"
                       >
-                        <div
-                          v-for="image in chat.media"
-                          :key="image.id"
-                          :style="
-                              chat.media.length > 1
-                              ? 'flex:1 1 50%;border:1px solid transparent;height:126px'
-                              : 'flex:0 0 100%'  
-                          "
-                        >
-                        <!-- style="min-height:346px" -->
-                        
-  
-                          <img
-                            :src="image.imageSource"
-                            style="
-                              width: 100%;
-                              height: 100%;
-                              object-fit: cover;
-                              object-position: center;
-                              max-height: 346px;
-                            "
-                            :style="
-                              chat.senderid == userprofile.id || chat.oaid !== '' ||
-                              checksender(chat.senderid)
-                                ? 'border-radius:6px 2px 6px 6px'
-                                : 'border-radius:2px 6px 6px 6px'
-                            "
-                          />
+                        <div v-if="chat.media.length === 1">
+                          <div
+                            v-for="image in chat.media"
+                            :key="image.mediaRefKey"
+                            :style="'flex:0 0 100%'"
+                          >
+                            <div
+                              
+                              v-bind:style="{
+                                height: numcalcHeight(
+                                  image.width,
+                                  image.height
+                                ),
+                                'min-height': numcalcHeight(
+                                  image.width,
+                                  image.height
+                                ),
+                                width: checkwidth(image.width, image.height),
+                                'max-width': '268px',
+                                'cursor':'pointer',
+                                'background-image':`url('${getDefaultimage()}')`,
+                                'background-size':'cover',
+                                'background-position': 'center',
+                                'border-radius':chat.senderid == userprofile.id ||chat.oaid !== '' || checksender(chat.senderid)?'6px 2px 6px 6px':'2px 6px 6px 6px'
+                              }"
+                              @click="previewimage(image.imageSource)"
+                            >
+                              <img
+                                :src="image.imageSource"
+                                style="width: 100%; height: 100%"
+                                :style="
+                                  chat.senderid == userprofile.id ||
+                                  chat.oaid !== '' ||
+                                  checksender(chat.senderid)
+                                    ? 'border-radius:6px 2px 6px 6px'
+                                    : 'border-radius:2px 6px 6px 6px'
+                                "
+                              />
+                              
+                            </div>
+                          </div>
                         </div>
+
+                        <div v-if="chat.media.length > 1" style="display:flex;flex-wrap: wrap;">
+                          <div
+                            v-for="image in chat.media"
+                            :key="image.mediaRefKey"
+                            style="flex:1 1 50%;height:100px;padding:1px;cursor:pointer"
+                            :style="{'background-image':`url('${getDefaultimage()}')`,'background-size':'cover','background-position': 'center'}"
+                            @click="previewimage(image.imageSource)"
+                          >
+                              <img
+                                :src="image.imageSource"
+                                style="
+                                width: 100%; 
+                                height: 100%;
+                                object-fit: cover;"
+                              />
+                              <!-- :style="
+                                  chat.senderid == userprofile.id ||
+                                  chat.oaid !== '' ||
+                                  checksender(chat.senderid)
+                                    ? 'border-radius:6px 2px 6px 6px'
+                                    : 'border-radius:2px 6px 6px 6px'
+                                " -->
+                          </div>
+                        </div>
+
                       </div>
                       <!-- min-width:100px;
                                     min-height:100px;
@@ -190,7 +232,8 @@
                       <div
                         v-if="
                           chat.status == 'READ' &&
-                          (chat.senderid == userprofile.id || chat.oaid !== '' ||
+                          (chat.senderid == userprofile.id ||
+                            chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
                         class="badge sm ml-2"
@@ -207,7 +250,8 @@
                       <div
                         v-if="
                           chat.status == 'SENT' &&
-                          (chat.senderid == userprofile.id || chat.oaid !== '' ||
+                          (chat.senderid == userprofile.id ||
+                            chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
                         class="badge sm ml-2"
@@ -223,7 +267,8 @@
                     <div
                       v-if="
                         chat.status == 'WAITING' &&
-                        (chat.senderid == userprofile.id || chat.oaid !== '' ||
+                        (chat.senderid == userprofile.id ||
+                          chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
                       class="badge sm ml-2"
@@ -240,7 +285,8 @@
                       "
                       v-if="
                         chat.status == 'FAILED' &&
-                        (chat.senderid == userprofile.id || chat.oaid !== '' ||
+                        (chat.senderid == userprofile.id ||
+                          chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
                     >
@@ -447,14 +493,17 @@ export default {
   },
 
   methods: {
-    preview() {
+    previewimage(image) {
       window.open(
-        "https://img.huffingtonpost.com/asset/5ab4d4ac2000007d06eb2c56.jpeg?cache=sih0jwle4e&ops=1910_1000",
+        image,
         "_blank"
       );
     },
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
+    },
+    getDefaultimage(){
+      return require("../../../../assets/images/logo/waitimg.png");
     },
     async resendfailed(failedmessage) {
       console.log(failedmessage);
@@ -491,7 +540,7 @@ export default {
         }, 10);
       }
     },
-    checksender(senderid,chat) {
+    checksender(senderid, chat) {
       if (this.userprofile.adminuserids) {
         if (this.userprofile.adminuserids.indexOf(senderid) != -1) {
           return true;
@@ -500,7 +549,17 @@ export default {
         }
       }
     },
-    
+    numcalcHeight(widthimage, heightimage) {
+      const calcheight = (heightimage * ((268 * 100) / widthimage)) / 100;
+      return `${calcheight}px`;
+    },
+    checkwidth(imgwidth, imgheight) {
+      if (imgwidth === imgheight && imgwidth < 268) {
+        return "268px";
+      } else {
+        return `${imgwidth}px`;
+      }
+    },
     infoTime(time) {
       var stillUtc = moment.utc(time).toDate();
       if (

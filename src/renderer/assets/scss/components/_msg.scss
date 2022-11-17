@@ -4,7 +4,7 @@
 		> h5,.document,.auto-gallery{
 			display: inline-block;
 			padding: 16px 25px;
-			background-color: $primary-color;
+			background-color: $dark-color;
 			color: $white;
 			border-radius: 0 25px 25px 0;
 			font-weight: 500;
@@ -141,6 +141,7 @@
 					.details{
 						h5,h6{
 							color: $light-color;
+							
 						}
 					}
 					i{
@@ -158,6 +159,7 @@
 				width: 80%;
 				.auto-gallery{
 					background-color: rgba($primary-color, 0.15) !important;
+					
 					padding: 16px 25px 0 15px;
 					li{
 						display: inline-block !important;
@@ -256,11 +258,12 @@
 				}
 			}
 			&+li{
-				margin-top: 10px;
+				// margin-top: 10px;
+				// margin-top: 0;
 			}
 			.contact-name{
 				.msg-box{
-					margin-top: 15px;
+					margin-top: 15px !important;
 					img{
 						width: 130px;
 					}

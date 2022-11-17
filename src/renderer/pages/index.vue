@@ -249,6 +249,8 @@ export default {
                           "updateDummyMesaage"
                         );
                         this.addDataToRealm(msgupdate.data, "addMessage");
+                        
+
                         this.addDataToRealm(
                           this.getProfile,
                           "updateUnreadcount"
@@ -360,6 +362,7 @@ export default {
 
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
+                            console.log('emitread');
                             socket.emit(
                               "messages:read",
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`

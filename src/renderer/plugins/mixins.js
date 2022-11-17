@@ -248,6 +248,7 @@ Vue.mixin({
     },
     methods: {
         setMessage(session) {
+            let container = document.querySelector(".scrolltopdirectchat");
             this.getdataDB.then((data) => {
                 let lastshowtime = data
                     .objects("ROOM")
@@ -266,6 +267,12 @@ Vue.mixin({
                         arr.push(msg[i]);
                     }
                     this.$store.dispatch("chat/setChat", arr.reverse());
+                }
+
+                if (document.querySelector(".scrolltopdirectchat")) {
+                    if (((container.scrollTop + container.clientHeight) - container.scrollHeight) < 1 && ((container.scrollTop + container.clientHeight) - container.scrollHeight) >= 0) {
+                        container.scrollTop = container.scrollHeight;
+                    }
                 }
 
             })
@@ -539,21 +546,8 @@ Vue.mixin({
                                     contenttype: data.contentType,
                                     content: data.content,
                                     createdtime: "",
-                                    dummyfile: data.media,
-                                    media: [{
-                                        id: "",
-                                        imageSource: "",
-                                        imageMedium: "",
-                                        imageThumbnail: "",
-                                        type: "",
-                                        mediaRefKey: "",
-                                        width: 0,
-                                        height: 0,
-                                        cancelMedia: false,
-                                        createdTime: "",
-                                        indexMedia: 0,
-                                        timeStamp: 0
-                                    }],
+                                    dummyfile: [],
+                                    media: data.media,
                                     cancelmessage: false,
                                     strangermessage: false,
                                     blockmessage: false,
@@ -570,7 +564,8 @@ Vue.mixin({
                             realm.write(() => {
                                 data.map((item) => {
                                     item.messages.map((msg) => {
-                                        const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${msg.referenceKey}" AND status == "WAITING"`)
+                                        if (msg.contentType == 'TEXT') {
+                                            const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${msg.referenceKey}" AND status == "WAITING"`)
                                         dummymsg.map((dummsg) => {
                                             dummsg.id = item.id,
                                                 dummsg.groupmessageid = item.groupMessageId,
@@ -610,6 +605,36 @@ Vue.mixin({
                                                 dummsg.uniqueids = ["null"],
                                                 dummsg.updatedtime = msg.updatedTime
                                         })
+                                        } else {
+                                            const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${msg.referenceKey}" AND status == "WAITING"`)
+                                            dummymsg.map((dummsg) => {
+                                                dummsg.id = item.id,
+                                                    dummsg.groupmessageid = item.groupMessageId,
+                                                    dummsg.sessionid = item.sessionId,
+                                                    dummsg.messageid = msg.messageId,
+                                                    dummsg.referencekey = msg.referenceKey,
+                                                    dummsg.senderid = msg.senderId,
+                                                    dummsg.displayname = msg.displayName,
+                                                    dummsg.avatar = msg.avatar,
+                                                    dummsg.rename = "null",
+                                                    dummsg.readCount = msg.readCount,
+                                                    dummsg.contenttype = msg.contentType,
+                                                    dummsg.content = msg.content,
+                                                    dummsg.createdtime = msg.createdTime,
+                                                    dummsg.dummyfile = []
+                                                dummsg.media = msg.media,
+                                                    dummsg.cancelmessage = msg.cancelMessage,
+                                                    dummsg.strangermessage = msg.strangerMessage,
+                                                    dummsg.blockmessage = msg.blockMessage,
+                                                    dummsg.status = msg.status,
+                                                    dummsg.destructtime = msg.destructTime,
+                                                    dummsg.disappeartime = msg.disappearTime,
+                                                    dummsg.replymsgId = msg.replyMsgId,
+                                                    dummsg.uniqueids = ["null"],
+                                                    dummsg.updatedtime = msg.updatedTime
+                                            })
+                                        }
+
                                     })
                                 })
                             })

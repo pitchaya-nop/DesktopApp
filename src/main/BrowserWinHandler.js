@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app, session, Notification, ipcMain } from 'electron'
+import { BrowserWindow, app, session, Notification, ipcMain, shell } from 'electron'
 
 
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
@@ -26,6 +26,7 @@ export default class BrowserWinHandler {
 
 
   _createInstance () {
+
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
@@ -49,8 +50,7 @@ export default class BrowserWinHandler {
   //   })
   // }
   
-  _create () {
-    
+  _create() {
     this.browserWindow = new BrowserWindow(
       { 
         ...this.options,
@@ -78,6 +78,34 @@ export default class BrowserWinHandler {
       new Notification({ title: message.displayName, body: message.content }).show();
     })
 
+    this.browserWindow.webContents.setWindowOpenHandler(({ url }) => {
+      // config.fileProtocol is my custom file protocol
+      // if (url.startsWith(config.fileProtocol)) {
+      //   return { action: 'allow' };
+      // }
+      // open url in a browser and prevent default
+      shell.openExternal(url);
+      return { action: 'deny' };
+    });
+
+    // ipcMain.on('newtab', (e, data) => {
+    //   e.preventDefault()
+    //   shell.openExternal("http://www.google.com")
+    // })
+    // this.browserWindow.webContents.setWindowOpenHandler(({ url }) => {
+    //   return {
+    //     action: 'allow',
+    //     overrideBrowserWindowOptions: {
+    //       frame: false,
+    //       fullscreenable: false,
+    //       backgroundColor: 'black',
+    //       webPreferences: {
+    //         preload: 'my-child-window-preload-script.js'
+    //       }
+    //     }
+    //   }
+    // })
+
     // this.browserWindow.setMenu(null)
     // this.browserWindow.setWindowButtonVisibility(true)
     // this.browserWindow.webcontents.on("did-finish-load",()=>{
@@ -99,6 +127,7 @@ export default class BrowserWinHandler {
   }
 
   _recreate () {
+
     if (this.browserWindow === null) this._create()
 
   }

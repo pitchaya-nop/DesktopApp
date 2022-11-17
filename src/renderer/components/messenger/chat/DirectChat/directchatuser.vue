@@ -9,7 +9,7 @@
               ><feather type="search" size="15" height="15"></feather
             ></span>
           </div>
-          
+
           <input
             class="form-control"
             type="text"
@@ -18,8 +18,9 @@
           />
         </div>
       </div>
+      <!-- <button @click="newtab">log dummy</button> -->
     </div>
-    
+
     <li
       :class="{ active: sessionroom === user.sessionid }"
       v-for="(user, index) in currentRoom.room"
@@ -33,7 +34,7 @@
       "
     >
       <div class="chat-box">
-        <div class="media" style="align-items: center;overflow:hidden">
+        <div class="media" style="align-items: center; overflow: hidden">
           <div
             class="profile"
             :style="
@@ -90,8 +91,8 @@
                     styleObject,
                   ] -->
           </div>
-          <div class="details" style="overflow:hidden">
-            <h5 style="overflow: hidden;text-overflow: ellipsis">
+          <div class="details" style="overflow: hidden">
+            <h5 style="overflow: hidden; text-overflow: ellipsis">
               {{
                 user.isblock
                   ? "UNKNOWN"
@@ -100,7 +101,8 @@
                   : user.sessiontype == "GROUP"
                   ? user.groupname
                   : user.sessiontype == "GUEST"
-                  ? user.guestUniqueName :''
+                  ? user.guestUniqueName
+                  : ""
               }}
             </h5>
             <h6>{{ user.lastmessage }}</h6>
@@ -124,6 +126,7 @@
 import { mapState } from "vuex";
 import Vue from "vue";
 import { socket } from "../../../../plugins/socketio.service";
+const { ipcRenderer } = require("electron");
 export default {
   data() {
     return {
@@ -159,7 +162,10 @@ export default {
             .objects("ROOM")
             .filtered(`idofficialroom =="${this.getProfile.id}"`);
           objs.map((data) => {
-            if (data.user.displayName.includes(`${val}`)  || data.guestUniqueName.includes(`${val}`)) {
+            if (
+              data.user.displayName.includes(`${val}`) ||
+              data.guestUniqueName.includes(`${val}`)
+            ) {
               console.log(data);
               arr.push(data);
             }
@@ -181,7 +187,7 @@ export default {
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
-    
+
     setBlockroom(isblock) {
       if (isblock == true) {
         this.$store.state.common.isblockroom = true;
@@ -201,6 +207,13 @@ export default {
     //     });
     //   });
     // },
+    newtab() {
+      //  window.open("/preview/previewimage", "_blank");
+      // childWindow.document.write("<h1>Hello</h1>");
+      // ipcRenderer.send("newtab", '');
+      // window.open("/preview/previewimage",'_blank')
+      // this.$router.push("/previewimage");
+    },
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
       this.getdataDB.then((data) => {

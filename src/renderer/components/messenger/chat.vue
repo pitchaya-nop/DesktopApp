@@ -14,7 +14,7 @@
         width: 100%;
         align-items: center;
         padding: 0 20px;
-        border-bottom:1px solid #eff1f2
+        border-bottom: 1px solid #eff1f2;
       "
     >
       <div
@@ -36,9 +36,13 @@
               ]
         "
       ></div>
-      <h2 style="font-weight:500"
-        >{{this.currentRoom.roomdisplay.sessiontype == "GUEST"?this.currentRoom.roomdisplay.guestUniqueName :this.currentRoom.roomdisplay.user.displayName}} </h2
-      >
+      <h2 style="font-weight: 500">
+        {{
+          this.currentRoom.roomdisplay.sessiontype == "GUEST"
+            ? this.currentRoom.roomdisplay.guestUniqueName
+            : this.currentRoom.roomdisplay.user.displayName
+        }}
+      </h2>
     </div>
 
     <div
@@ -434,9 +438,8 @@ export default {
       styleObjectTitle: {
         "background-size": "cover",
         "background-position": "center",
-        "display": "block",
-        "margin-right":"0.5rem"
-
+        display: "block",
+        "margin-right": "0.5rem",
       },
     };
   },
@@ -501,9 +504,62 @@ export default {
     backtochat() {
       document.querySelector(".sidebar-toggle").classList.remove("mobile-menu");
     },
+    imageDimensions(file) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+
+        // the following handler will fire after a successful loading of the image
+        img.onload = () => {
+          const { naturalWidth: width, naturalHeight: height, src: src } = img;
+          resolve({ width, height, src });
+        };
+        img.onerror = () => {
+          reject("There was some problem with the image.");
+        };
+
+        img.src = URL.createObjectURL(file);
+      });
+    },
 
     async onFileChange(e) {
       let arrimg = [];
+      const payload = {
+        sessionId: this.sessionID,
+        referenceKey: uuidv4(),
+        contentType: "IMAGE",
+        content: "",
+        destructTime: 0,
+        senderId: this.profile.id,
+        oaId: this.profile.id,
+        media: [],
+      };
+      if (e.target.files.length > 0) {
+        for (let i = 0; i < e.target.files.length; i++) {
+          const dataimage = await this.imageDimensions(e.target.files[i]);
+          payload.media.push({
+            id: "",
+            imageSource: dataimage.src,
+            imageMedium: "",
+            imageThumbnail: "",
+            type: "",
+            mediaRefKey: `${i}`,
+            width: dataimage.width,
+            height: dataimage.height,
+            cancelMedia: false,
+            createdTime: "",
+            indexMedia: 0,
+            timeStamp: 0,
+          });
+        }
+        // console.log(payload);
+        // payload.dummyfile = e.target.files
+        this.addDataToRealm(payload, "addDummyMessage");
+        this.setMessage(this.sessionID);
+        setTimeout(() => {
+          this.scrollbottom();
+        }, 50);
+        
+      }
       for (let i = 0; i < e.target.files.length; i++) {
         const formdata = new FormData();
         formdata.append("file", e.target.files[i]);
@@ -514,18 +570,9 @@ export default {
           arrimg.push(resimg.data.data);
         }
       }
-      const payload = {
-        sessionId: this.sessionID,
-        referenceKey: uuidv4(),
-        contentType: "IMAGE",
-        content: "",
-        destructTime: 0,
-        senderId: this.profile.id,
-        oaId: this.profile.id,
-        media: arrimg,
-      };
+      payload.media = arrimg;
       const res = await this.$store.dispatch("chat/addChat", payload);
-      console.log(res);
+      // console.log(res);
       this.scrollbottom();
       document.getElementById("fileimage").value = "";
       // if(resimg.data.code === '0000'){
@@ -688,7 +735,7 @@ export default {
       sessionID: (state) => state.chat.session,
       profile: (state) => state.auth.profile,
       isblockroom: (state) => state.common.isblockroom,
-      
+
       currentRoom() {
         return (this.roomdisplay = this.$store.getters["room/currentRoom"]);
       },

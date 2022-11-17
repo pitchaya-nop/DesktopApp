@@ -63,8 +63,10 @@
   .contact-chat {
     padding: 30px 0px;
     .profile {
-      height: 50px;
-      width: 50px;
+      // height: 50px;
+      // width: 50px;
+      width: 40px;
+      height: 40px;
     }
   }
   .call-content,.contact-content {
@@ -2615,6 +2617,7 @@ footer {
               border-radius: 5px;
               margin-left: 5px;
               margin-bottom: 5px;
+              
             }
           }
         }
@@ -2622,6 +2625,7 @@ footer {
           margin-top: 20px;
         }
         &.replies{
+          
           .document{
             padding: 10px 25px;
             i{
