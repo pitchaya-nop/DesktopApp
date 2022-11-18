@@ -44,6 +44,7 @@ export default {
     // this.getRooms();
     this.getOfficial();
     socket.on("connect", (data) => {
+      console.log(__dirname);
       console.log(
         "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
