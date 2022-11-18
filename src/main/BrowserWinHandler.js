@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events'
 import { BrowserWindow, app, session, Notification, ipcMain, shell } from 'electron'
 import path from 'path';
-
+import url from 'url'
 
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
@@ -15,7 +15,7 @@ export default class BrowserWinHandler {
    * @param [options] {object} - browser window options
    * @param [allowRecreate] {boolean}
    */
-  constructor (options, allowRecreate = true) {
+  constructor(options, allowRecreate = true) {
     this._eventEmitter = new EventEmitter()
     this.allowRecreate = allowRecreate
     this.options = options
@@ -23,16 +23,16 @@ export default class BrowserWinHandler {
     this._createInstance()
 
   }
-  
 
 
 
-  _createInstance () {
+
+  _createInstance() {
 
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    if (app.isReady()) this._create() 
+    if (app.isReady()) this._create()
     else {
       app.once('ready', () => {
 
@@ -51,10 +51,17 @@ export default class BrowserWinHandler {
   //     new Notification({ title: "Notification", body: message }).show();
   //   })
   // }
-  
+
   _create() {
+
+
+    const iconUrl = url.format({
+      pathname: path.join(__dirname, '/favicon.png'),
+      protocol: 'file:',
+      slashes: true
+    })
     this.browserWindow = new BrowserWindow(
-      { 
+      {
         ...this.options,
         webPreferences: {
           ...this.options.webPreferences,
@@ -65,7 +72,7 @@ export default class BrowserWinHandler {
         },
         width: 1200,
         height: 800,
-
+        icon: iconUrl
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
         // titleBarOverlay: {
@@ -77,6 +84,7 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+
     ipcMain.on('notify', (e, message) => {
       // console.log(message);
       // new Notification({ title: message.displayName, body: message.content }).show();
@@ -149,7 +157,7 @@ export default class BrowserWinHandler {
     this._eventEmitter.emit('created')
   }
 
-  _recreate () {
+  _recreate() {
 
     if (this.browserWindow === null) this._create()
 
@@ -164,7 +172,7 @@ export default class BrowserWinHandler {
    *
    * @param callback {onReadyCallback}
    */
-  onCreated (callback) {
+  onCreated(callback) {
     if (this.browserWindow !== null) return callback(this.browserWindow);
     this._eventEmitter.once('created', () => {
       callback(this.browserWindow)
@@ -177,7 +185,7 @@ export default class BrowserWinHandler {
     const fullPath = serverUrl + '#' + pagePath;
     await this.browserWindow.loadURL(fullPath)
   }
-  
+
   // noti() {
   //   ipcMain.on('notification-show', function (event, arg) {
   //     // tray.setImage(__dirname + "/images/favicon-notification.ico");
@@ -189,7 +197,7 @@ export default class BrowserWinHandler {
    *
    * @returns {Promise<BrowserWindow>}
    */
-  created () {
+  created() {
     return new Promise(resolve => {
       this.onCreated(() => resolve(this.browserWindow))
     })
