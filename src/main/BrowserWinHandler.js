@@ -91,7 +91,7 @@ export default class BrowserWinHandler {
         // timeoutType: 'never',
         // replyPlaceholder: 'Reply Here',
         // sound: path.join(__dirname, '../assets/sound.mp3'),
-        urgency: 'critical',
+        // urgency: 'critical',
         // closeButtonText: 'Close Button',
         // actions: [{
         //   type: 'button',
