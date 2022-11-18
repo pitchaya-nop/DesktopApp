@@ -118,7 +118,7 @@
                     <!-- <div style="height:200px">form</div> -->
                     <h5
                       v-if="chat.contenttype == 'TEXT'"
-                      v-linkify="{ className: 'colorLink', target: '_blank' }"
+                      v-linkified="{ className: 'colorLink', target: '_blank' }"
                       style="
                         white-space: pre-wrap;
                         text-align: left;
@@ -474,7 +474,13 @@ import { mapState } from "vuex";
 import DropDown from "../../common/dropdown.vue";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
+// import { vLinkify as linkify } from  "v-linkify";
+import linkify from 'vue-linkify'
+
 export default {
+  directives: {
+      linkify
+   },
   components: {
     DropDown,
   },

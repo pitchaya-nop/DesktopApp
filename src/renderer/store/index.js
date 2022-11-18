@@ -9,10 +9,14 @@ import auth from "./modules/auth";
 import contact from "./modules/contact";
 import room from "./modules/room";
 import official from './modules/official'
-import vLinkify from 'v-linkify';
+// import vLinkify from 'v-linkify';
+import linkify from 'vue-linkify'
+
+
 
 Vue.use(Vuex);
-Vue.use(vLinkify)
+Vue.directive('linkified', linkify)
+
 
 
 const createStore = () => {
