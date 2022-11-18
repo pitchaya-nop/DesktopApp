@@ -1,7 +1,7 @@
 
 import io from "socket.io-client";
 
-export const socket = io('https://dev.apigochat.com:443', {
+export const socket = io('https://live.apigochat.com:443', {
     path: "/socket/socket.io",
     transports: ['websocket'],
     autoConnect: false,

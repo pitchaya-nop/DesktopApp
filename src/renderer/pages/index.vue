@@ -44,7 +44,6 @@ export default {
     // this.getRooms();
     this.getOfficial();
     socket.on("connect", (data) => {
-      console.log(__dirname);
       console.log(
         "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
       );
@@ -243,6 +242,8 @@ export default {
                               "messages:read",
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
                             );
+                          }else{
+                            ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
                         this.addDataToRealm(
