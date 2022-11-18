@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app, session, Notification, ipcMain, shell, Tray } from 'electron'
+import { BrowserWindow, app, session, Notification, ipcMain, shell } from 'electron'
 import path from 'path';
 
 
@@ -65,7 +65,7 @@ export default class BrowserWinHandler {
         },
         width: 1200,
         height: 800,
-        icon: path.join(__dirname, 'favicon.png')
+
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
         // titleBarOverlay: {
@@ -78,24 +78,25 @@ export default class BrowserWinHandler {
       }
     )
     ipcMain.on('notify', (e, message) => {
-
+      // console.log(message);
       // new Notification({ title: message.displayName, body: message.content }).show();
       const options = {
         title: message.displayName,
         // subtitle: 'Subtitle of the Notification',
         body: message.content,
-        silent: false,
+        // silent: false,
         // icon: path.join(__dirname, '../renderer/assets/images/chat.png'),
-        hasReply: true,
-        timeoutType: 'never',
-        replyPlaceholder: 'Reply Here',
+        // icon:message.,
+        // hasReply: true,
+        // timeoutType: 'never',
+        // replyPlaceholder: 'Reply Here',
         // sound: path.join(__dirname, '../assets/sound.mp3'),
         urgency: 'critical',
-        closeButtonText: 'Close Button',
-        actions: [{
-          type: 'button',
-          text: 'Show Button'
-        }]
+        // closeButtonText: 'Close Button',
+        // actions: [{
+        //   type: 'button',
+        //   text: 'Show Button'
+        // }]
       }
       new Notification(options).show()
     })
