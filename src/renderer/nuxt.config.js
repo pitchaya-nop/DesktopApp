@@ -29,7 +29,7 @@ module.exports = {
   ],
 
   axios:{
-    baseURL: 'https://live.apigochat.com/gochat/v1',
+    baseURL: 'https://dev.apigochat.com/gochat/v1',
   },
 
   components: true,

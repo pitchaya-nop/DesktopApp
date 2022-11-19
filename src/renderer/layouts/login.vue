@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <!-- <div>
     <nuxt />
-  </div>
+  </div> -->
+  <nuxt />
 </template>
 
 <script>
