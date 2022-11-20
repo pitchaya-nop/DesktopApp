@@ -579,6 +579,7 @@ export default {
     },
   },
   mounted() {
+    
     // document
     //   .querySelector(".scrolltopdirectchat")
     //   .addEventListener("scroll", this.addMessage, false);
