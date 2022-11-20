@@ -226,19 +226,21 @@ export default {
             `sessionid == "${sessionid}" AND  createdtime <= "${lastshowtime[0].showtime}" `
           );
         let arr = [];
-        this.$store.state.chat.messagelength = 50;
-        if (msg.length < this.$store.state.chat.messagelength) {
-          this.$store.dispatch("chat/setChat", msg);
-        } else {
-          for (
-            let i = msg.length - 1;
-            i > msg.length - this.$store.state.chat.messagelength;
-            i--
-          ) {
-            arr.push(msg[i]);
-          }
-          this.$store.dispatch("chat/setChat", arr.reverse());
-        }
+        this.$store.dispatch("chat/setChat", msg);
+        // this.$store.state.chat.messagelength = 50;
+        // if (msg.length < this.$store.state.chat.messagelength) {
+        //   this.$store.dispatch("chat/setChat", msg);
+        // } else {
+        //   for (
+        //     let i = msg.length - 1;
+        //     i > msg.length - this.$store.state.chat.messagelength;
+        //     i--
+        //   ) {
+        //     arr.push(msg[i]);
+        //   }
+        //   this.$store.dispatch("chat/setChat", arr.reverse());
+        // }
+
         if (this.roomtype == "official") {
           let unreadtime = data
             .objects("MESSAGE")

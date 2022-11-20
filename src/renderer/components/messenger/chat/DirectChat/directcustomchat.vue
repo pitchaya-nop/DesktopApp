@@ -579,19 +579,19 @@ export default {
     },
   },
   mounted() {
-    document
-      .querySelector(".scrolltopdirectchat")
-      .addEventListener("scroll", this.addMessage, false);
+    // document
+    //   .querySelector(".scrolltopdirectchat")
+    //   .addEventListener("scroll", this.addMessage, false);
   },
   beforeDestroy() {
-    document
-      .querySelector(".scrolltopdirectchat")
-      .removeEventListener("scroll", this.addMessage, false);
+    // document
+    //   .querySelector(".scrolltopdirectchat")
+    //   .removeEventListener("scroll", this.addMessage, false);
   },
   destroyed() {
-    document
-      .querySelector(".scrolltopdirectchat")
-      .removeEventListener("scroll", this.addMessage, false);
+    // document
+    //   .querySelector(".scrolltopdirectchat")
+    //   .removeEventListener("scroll", this.addMessage, false);
   },
   computed: {
     ...mapState({

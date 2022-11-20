@@ -75,6 +75,7 @@
         </template>
       </ul>
       <ul class="sidebar-bottom">
+         
         <!-- <li><a class="icon-btn btn-light button-effect mode" href="javascript:void(0)" v-b-tooltip.hover.topright title="Theme Mode" data-tippy-content="Theme Mode" data-intro="Change mode" @click="customizeMixLayout()"><i class="fa" :class="this.mixLayout===''? 'fa-moon-o': 'fa-lightbulb-o'"></i></a></li> -->
         <li>
           <div @click="handleSingOut" class="icon-btn btn-light button-effect">
@@ -190,7 +191,7 @@ export default {
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
         window.localStorage.removeItem("auth");
-        this.$router.push("/realm");
+        this.$router.push("/authentication/login");
       }
     },
   },

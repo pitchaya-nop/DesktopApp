@@ -248,7 +248,7 @@ Vue.mixin({
     },
     methods: {
         setMessage(session) {
-            let container = document.querySelector(".scrolltopdirectchat");
+            // let container = document.querySelector(".scrolltopdirectchat");
             this.getdataDB.then((data) => {
                 let lastshowtime = data
                     .objects("ROOM")
@@ -260,20 +260,22 @@ Vue.mixin({
                     );
                 let arr = [];
                 let testarr = [];
-                if (msg.length < this.$store.state.chat.messagelength) {
-                    this.$store.dispatch("chat/setChat", msg);
-                } else {
-                    for (let i = msg.length - 1; i > msg.length - this.$store.state.chat.messagelength; i--) {
-                        arr.push(msg[i]);
-                    }
-                    this.$store.dispatch("chat/setChat", arr.reverse());
-                }
+                this.$store.dispatch("chat/setChat", msg);
 
-                if (document.querySelector(".scrolltopdirectchat")) {
-                    if (((container.scrollTop + container.clientHeight) - container.scrollHeight) < 1 && ((container.scrollTop + container.clientHeight) - container.scrollHeight) >= 0) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                }
+                // if (msg.length < this.$store.state.chat.messagelength) {
+                //     this.$store.dispatch("chat/setChat", msg);
+                // } else {
+                //     for (let i = msg.length - 1; i > msg.length - this.$store.state.chat.messagelength; i--) {
+                //         arr.push(msg[i]);
+                //     }
+                //     this.$store.dispatch("chat/setChat", arr.reverse());
+                // }
+
+                // if (document.querySelector(".scrolltopdirectchat")) {
+                //     if (((container.scrollTop + container.clientHeight) - container.scrollHeight) < 1 && ((container.scrollTop + container.clientHeight) - container.scrollHeight) >= 0) {
+                //         container.scrollTop = container.scrollHeight;
+                //     }
+                // }
 
             })
 
