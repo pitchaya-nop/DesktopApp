@@ -276,9 +276,13 @@ export default {
                         }
                       }
                     );
+                    // socket.emit(
+                    //   `messages`,
+                    //   `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${data.data[0].sessionId}"}`
+                    // );
                     socket.emit(
                       `messages`,
-                      `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${data.data[0].sessionId}"}`
+                      `{"auth":"Bearer ${this.token}","syncTime":"${localStorage.getItem('timeStamp')?localStorage.getItem('timeStamp'):this.getTimeToUtc()}","sessionId":"${data.data[0].sessionId}"}`
                     );
                     setTimeout(() => {
                       this.setRooms();
@@ -405,7 +409,7 @@ export default {
                     );
                     socket.emit(
                       `messages`,
-                      `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","sessionId":"${item.sessionId}"}`
+                      `{"auth":"Bearer ${this.token}","syncTime":"${localStorage.getItem('timeStamp')?localStorage.getItem('timeStamp'):this.getTimeToUtc()}","sessionId":"${item.sessionId}"}`
                     );
                   });
                 });

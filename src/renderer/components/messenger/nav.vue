@@ -187,7 +187,7 @@ export default {
         this.$store.dispatch("contact/resetState");
         this.$store.dispatch("room/resetState");
 
-        this.addDataToRealm("", "deleteData");
+        // this.addDataToRealm("", "deleteData");
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
         window.localStorage.removeItem("auth");
