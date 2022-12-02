@@ -18,7 +18,6 @@
           />
         </div>
       </div>
-      <!-- <button @click="newtab">log dummy</button> -->
     </div>
 
     <li
@@ -207,15 +206,9 @@ export default {
     //     });
     //   });
     // },
-    newtab() {
-      //  window.open("/preview/previewimage", "_blank");
-      // childWindow.document.write("<h1>Hello</h1>");
-      // ipcRenderer.send("newtab", '');
-      // window.open("/preview/previewimage",'_blank')
-      // this.$router.push("/previewimage");
-    },
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
+      this.addDataToRealm(this.profile, "updateUnreadcount");
       this.getdataDB.then((data) => {
         let lastshowtime = data
           .objects("ROOM")
@@ -226,7 +219,11 @@ export default {
             `sessionid == "${sessionid}" AND  createdtime <= "${lastshowtime[0].showtime}" `
           );
         let arr = [];
-        this.$store.dispatch("chat/setChat", msg);
+        this.$store.dispatch("chat/setChat", []);
+        
+        setTimeout(() => {
+          this.$store.dispatch("chat/setChat", msg);
+        }, 300);
         // this.$store.state.chat.messagelength = 50;
         // if (msg.length < this.$store.state.chat.messagelength) {
         //   this.$store.dispatch("chat/setChat", msg);
@@ -282,7 +279,6 @@ export default {
         }
       });
       // console.log(this.profile);
-      this.addDataToRealm(this.profile, "updateUnreadcount");
       this.addDataToRealm(this.profile, "updateLastmessage");
       this.setRooms();
       setTimeout(() => {
@@ -294,7 +290,7 @@ export default {
           const contain = document.querySelector(".scrolltopdirectchat");
           contain.scrollTop = contain.scrollHeight;
         }
-      }, 100);
+      }, 400);
       setTimeout(() => {
         this.$store.dispatch("common/setLoadingchat", false);
       }, 500);

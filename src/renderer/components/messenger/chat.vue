@@ -616,9 +616,9 @@ export default {
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
           // console.log(res.data);
-          // if(res.data.code == '0000'){
-          //   this.addDataToRealm(res.data.data,"updateDummyMesaage");
-          // }
+          if(res.data.code == '0000'){
+            this.addDataToRealm(res.data.data,"updateDummyMesaage");
+          }
           this.scrollbottom();
           if (res.data.message != "success") {
             this.addDataToRealm(payload, "failedUpdateDummyMesaage");
