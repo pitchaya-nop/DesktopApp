@@ -206,6 +206,7 @@ export default {
     //     });
     //   });
     // },
+    
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
       this.addDataToRealm(this.profile, "updateUnreadcount");
