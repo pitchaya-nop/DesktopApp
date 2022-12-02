@@ -179,7 +179,7 @@ export default {
       this.ClearRealm()
     },
     async handleSingOut() {
-      if (window.confirm("Do you really want to log out?")) {
+      // if (window.confirm("Do you really want to log out?")) {
         socketDisconnect();
         this.$store.state.common.activesidebar = 0;
         this.$store.state.common.iscontact = false;
@@ -192,7 +192,7 @@ export default {
         this.$store.dispatch("auth/setProfile", "");
         window.localStorage.removeItem("auth");
         this.$router.push("/authentication/login");
-      }
+      // }
     },
   },
 };

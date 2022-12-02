@@ -55,6 +55,7 @@ export default {
       );
     });
     socket.on("disconnect", async (disconnect) => {
+      localStorage.setItem("timeStamp",this.getTimeToUtc());
       console.log(disconnect.message);
       console.log(
         "disconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -84,6 +85,10 @@ export default {
     });
   },
   methods: {
+    getTimeToUtc() {
+      var utcdate = new Date().toISOString().substr(0, 19).replace("T", " ");
+      return utcdate;
+    },
     async unsubSocketEvent() {
       socket.off("socketId");
       socket.off(`web:auth:${this.$store.getters["auth/profile"].id}`);
@@ -242,7 +247,7 @@ export default {
                               "messages:read",
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
                             );
-                          }else{
+                          } else {
                             ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
@@ -251,7 +256,6 @@ export default {
                           "updateDummyMesaage"
                         );
                         this.addDataToRealm(msgupdate.data, "addMessage");
-                        
 
                         this.addDataToRealm(
                           this.getProfile,
@@ -364,7 +368,7 @@ export default {
 
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
-                            console.log('emitread');
+                            console.log("emitread");
                             socket.emit(
                               "messages:read",
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
