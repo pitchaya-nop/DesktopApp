@@ -237,7 +237,6 @@ export default {
         //   }
         //   this.$store.dispatch("chat/setChat", arr.reverse());
         // }
-
         if (this.roomtype == "official") {
           let unreadtime = data
             .objects("MESSAGE")
