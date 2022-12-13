@@ -8,6 +8,8 @@
           style="position: fixed; width: 4rem; height: 4rem"
         ></b-spinner>
       </div>
+      
+      
       <template v-if="currentChat.chat">
         <li
           :class="
@@ -110,7 +112,7 @@
                   }}
                 </h5> -->
                 <!-- <h6>{{ chat.time }}</h6> -->
-                <ul class="msg-box" >
+                <ul class="msg-box">
                   <!-- v-if="currentChat.chat.id == 0 && !chat.stickerpath" -->
                   <li class="msg-setting-main">
                     <!-- <DropDown v-if="chat.sender == 0 && !chat.lastmsg" /> -->
@@ -130,7 +132,7 @@
                       :style="
                         chat.senderid == userprofile.id ||
                         chat.oaid !== '' ||
-                        checksender(chat.senderid) 
+                        checksender(chat.senderid)
                           ? `background:transparent;border-radius:6px 2px 6px 6px`
                           : `background:transparent;border-radius:2px 6px 6px 6px;`
                       "
@@ -146,7 +148,6 @@
                             :style="'flex:0 0 100%'"
                           >
                             <div
-                              
                               v-bind:style="{
                                 height: numcalcHeight(
                                   image.width,
@@ -158,11 +159,16 @@
                                 ),
                                 width: checkwidth(image.width, image.height),
                                 'max-width': '268px',
-                                'cursor':'pointer',
-                                'background-image':`url('${getDefaultimage()}')`,
-                                'background-size':'cover',
+                                cursor: 'pointer',
+                                'background-image': `url('${getDefaultimage()}')`,
+                                'background-size': 'cover',
                                 'background-position': 'center',
-                                'border-radius':chat.senderid == userprofile.id ||chat.oaid !== '' || checksender(chat.senderid)?'6px 2px 6px 6px':'2px 6px 6px 6px'
+                                'border-radius':
+                                  chat.senderid == userprofile.id ||
+                                  chat.oaid !== '' ||
+                                  checksender(chat.senderid)
+                                    ? '6px 2px 6px 6px'
+                                    : '2px 6px 6px 6px',
                               }"
                               @click="previewimage(image.imageSource)"
                             >
@@ -177,27 +183,39 @@
                                     : 'border-radius:2px 6px 6px 6px'
                                 "
                               />
-                              
                             </div>
                           </div>
                         </div>
 
-                        <div v-if="chat.media.length > 1" style="display:flex;flex-wrap: wrap;">
+                        <div
+                          v-if="chat.media.length > 1"
+                          style="display: flex; flex-wrap: wrap"
+                        >
                           <div
                             v-for="image in chat.media"
                             :key="image.mediaRefKey"
-                            style="flex:1 1 50%;height:100px;padding:1px;cursor:pointer"
-                            :style="{'background-image':`url('${getDefaultimage()}')`,'background-size':'cover','background-position': 'center'}"
+                            style="
+                              flex: 1 1 50%;
+                              height: 100px;
+                              padding: 1px;
+                              cursor: pointer;
+                            "
+                            :style="{
+                              'background-image': `url('${getDefaultimage()}')`,
+                              'background-size': 'cover',
+                              'background-position': 'center',
+                            }"
                             @click="previewimage(image.imageSource)"
                           >
-                              <img
-                                :src="image.imageSource"
-                                style="
-                                width: 100%; 
+                            <img
+                              :src="image.imageSource"
+                              style="
+                                width: 100%;
                                 height: 100%;
-                                object-fit: cover;"
-                              />
-                              <!-- :style="
+                                object-fit: cover;
+                              "
+                            />
+                            <!-- :style="
                                   chat.senderid == userprofile.id ||
                                   chat.oaid !== '' ||
                                   checksender(chat.senderid)
@@ -206,7 +224,6 @@
                                 " -->
                           </div>
                         </div>
-
                       </div>
                       <!-- min-width:100px;
                                     min-height:100px;
@@ -475,12 +492,12 @@ import DropDown from "../../common/dropdown.vue";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
 // import { vLinkify as linkify } from  "v-linkify";
-import linkify from 'vue-linkify'
+import linkify from "vue-linkify";
 
 export default {
   directives: {
-      linkify
-   },
+    linkify,
+  },
   components: {
     DropDown,
   },
@@ -489,7 +506,6 @@ export default {
       currentchat: [],
       testdata: [],
       refresh: false,
-
       styleObject: {
         "background-size": "cover",
         "background-position": "center",
@@ -500,15 +516,12 @@ export default {
 
   methods: {
     previewimage(image) {
-      window.open(
-        image,
-        "_blank"
-      );
+      window.open(image, "_blank");
     },
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
-    getDefaultimage(){
+    getDefaultimage() {
       return require("../../../../assets/images/logo/waitimg.png");
     },
     async resendfailed(failedmessage) {
@@ -579,7 +592,6 @@ export default {
     },
   },
   mounted() {
-    
     // document
     //   .querySelector(".scrolltopdirectchat")
     //   .addEventListener("scroll", this.addMessage, false);

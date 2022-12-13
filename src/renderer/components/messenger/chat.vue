@@ -2,9 +2,53 @@
   <!-- Main Chat start -->
   <div
     class="chitchat-main"
+    
     :class="togglerightside ? 'small-sidebar' : ''"
     id="content"
   >
+    <div v-if="showModal">
+      <transition name="modal">
+        <div class="modal-mask" >
+          <div class="modal-wrapper">
+            <div class="modal-dialog" role="document" style="max-width:300px">
+              <div class="modal-content">
+                <!-- <div class="modal-header">
+                  <h5 class="modal-title">Error</h5>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true" @click="showModal = false"
+                      >&times;</span
+                    >
+                  </button>
+                </div> -->
+                <div class="modal-body" style="padding-top:32px;display:flex;align-items:center">
+                  <!-- <p>Modal body text goes here.</p> -->
+                  <img :src="getErrorIcon()" style="width:22px;height:22px;margin-right:16px"/>
+                  <span style="text-align:left;font-weight:600;font-size:16px">{{this.errorMessage}}</span>
+                  <!-- <h5>This file format can’t be sent.</h5> -->
+                </div>
+                <div class="modal-footer" >
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    style="font-weight:400;color:#fff;font-size:14px;padding:5px 16px;border-radius:2px"
+                    @click="showModal = false"
+                  >
+                    OK
+                  </button>
+            
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+
     <div
       v-if="this.currentRoom.roomdisplay"
       style="
@@ -431,6 +475,8 @@ export default {
       testdata: [],
       blockroom: false,
       roomdisplay: null,
+      showModal: false,
+      errorMessage:'',
       styleObject: {
         "background-color": "transparent",
         "background-blend-mode": "unset",
@@ -535,6 +581,18 @@ export default {
       };
       if (e.target.files.length > 0) {
         for (let i = 0; i < e.target.files.length; i++) {
+          if (e.target.files[i].size > 10 * 1024 * 1024) {
+            this.showModal = true;
+            document.getElementById("fileimage").value = "";
+            this.errorMessage = 'You can send files no more than 10MB at a time.'
+            return false;
+          }
+          if (e.target.files.length > 10) {
+            this.showModal = true;
+            document.getElementById("fileimage").value = "";
+            this.errorMessage = 'You can send files no more than 10 Files at a time.'
+            return false;
+          }
           const dataimage = await this.imageDimensions(e.target.files[i]);
           payload.media.push({
             id: "",
@@ -558,22 +616,25 @@ export default {
         setTimeout(() => {
           this.scrollbottom();
         }, 50);
-        
-      }
-      for (let i = 0; i < e.target.files.length; i++) {
-        const formdata = new FormData();
-        formdata.append("file", e.target.files[i]);
-        formdata.append("sessionId", this.sessionID);
-        formdata.append("mediaRefKey", uuidv4());
-        const resimg = await this.$store.dispatch("chat/uploadImage", formdata);
-        if (resimg.data.code === "0000") {
-          arrimg.push(resimg.data.data);
+
+        for (let i = 0; i < e.target.files.length; i++) {
+          const formdata = new FormData();
+          formdata.append("file", e.target.files[i]);
+          formdata.append("sessionId", this.sessionID);
+          formdata.append("mediaRefKey", uuidv4());
+          const resimg = await this.$store.dispatch(
+            "chat/uploadImage",
+            formdata
+          );
+          if (resimg.data.code === "0000") {
+            arrimg.push(resimg.data.data);
+          }
         }
+        payload.media = arrimg;
+        const res = await this.$store.dispatch("chat/addChat", payload);
+        // console.log(res);
+        this.scrollbottom();
       }
-      payload.media = arrimg;
-      const res = await this.$store.dispatch("chat/addChat", payload);
-      // console.log(res);
-      this.scrollbottom();
       document.getElementById("fileimage").value = "";
       // if(resimg.data.code === '0000'){
       //   console.log(true);
@@ -615,9 +676,9 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-          // console.log(res.data);
-          if(res.data.code == '0000'){
-            this.addDataToRealm(res.data.data,"updateDummyMesaage");
+          console.log(res.data.data);
+          if (res.data.code == "0000") {
+            this.addDataToRealm(res.data.data, "updateDummyMesaage");
           }
           this.scrollbottom();
           if (res.data.message != "success") {
@@ -693,6 +754,9 @@ export default {
     },
     getImgUrl() {
       return require("../../assets/images/avtar/defaultimageoa.png");
+    },
+    getErrorIcon(){
+      return require("../../assets/images/erroricon.png");
     },
     addemogi(emogi) {
       if (this.text === "") {

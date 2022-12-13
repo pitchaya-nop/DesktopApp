@@ -119,6 +119,10 @@ export default {
     getImgUrl() {
       return require("../../assets/images/avtar/defaultimageoa.png");
     },
+    getTimeToUtc() {
+      var utcdate = new Date().toISOString().substr(0, 19).replace("T", " ");
+      return utcdate;
+    },
     openUrl() {
       require("electron").shell.openExternal(
         "https://official-dev.goochat.net"
@@ -181,13 +185,14 @@ export default {
     async handleSingOut() {
       // if (window.confirm("Do you really want to log out?")) {
         socketDisconnect();
+        localStorage.setItem("timeStamp",this.getTimeToUtc());
         this.$store.state.common.activesidebar = 0;
         this.$store.state.common.iscontact = false;
         this.$store.dispatch("chat/resetState");
         this.$store.dispatch("contact/resetState");
         this.$store.dispatch("room/resetState");
 
-        // this.addDataToRealm("", "deleteData");
+        this.addDataToRealm("", "deleteData");
         this.$store.dispatch("auth/setToken", "");
         this.$store.dispatch("auth/setProfile", "");
         window.localStorage.removeItem("auth");

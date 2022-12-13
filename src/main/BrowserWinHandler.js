@@ -3,7 +3,7 @@ import { EventEmitter } from 'events'
 import { BrowserWindow, app, session, Notification, ipcMain, shell } from 'electron'
 import path from 'path';
 import url from 'url'
-
+const electron = require('electron')
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
@@ -53,8 +53,6 @@ export default class BrowserWinHandler {
   // }
 
   _create() {
-
-
     const iconUrl = url.format({
       pathname: path.join(__dirname, '/favicon.png'),
       protocol: 'file:',
@@ -72,7 +70,7 @@ export default class BrowserWinHandler {
         },
         width: 1200,
         height: 800,
-        icon: iconUrl
+        // icon: iconUrl
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
         // titleBarOverlay: {
@@ -84,6 +82,13 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+
+    // electron.powerMonitor.on('suspend', () => {
+    //   console.log('The system is going to sleep')
+    // })
+    // electron.powerMonitor.on('shutdown', () => {
+    //   console.log('The system is going to sleep')
+    // })
 
     ipcMain.on('notify', (e, message) => {
       // console.log(message);
@@ -158,7 +163,6 @@ export default class BrowserWinHandler {
   }
 
   _recreate() {
-
     if (this.browserWindow === null) this._create()
 
   }

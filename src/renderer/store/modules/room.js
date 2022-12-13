@@ -27,7 +27,6 @@ const mutations = {
   },
   setRoomDisplay: (state, payload) => {
     state.displayroom = payload
-    console.log(payload);
   },
   RESET_STATE(state) {
     Object.assign(state, innitialstate)

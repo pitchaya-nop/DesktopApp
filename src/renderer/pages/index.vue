@@ -28,11 +28,12 @@ export default {
   computed: {
     ...mapState({
       sesssionid: (state) => state.chat.session,
+      profile: (state) => state.auth.profile,
     }),
   },
   created() {
     // SocketioService.setupSocketConnection();
-    socketAuth();
+    // socketAuth();
   },
   async mounted() {
     // this.socketEvent();
@@ -43,6 +44,10 @@ export default {
     this.getContact();
     // this.getRooms();
     this.getOfficial();
+    socket.on("keepAlive",(data)=>{
+      // console.log(data);
+      localStorage.setItem("timeStamp", data.syncTime);
+    })
     socket.on("connect", (data) => {
       console.log(
         "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -55,7 +60,7 @@ export default {
       );
     });
     socket.on("disconnect", async (disconnect) => {
-      localStorage.setItem("timeStamp",this.getTimeToUtc());
+      // localStorage.setItem("timeStamp", this.getTimeToUtc());
       console.log(disconnect.message);
       console.log(
         "disconnect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -84,6 +89,7 @@ export default {
       console.log(`connect_error due to ${err.message}`);
     });
   },
+
   methods: {
     getTimeToUtc() {
       var utcdate = new Date().toISOString().substr(0, 19).replace("T", " ");
@@ -100,9 +106,7 @@ export default {
         socket.off(`friends:update:${officialdata.id}`);
       });
       this.Responseoaroom.map((data) => {
-        console.log(data);
         data.map((item) => {
-          console.log(item.sessionId);
           socket.off(`messages:${item.sessionId}`);
           socket.off(`messages:update:${item.sessionId}`);
           socket.off(`messages:read:${item.sessionId}`);
@@ -111,8 +115,6 @@ export default {
 
       if (this.Roomofficialdataupdate.length) {
         this.Roomofficialdataupdate.map((data) => {
-          console.log("roomofficialupdate");
-          console.log(data.sessionId);
           socket.off(`messages:${data.sessionId}`);
           socket.off(`messages:read:${data.sessionId}`);
           socket.off(`messages:update:${data.sessionId}`);
@@ -128,8 +130,6 @@ export default {
         socket.on(
           `web:auth:${this.$store.getters["auth/profile"].id}`,
           (data) => {
-            console.log("authen");
-            console.log(data);
             this.syncTime = data.syncTime;
             socket.emit(
               "officials:user",
@@ -142,11 +142,6 @@ export default {
             // })
 
             socket.on(`officials:user:${this.getProfile.id}`, (data) => {
-              console.log("getprofile id");
-              console.log(this.getProfile.id);
-              console.log("official user");
-              console.log(data.data);
-
               this.Officialuser = data.data;
 
               data.data.map((officialdata) => {
@@ -239,6 +234,7 @@ export default {
                       `messages:update:${data.data[0].sessionId}`,
                       (msgupdate) => {
                         console.log("message update");
+                        console.log(this.profile.id);
                         console.log(msgupdate);
 
                         msgupdate.data.map((data) => {
@@ -251,10 +247,11 @@ export default {
                             ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
-                        this.addDataToRealm(
-                          msgupdate.data,
-                          "updateDummyMesaage"
-                        );
+                        console.log(msgupdate.data);
+                        // this.addDataToRealm(
+                        //   msgupdate.data,
+                        //   "updateDummyMesaage"
+                        // );
                         this.addDataToRealm(msgupdate.data, "addMessage");
 
                         this.addDataToRealm(
@@ -282,7 +279,11 @@ export default {
                     // );
                     socket.emit(
                       `messages`,
-                      `{"auth":"Bearer ${this.token}","syncTime":"${localStorage.getItem('timeStamp')?localStorage.getItem('timeStamp'):this.getTimeToUtc()}","sessionId":"${data.data[0].sessionId}"}`
+                      `{"auth":"Bearer ${this.token}","syncTime":"${
+                        localStorage.getItem("timeStamp")
+                          ? localStorage.getItem("timeStamp")
+                          : this.getTimeToUtc()
+                      }","sessionId":"${data.data[0].sessionId}"}`
                     );
                     setTimeout(() => {
                       this.setRooms();
@@ -298,19 +299,19 @@ export default {
                 );
 
                 this.getOfficialRoom(officialdata.id).then((responseOaRoom) => {
-                  console.log("responseOaRoom");
-                  console.log(responseOaRoom);
                   this.Responseoaroom.push(responseOaRoom);
-
+                  console.log("oa room");
                   responseOaRoom.map(
                     (dataroomofficial) => (
                       (dataroomofficial.roomtype = "official"),
                       (dataroomofficial.idofficialroom = officialdata.id)
                     )
                   );
+                  console.log(responseOaRoom);
                   // console.log(responseOaRoom);
                   if (responseOaRoom.length > 0) {
-                    this.UpdateAddRoom(responseOaRoom);
+                    // this.UpdateAddRoom(responseOaRoom);
+                    this.Addroomofficial(responseOaRoom);
                     //                   if(){
                     // this.addDataToRealm(responseOaRoom, "addRooms");
                     //                   }
@@ -329,7 +330,6 @@ export default {
                     `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1,"userId":"${officialdata.id}"}`
                   );
                   responseOaRoom.map((item) => {
-                    console.log(item);
                     socket.on(`messages:${item.sessionId}`, (data) => {
                       // console.log("messages");
                       // console.log(data);
@@ -367,6 +367,7 @@ export default {
                     socket.on(
                       `messages:update:${item.sessionId}`,
                       (msgupdate) => {
+                        console.log(this.profile.id);
                         console.log("message update");
                         console.log(msgupdate);
 
@@ -409,7 +410,11 @@ export default {
                     );
                     socket.emit(
                       `messages`,
-                      `{"auth":"Bearer ${this.token}","syncTime":"${localStorage.getItem('timeStamp')?localStorage.getItem('timeStamp'):this.getTimeToUtc()}","sessionId":"${item.sessionId}"}`
+                      `{"auth":"Bearer ${this.token}","syncTime":"${
+                        localStorage.getItem("timeStamp")
+                          ? localStorage.getItem("timeStamp")
+                          : this.getTimeToUtc()
+                      }","sessionId":"${item.sessionId}"}`
                     );
                   });
                 });
@@ -792,6 +797,8 @@ export default {
       });
     },
     UpdateAddRoom(idroom) {
+      console.log("function api room");
+      console.log(idroom);
       this.getdataDB.then((data) => {
         let room = data.objects("ROOM").filtered(`id == "${idroom[0].id}"`);
         console.log("room length");
@@ -799,6 +806,19 @@ export default {
         if (room.length == 0) {
           this.addDataToRealm(idroom, "addRooms");
         }
+      });
+    },
+    Addroomofficial(roomdata) {
+      console.log("Add Official room");
+      this.getdataDB.then((data) => {
+        roomdata.map((dataroom) => {
+          let room = data.objects("ROOM").filtered(`id == "${dataroom.id}"`);
+          console.log(room.length);
+          console.log(dataroom);
+          if (room.length == 0) {
+            this.addDataToRealm(dataroom, "addOfficialRooms");
+          }
+        });
       });
     },
     checkDuplicateMessage(msgdata) {
@@ -876,6 +896,10 @@ export default {
           payload
         );
         if (response.status === 200) {
+          response.data.data.map((item) => {
+            item.profileId = this.profile.id;
+          });
+
           this.addDataToRealm(response.data.data, "addOfficial");
           setTimeout(() => {
             this.setOfficial();
@@ -897,8 +921,7 @@ export default {
           "official/requestOfficialRoom",
           payload
         );
-        console.log("get Officialroom");
-        console.log(response.data.data);
+
         return response.data.data;
       } catch (error) {
         return error;

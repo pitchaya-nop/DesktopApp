@@ -13,8 +13,8 @@ import official from './modules/official'
 import linkify from 'vue-linkify'
 
 
-
 Vue.use(Vuex);
+
 Vue.directive('linkified', linkify)
 
 

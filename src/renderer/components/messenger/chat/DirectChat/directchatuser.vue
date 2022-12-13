@@ -19,6 +19,7 @@
         </div>
       </div>
     </div>
+  
 
     <li
       :class="{ active: sessionroom === user.sessionid }"
@@ -206,7 +207,7 @@ export default {
     //     });
     //   });
     // },
-    
+
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
       this.addDataToRealm(this.profile, "updateUnreadcount");
@@ -221,7 +222,7 @@ export default {
           );
         let arr = [];
         this.$store.dispatch("chat/setChat", []);
-        
+
         setTimeout(() => {
           this.$store.dispatch("chat/setChat", msg);
         }, 300);
@@ -290,7 +291,7 @@ export default {
           const contain = document.querySelector(".scrolltopdirectchat");
           contain.scrollTop = contain.scrollHeight;
         }
-      }, 400);
+      }, 450);
       setTimeout(() => {
         this.$store.dispatch("common/setLoadingchat", false);
       }, 500);

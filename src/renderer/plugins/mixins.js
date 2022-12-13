@@ -76,6 +76,7 @@ const OfficialSchema = {
         displayname: "string",
         friendcount: "int",
         gochatid: "string",
+        profileid: "string",
         id: "string",
         package: "string",
         role: "string",
@@ -224,7 +225,7 @@ Vue.mixin({
         getdataDB: function () {
             return Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 2
+                schemaVersion: 3
             }).then(
                 (realm) => {
                     return realm
@@ -304,7 +305,12 @@ Vue.mixin({
         },
         setOfficial() {
             this.getdataDB.then((data) => {
+
+                console.log('setofficial');
+
                 let official = data.objects("OFFICIAL")
+                console.log(official);
+                official.map((data) => { console.log(data); })
                 this.$store.dispatch("official/setOfficial", official)
             })
         },
@@ -312,7 +318,7 @@ Vue.mixin({
 
             Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 2,
+                schemaVersion: 3,
                 // migration: (oldRealm, newRealm) => {
 
                 //     if (oldRealm.schemaVersion < 1) { }
@@ -390,6 +396,7 @@ Vue.mixin({
                                             displayname: item.displayName,
                                             friendcount: item.friendCount,
                                             gochatid: item.gochatId,
+                                            profileid: item.profileId,
                                             id: item.id,
                                             package: item.package,
                                             role: item.role,
@@ -473,6 +480,76 @@ Vue.mixin({
                                 })
 
                             })
+                            break;
+                        case 'addOfficialRooms':
+
+                            realm.write(() => {
+                                realm.create('ROOM', {
+                                    isshow: data.roomtype == 'official' ? true : false,
+                                    showtime: data.createdTime ? data.createdTime : '',
+                                    roomtype: data.roomtype,
+                                    idofficialroom: data.idofficialroom ? data.idofficialroom : 'null',
+                                    unreadcount: 0,
+                                    lastmessage: "",
+                                    isblock: false,
+                                    admincount: data.adminCount,
+                                    adminUserIds: data.adminUserIds ? data.adminUserIds : [],
+                                    allowlinkinvite: data.allowLinkInvite,
+                                    allowuserinvite: data.allowUserInvite,
+                                    createdtime: data.createdTime,
+                                    deletedtime: data.deletedTime ? data.deletedTime : 'null',
+                                    groupavatar: {
+                                        medium: data.groupAvatar.medium ? data.groupAvatar.medium : 'null',
+                                        source: data.groupAvatar.source ? data.groupAvatar.source : 'null',
+                                        thumbnail: data.groupAvatar.thumbnail ? data.groupAvatar.thumbnail : 'null'
+                                    },
+                                    groupname: data.groupName,
+                                    groupstatusmessage: data.groupStatusMessage ? data.groupStatusMessage : 'null',
+                                    id: data.id,
+                                    invitelink: data.inviteLink,
+                                    isfavorite: data.isFavorite ? data.isFavorite : false,
+                                    ishidden: data.isHidden,
+                                    ismarkasunread: data.isMarkAsUnread,
+                                    ismute: data.isMute,
+                                    ispin: data.isPin,
+                                    isclose: data.isClose,
+                                    guestid: data.guest.guestId,
+                                    guestUniqueName: data.guest.guestUniqueName,
+                                    membercount: data.memberCount,
+                                    memberuserids: data.memberUserIds ? data.memberUserIds : [],
+                                    owneruserid: data.ownerUserId ? data.ownerUserId : 'null',
+                                    pendingcount: data.pendingCount,
+                                    pendinguserids: data.pendingUserIds ? data.pendingUserIds : [],
+                                    permission: data.permission ? data.permission : 'null',
+                                    pinmessage: data.pinMessage ? data.pinMessage : [],
+                                    sessionid: data.sessionId,
+                                    sessionname: data.sessionName,
+                                    sessiontype: data.sessionType,
+                                    uniqueids: data.uniqueIds ? data.uniqueIds : [],
+                                    updatedtime: data.updatedTime,
+                                    userids: data.userIds ? data.userIds : ['null'],
+                                    user: data.user ? {
+                                        avatar: data.user.avatar ? data.user.avatar : 'null',
+                                        dialCode: data.user.dialCode ? data.user.dialCode : "null",
+                                        displayName: data.user.displayName ? data.user.displayName : "null",
+                                        id: data.user.id ? data.user.id : 'null',
+                                        mobile: data.user.mobile ? data.user.mobile : 'null',
+                                        permission: data.user.permission ? data.user.permission : "null",
+                                        rename: data.user.rename ? data.user.rename : "null",
+                                    } :
+                                        {
+                                            avatar: 'null',
+                                            dialCode: 'null',
+                                            displayName: 'null',
+                                            id: 'null',
+                                            mobile: 'null',
+                                            permission: 'null',
+                                            rename: 'null',
+                                        }
+                                })
+                            })
+
+
                             break;
                         case 'addMessage':
 
@@ -763,7 +840,9 @@ Vue.mixin({
                         //     break;
                         case 'deleteData':
                             realm.write(() => {
-                                realm.deleteAll()
+                                // realm.deleteAll()
+                                let official = realm.objects("OFFICIAL")
+                                realm.delete(official)
                             })
                             break;
                     }

@@ -280,7 +280,7 @@ export default {
     async handleLogin() {
       // console.log("email", this.email);
       // console.log("password", this.password);
-      this.addDataToRealm("", "deleteData");
+      // this.addDataToRealm("", "deleteData");
       if (this.email !== "" && this.password !== "") {
         this.loginloading = true;
         this.loginfailed = false;
