@@ -643,47 +643,49 @@ Vue.mixin({
                             realm.write(() => {
                                 data.map((item) => {
                                     item.messages.map((msg) => {
+
+
                                         if (msg.contentType == 'TEXT') {
                                             const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${msg.referenceKey}" AND status == "WAITING"`)
-                                        dummymsg.map((dummsg) => {
-                                            dummsg.id = item.id,
-                                                dummsg.groupmessageid = item.groupMessageId,
-                                                dummsg.sessionid = item.sessionId,
-                                                dummsg.messageid = msg.messageId,
-                                                dummsg.referencekey = msg.referenceKey,
-                                                dummsg.senderid = msg.senderId,
-                                                dummsg.displayname = msg.displayName,
-                                                dummsg.avatar = msg.avatar,
-                                                dummsg.rename = "null",
-                                                dummsg.readCount = msg.readCount,
-                                                dummsg.contenttype = msg.contentType,
-                                                dummsg.content = msg.content,
-                                                dummsg.createdtime = msg.createdTime,
-                                                dummsg.dummyfile = []
-                                            dummsg.media = [{
-                                                id: "",
-                                                imageSource: "",
-                                                imageMedium: "",
-                                                imageThumbnail: "",
-                                                type: "",
-                                                mediaRefKey: "",
-                                                width: 0,
-                                                height: 0,
-                                                cancelMedia: false,
-                                                createdTime: "",
-                                                indexMedia: 0,
-                                                timeStamp: 0
-                                            }],
-                                                dummsg.cancelmessage = msg.cancelMessage,
-                                                dummsg.strangermessage = msg.strangerMessage,
-                                                dummsg.blockmessage = msg.blockMessage,
-                                                dummsg.status = msg.status,
-                                                dummsg.destructtime = msg.destructTime,
-                                                dummsg.disappeartime = msg.disappearTime,
-                                                dummsg.replymsgId = msg.replyMsgId,
-                                                dummsg.uniqueids = ["null"],
-                                                dummsg.updatedtime = msg.updatedTime
-                                        })
+                                            dummymsg.map((dummsg) => {
+                                                dummsg.id = item.id,
+                                                    dummsg.groupmessageid = item.groupMessageId,
+                                                    dummsg.sessionid = item.sessionId,
+                                                    dummsg.messageid = msg.messageId,
+                                                    dummsg.referencekey = msg.referenceKey,
+                                                    dummsg.senderid = msg.senderId,
+                                                    dummsg.displayname = msg.displayName,
+                                                    dummsg.avatar = msg.avatar,
+                                                    dummsg.rename = "null",
+                                                    dummsg.readCount = msg.readCount,
+                                                    dummsg.contenttype = msg.contentType,
+                                                    dummsg.content = msg.content,
+                                                    dummsg.createdtime = msg.createdTime,
+                                                    dummsg.dummyfile = []
+                                                dummsg.media = [{
+                                                    id: "",
+                                                    imageSource: "",
+                                                    imageMedium: "",
+                                                    imageThumbnail: "",
+                                                    type: "",
+                                                    mediaRefKey: "",
+                                                    width: 0,
+                                                    height: 0,
+                                                    cancelMedia: false,
+                                                    createdTime: "",
+                                                    indexMedia: 0,
+                                                    timeStamp: 0
+                                                }],
+                                                    dummsg.cancelmessage = msg.cancelMessage,
+                                                    dummsg.strangermessage = msg.strangerMessage,
+                                                    dummsg.blockmessage = msg.blockMessage,
+                                                    dummsg.status = msg.status,
+                                                    dummsg.destructtime = msg.destructTime,
+                                                    dummsg.disappeartime = msg.disappearTime,
+                                                    dummsg.replymsgId = msg.replyMsgId,
+                                                    dummsg.uniqueids = ["null"],
+                                                    dummsg.updatedtime = msg.updatedTime
+                                            })
                                         } else {
                                             const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${msg.referenceKey}" AND status == "WAITING"`)
                                             dummymsg.map((dummsg) => {

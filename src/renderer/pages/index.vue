@@ -33,7 +33,7 @@ export default {
   },
   created() {
     // SocketioService.setupSocketConnection();
-    // socketAuth();
+    socketAuth();
   },
   async mounted() {
     // this.socketEvent();
@@ -247,11 +247,11 @@ export default {
                             ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
-                        console.log(msgupdate.data);
-                        // this.addDataToRealm(
-                        //   msgupdate.data,
-                        //   "updateDummyMesaage"
-                        // );
+                        // console.log(msgupdate.data);
+                        this.addDataToRealm(
+                          msgupdate.data,
+                          "updateDummyMesaage"
+                        );
                         this.addDataToRealm(msgupdate.data, "addMessage");
 
                         this.addDataToRealm(
