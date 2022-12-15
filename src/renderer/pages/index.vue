@@ -281,7 +281,7 @@ export default {
                       `{"auth":"Bearer ${this.token}","syncTime":"${
                         localStorage.getItem("timeStamp")
                           ? localStorage.getItem("timeStamp")
-                          : this.getTimeToUtc()
+                          : '0001-01-01 00:00:00'
                       }","sessionId":"${data.data[0].sessionId}"}`
                     );
                     setTimeout(() => {
@@ -392,7 +392,7 @@ export default {
                               ) {
                                 ipcRenderer.send("notify", data.messages[0]);
                               }
-                              console.log(item);
+                              
                             });
                           }
                         });
@@ -426,7 +426,7 @@ export default {
                       `{"auth":"Bearer ${this.token}","syncTime":"${
                         localStorage.getItem("timeStamp")
                           ? localStorage.getItem("timeStamp")
-                          : this.getTimeToUtc()
+                          : '0001-01-01 00:00:00'
                       }","sessionId":"${item.sessionId}"}`
                     );
                   });

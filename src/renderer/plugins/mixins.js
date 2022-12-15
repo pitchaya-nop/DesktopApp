@@ -842,10 +842,13 @@ Vue.mixin({
                         //     break;
                         case 'deleteData':
                             realm.write(() => {
-                                realm.deleteAll()
-                                // let official = realm.objects("OFFICIAL")
-                                // realm.delete(official)
+                                // realm.deleteAll()
+                                let official = realm.objects("OFFICIAL")
+                                realm.delete(official)
                             })
+                            break;
+                        case 'deleteallData':
+                            realm.write(() => { realm.deleteAll() })
                             break;
                     }
 

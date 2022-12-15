@@ -8,6 +8,7 @@
     </div> -->
     <div class="sidebar-main">
       <ul class="sidebar-top custom-scroll">
+        <button @click="">Clear DB</button>
         <!-- <li>
           <a
             class="icon-btn btn-light button-effect"
@@ -75,7 +76,6 @@
         </template>
       </ul>
       <ul class="sidebar-bottom">
-         
         <!-- <li><a class="icon-btn btn-light button-effect mode" href="javascript:void(0)" v-b-tooltip.hover.topright title="Theme Mode" data-tippy-content="Theme Mode" data-intro="Change mode" @click="customizeMixLayout()"><i class="fa" :class="this.mixLayout===''? 'fa-moon-o': 'fa-lightbulb-o'"></i></a></li> -->
         <li>
           <div @click="handleSingOut" class="icon-btn btn-light button-effect">
@@ -127,6 +127,9 @@ export default {
       require("electron").shell.openExternal(
         "https://official-dev.goochat.net"
       );
+    },
+    deleteDB() {
+      this.addDataToRealm("", "deleteallData");
     },
     setOfficial(data) {
       this.$store.dispatch("auth/setOfficialProfile", data);
@@ -180,23 +183,23 @@ export default {
       this.$store.dispatch("layout/setLayout", this.mixLayout);
     },
     clearDb() {
-      this.ClearRealm()
+      this.ClearRealm();
     },
     async handleSingOut() {
       // if (window.confirm("Do you really want to log out?")) {
-        socketDisconnect();
-        localStorage.setItem("timeStamp",this.getTimeToUtc());
-        this.$store.state.common.activesidebar = 0;
-        this.$store.state.common.iscontact = false;
-        this.$store.dispatch("chat/resetState");
-        this.$store.dispatch("contact/resetState");
-        this.$store.dispatch("room/resetState");
+      socketDisconnect();
+      localStorage.setItem("timeStamp", this.getTimeToUtc());
+      this.$store.state.common.activesidebar = 0;
+      this.$store.state.common.iscontact = false;
+      this.$store.dispatch("chat/resetState");
+      this.$store.dispatch("contact/resetState");
+      this.$store.dispatch("room/resetState");
 
-        this.addDataToRealm("", "deleteData");
-        this.$store.dispatch("auth/setToken", "");
-        this.$store.dispatch("auth/setProfile", "");
-        window.localStorage.removeItem("auth");
-        this.$router.push("/authentication/login");
+      this.addDataToRealm("", "deleteData");
+      this.$store.dispatch("auth/setToken", "");
+      this.$store.dispatch("auth/setProfile", "");
+      window.localStorage.removeItem("auth");
+      this.$router.push("/authentication/login");
       // }
     },
   },
