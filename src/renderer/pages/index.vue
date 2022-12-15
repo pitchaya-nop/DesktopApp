@@ -44,10 +44,10 @@ export default {
     this.getContact();
     // this.getRooms();
     this.getOfficial();
-    socket.on("keepAlive",(data)=>{
+    socket.on("keepAlive", (data) => {
       // console.log(data);
       localStorage.setItem("timeStamp", data.syncTime);
-    })
+    });
     socket.on("connect", (data) => {
       console.log(
         "connect @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -234,7 +234,7 @@ export default {
                       `messages:update:${data.data[0].sessionId}`,
                       (msgupdate) => {
                         console.log("message update");
-                        console.log(this.profile.id);
+                        console.log(this.profile);
                         console.log(msgupdate);
 
                         msgupdate.data.map((data) => {
@@ -247,7 +247,6 @@ export default {
                             ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
-                        // console.log(msgupdate.data);
                         this.addDataToRealm(
                           msgupdate.data,
                           "updateDummyMesaage"
@@ -367,7 +366,12 @@ export default {
                     socket.on(
                       `messages:update:${item.sessionId}`,
                       (msgupdate) => {
+                        console.log(this.profile);
+                        console.log(this.profile.adminuserids.length);
                         console.log(this.profile.id);
+                        this.profile.adminuserids.map((item) => {
+                          console.log(item);
+                        });
                         console.log("message update");
                         console.log(msgupdate);
 
@@ -379,8 +383,17 @@ export default {
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
                             );
                           } else {
+                            // ipcRenderer.send("notify", data.messages[0])
                             console.log("new message");
-                            ipcRenderer.send("notify", data.messages[0]);
+                            this.profile.adminuserids.map((item) => {
+                              if (
+                                item != data.messages[0].senderId &&
+                                this.profile.id != data.messages[0].senderId
+                              ) {
+                                ipcRenderer.send("notify", data.messages[0]);
+                              }
+                              console.log(item);
+                            });
                           }
                         });
 
@@ -813,8 +826,6 @@ export default {
       this.getdataDB.then((data) => {
         roomdata.map((dataroom) => {
           let room = data.objects("ROOM").filtered(`id == "${dataroom.id}"`);
-          console.log(room.length);
-          console.log(dataroom);
           if (room.length == 0) {
             this.addDataToRealm(dataroom, "addOfficialRooms");
           }

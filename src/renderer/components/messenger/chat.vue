@@ -695,7 +695,7 @@ export default {
 
           if (res.data.code == "0000") {
             this.addDataToRealm(res.data.data, "updateDummyMesaage");
-            
+            this.addDataToRealm(res.data.data, "addMessage");
             // if(socket.connected == false){
             //   console.log('disconnected');
             //   socket.connect()
