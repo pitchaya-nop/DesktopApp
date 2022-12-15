@@ -59,12 +59,6 @@
   "LandingPageTestimonial": {
     "description": "Auto imported from components/landing-page/testimonial.vue"
   },
-  "PagenotfoundErrorpage": {
-    "description": "Auto imported from components/pagenotfound/errorpage.vue"
-  },
-  "Pagenotfound": {
-    "description": "Auto imported from components/pagenotfound/index.vue"
-  },
   "MessengerChat": {
     "description": "Auto imported from components/messenger/chat.vue"
   },
@@ -79,6 +73,12 @@
   },
   "MessengerStickers": {
     "description": "Auto imported from components/messenger/stickers.vue"
+  },
+  "PagenotfoundErrorpage": {
+    "description": "Auto imported from components/pagenotfound/errorpage.vue"
+  },
+  "Pagenotfound": {
+    "description": "Auto imported from components/pagenotfound/index.vue"
   },
   "BlogsCommonBlogFollowUs": {
     "description": "Auto imported from components/blogs/Common/blog_follow_us.vue"
@@ -248,6 +248,30 @@
   "MessengerCommonUserdropdown": {
     "description": "Auto imported from components/messenger/common/userdropdown.vue"
   },
+  "MessengerContactsContactcontent": {
+    "description": "Auto imported from components/messenger/contacts/contactcontent.vue"
+  },
+  "MessengerContacts": {
+    "description": "Auto imported from components/messenger/contacts/contacts.vue"
+  },
+  "MessengerCustomizerChatwallpaper": {
+    "description": "Auto imported from components/messenger/customizer/chatwallpaper.vue"
+  },
+  "MessengerCustomizerChoosecolor": {
+    "description": "Auto imported from components/messenger/customizer/choosecolor.vue"
+  },
+  "MessengerCustomizerCustomizesetting": {
+    "description": "Auto imported from components/messenger/customizer/customizesetting.vue"
+  },
+  "MessengerCustomizer": {
+    "description": "Auto imported from components/messenger/customizer/index.vue"
+  },
+  "MessengerCustomizerLayout": {
+    "description": "Auto imported from components/messenger/customizer/layout.vue"
+  },
+  "MessengerCustomizerSidebar": {
+    "description": "Auto imported from components/messenger/customizer/sidebar.vue"
+  },
   "MessengerLefsidebarChats": {
     "description": "Auto imported from components/messenger/lefsidebar/chats.vue"
   },
@@ -268,12 +292,6 @@
   },
   "MessengerLefsidebarStatus": {
     "description": "Auto imported from components/messenger/lefsidebar/status.vue"
-  },
-  "MessengerContactsContactcontent": {
-    "description": "Auto imported from components/messenger/contacts/contactcontent.vue"
-  },
-  "MessengerContacts": {
-    "description": "Auto imported from components/messenger/contacts/contacts.vue"
   },
   "MessengerModalsAudiocall1": {
     "description": "Auto imported from components/messenger/modals/audiocall1.vue"
@@ -317,24 +335,6 @@
   "MessengerModalsVediocall": {
     "description": "Auto imported from components/messenger/modals/vediocall.vue"
   },
-  "MessengerCustomizerChatwallpaper": {
-    "description": "Auto imported from components/messenger/customizer/chatwallpaper.vue"
-  },
-  "MessengerCustomizerChoosecolor": {
-    "description": "Auto imported from components/messenger/customizer/choosecolor.vue"
-  },
-  "MessengerCustomizerCustomizesetting": {
-    "description": "Auto imported from components/messenger/customizer/customizesetting.vue"
-  },
-  "MessengerCustomizer": {
-    "description": "Auto imported from components/messenger/customizer/index.vue"
-  },
-  "MessengerCustomizerLayout": {
-    "description": "Auto imported from components/messenger/customizer/layout.vue"
-  },
-  "MessengerCustomizerSidebar": {
-    "description": "Auto imported from components/messenger/customizer/sidebar.vue"
-  },
   "MessengerRightsidebar": {
     "description": "Auto imported from components/messenger/rightsidebar/index.vue"
   },
@@ -365,18 +365,6 @@
   "MessengerChatOfficialChatOfficialcustomchat": {
     "description": "Auto imported from components/messenger/chat/OfficialChat/officialcustomchat.vue"
   },
-  "MessengerLefsidebarSettingAccount": {
-    "description": "Auto imported from components/messenger/lefsidebar/setting/account.vue"
-  },
-  "MessengerLefsidebarSettingChat": {
-    "description": "Auto imported from components/messenger/lefsidebar/setting/chat.vue"
-  },
-  "MessengerLefsidebarSettingHelp": {
-    "description": "Auto imported from components/messenger/lefsidebar/setting/help.vue"
-  },
-  "MessengerLefsidebarSettingIntegratin": {
-    "description": "Auto imported from components/messenger/lefsidebar/setting/integratin.vue"
-  },
   "MessengerContactsFriendContactFriendcontactchat": {
     "description": "Auto imported from components/messenger/contacts/FriendContact/friendcontactchat.vue"
   },
@@ -404,6 +392,18 @@
   "MessengerContactsOfficialContactOfficialcontactuser": {
     "description": "Auto imported from components/messenger/contacts/OfficialContact/officialcontactuser.vue"
   },
+  "MessengerLefsidebarSettingAccount": {
+    "description": "Auto imported from components/messenger/lefsidebar/setting/account.vue"
+  },
+  "MessengerLefsidebarSettingChat": {
+    "description": "Auto imported from components/messenger/lefsidebar/setting/chat.vue"
+  },
+  "MessengerLefsidebarSettingHelp": {
+    "description": "Auto imported from components/messenger/lefsidebar/setting/help.vue"
+  },
+  "MessengerLefsidebarSettingIntegratin": {
+    "description": "Auto imported from components/messenger/lefsidebar/setting/integratin.vue"
+  },
   "MessengerRightsidebarFiles": {
     "description": "Auto imported from components/messenger/rightsidebar/files/index.vue"
   },
@@ -415,6 +415,12 @@
   },
   "MessengerRightsidebarNotes": {
     "description": "Auto imported from components/messenger/rightsidebar/notes/index.vue"
+  },
+  "MessengerRightsidebarTodo": {
+    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
+  },
+  "MessengerRightsidebarReminder": {
+    "description": "Auto imported from components/messenger/rightsidebar/reminder/index.vue"
   },
   "MessengerRightsidebarProfileCommongroup": {
     "description": "Auto imported from components/messenger/rightsidebar/profile/commongroup.vue"
@@ -436,11 +442,5 @@
   },
   "MessengerRightsidebarProfileStatus": {
     "description": "Auto imported from components/messenger/rightsidebar/profile/status.vue"
-  },
-  "MessengerRightsidebarReminder": {
-    "description": "Auto imported from components/messenger/rightsidebar/reminder/index.vue"
-  },
-  "MessengerRightsidebarTodo": {
-    "description": "Auto imported from components/messenger/rightsidebar/todo/index.vue"
   }
 }

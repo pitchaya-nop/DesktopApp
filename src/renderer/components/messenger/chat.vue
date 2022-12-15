@@ -692,12 +692,14 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-          // console.log(res.data.data);
+
           if (res.data.code == "0000") {
             this.addDataToRealm(res.data.data, "updateDummyMesaage");
-            if(socket.connected == false){
-              socket.connect()
-            }
+            
+            // if(socket.connected == false){
+            //   console.log('disconnected');
+            //   socket.connect()
+            // }
             if (this.sessionID == res.data.data[0].sessionId) {
               this.setMessage(this.sessionID);
             }

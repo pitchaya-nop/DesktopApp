@@ -9,7 +9,7 @@ export const socket = io('https://dev.apigochat.com:443', {
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
     reconnectionAttempts: Infinity,
-    // forceNew: true
+    forceNew: true
     // withCredentials: true,
     // debug: false
 });
