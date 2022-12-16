@@ -8,7 +8,7 @@
     </div> -->
     <div class="sidebar-main">
       <ul class="sidebar-top custom-scroll">
-        <button @click="">Clear DB</button>
+        <button @click="deleteDB">Clear DB</button>
         <!-- <li>
           <a
             class="icon-btn btn-light button-effect"

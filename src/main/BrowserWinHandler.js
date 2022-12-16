@@ -44,7 +44,9 @@ export default class BrowserWinHandler {
     // dock icon is clicked and there are no other windows open.
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
+
   }
+
   // showNotification() {
   //   // new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
   //   ipcMain.on('notify', (e, message) => {
@@ -151,6 +153,7 @@ export default class BrowserWinHandler {
     this.browserWindow.on('closed', () => {
       // Dereference the window object
       // this.addDataToRealm("", "deleteData");
+      
 
       session.defaultSession.clearStorageData(null, (error) => {
 

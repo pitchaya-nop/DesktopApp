@@ -19,7 +19,6 @@
         </div>
       </div>
     </div>
-  
 
     <li
       :class="{ active: sessionroom === user.sessionid }"
@@ -210,8 +209,9 @@ export default {
 
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
-      this.addDataToRealm(this.profile, "updateUnreadcount");
-      this.getdataDB.then((data) => {
+
+      this.getdataDB.then(async (data) => {
+        this.addDataToRealm(this.profile, "updateUnreadcount");
         let lastshowtime = data
           .objects("ROOM")
           .filtered(`sessionid == "${sessionid}"`);
@@ -221,11 +221,9 @@ export default {
             `sessionid == "${sessionid}" AND  createdtime <= "${lastshowtime[0].showtime}" `
           );
         let arr = [];
-        this.$store.dispatch("chat/setChat", []);
+        await this.$store.dispatch("chat/setChat", []);
+        await this.$store.dispatch("chat/setChat", msg);
 
-        setTimeout(() => {
-          this.$store.dispatch("chat/setChat", msg);
-        }, 300);
         // this.$store.state.chat.messagelength = 50;
         // if (msg.length < this.$store.state.chat.messagelength) {
         //   this.$store.dispatch("chat/setChat", msg);
@@ -291,10 +289,10 @@ export default {
           const contain = document.querySelector(".scrolltopdirectchat");
           contain.scrollTop = contain.scrollHeight;
         }
-      }, 450);
+      }, 600);
       setTimeout(() => {
         this.$store.dispatch("common/setLoadingchat", false);
-      }, 500);
+      }, 610);
     },
     setSeesionuser: function (sessionid) {
       this.$store.dispatch("chat/setSessionChat", sessionid);
