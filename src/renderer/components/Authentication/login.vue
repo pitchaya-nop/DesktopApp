@@ -16,7 +16,7 @@
               </div>
               <h3>Hello Everyone , We are GooChat</h3>
               <h4>Welcome to GoChat please login to your account.</h4> -->
-
+              <!-- <img :src="getImgUrl()" style="width:100px;height:100px"/> -->
               <form class="form1" v-on:submit.prevent="handleLogin">
                 <div class="form-group">
                   <label
@@ -277,6 +277,9 @@ export default {
     };
   },
   methods: {
+    getImgUrl() {
+      return require("../../assets/images/goochatload.gif");
+    },
     async handleLogin() {
       // console.log("email", this.email);
       // console.log("password", this.password);
@@ -313,6 +316,7 @@ export default {
             const data = response.data;
             await this.$store.dispatch("auth/setToken", data.accessToken);
             await this.$store.dispatch("auth/setProfile", data.userProfile);
+            await this.$store.dispatch("auth/setUserLogin", data.userProfile);
             this.email = ''
             this.password = ''
             this.$router.push("/");

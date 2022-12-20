@@ -78,6 +78,7 @@ const OfficialSchema = {
         gochatid: "string",
         profileid: "string",
         id: "string",
+        stamptimeout: "string",
         package: "string",
         role: "string",
         updatedtime: "string",
@@ -225,7 +226,7 @@ Vue.mixin({
         getdataDB: function () {
             return Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 3
+                schemaVersion: 4
             }).then(
                 (realm) => {
                     return realm
@@ -318,7 +319,7 @@ Vue.mixin({
 
             Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 3,
+                schemaVersion: 4,
                 // migration: (oldRealm, newRealm) => {
 
                 //     if (oldRealm.schemaVersion < 1) { }
@@ -398,6 +399,7 @@ Vue.mixin({
                                             gochatid: item.gochatId,
                                             profileid: item.profileId,
                                             id: item.id,
+                                            stamptimeout: '',
                                             package: item.package,
                                             role: item.role,
                                             updatedtime: item.updatedTime,

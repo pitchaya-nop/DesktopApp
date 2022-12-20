@@ -244,7 +244,16 @@ export default {
                               `{"auth":"Bearer ${this.token}","sessionId": "${data.sessionId}","readTime":"${data.messages[0].createdTime}"}`
                             );
                           } else {
-                            ipcRenderer.send("notify", data.messages[0]);
+                            this.profile.adminuserids.map((item) => {
+                              if (
+                                item != data.messages[0].senderId &&
+                                this.profile.id != data.messages[0].senderId
+                              ) {
+                                ipcRenderer.send("notify", data.messages[0]);
+                              }
+                              
+                            });
+                            // ipcRenderer.send("notify", data.messages[0]);
                           }
                         });
                         this.addDataToRealm(
@@ -366,14 +375,14 @@ export default {
                     socket.on(
                       `messages:update:${item.sessionId}`,
                       (msgupdate) => {
-                        console.log(this.profile);
-                        console.log(this.profile.adminuserids.length);
-                        console.log(this.profile.id);
-                        this.profile.adminuserids.map((item) => {
-                          console.log(item);
-                        });
-                        console.log("message update");
-                        console.log(msgupdate);
+                        // console.log('profile id');
+                        // console.log(this.profile.id);
+                        // this.profile.adminuserids.map((item) => {
+                        //   console.log('admin');
+                        //   console.log(item);
+                        // });
+                        // console.log("message update");
+                        // console.log(msgupdate);
 
                         msgupdate.data.map((data) => {
                           if (this.sesssionid == data.sessionId) {
@@ -908,6 +917,8 @@ export default {
         );
         if (response.status === 200) {
           response.data.data.map((item) => {
+            console.log('profile id');
+            console.log(this.profile.id);
             item.profileId = this.profile.id;
           });
 

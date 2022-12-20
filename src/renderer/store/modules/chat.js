@@ -141,7 +141,7 @@ const mutations = {
 // actions
 const actions = {
   setChat: (context, payload) => {
-    context.commit("setChat", payload);
+    return new Promise(resolve => { context.commit("setChat", payload); resolve() })
   },
   setActiveuser: (context, payload) => {
     context.commit("setActiveuser", payload);

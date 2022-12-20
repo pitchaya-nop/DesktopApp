@@ -220,7 +220,7 @@ export default {
           .filtered(
             `sessionid == "${sessionid}" AND  createdtime <= "${lastshowtime[0].showtime}" `
           );
-        let arr = [];
+      
         await this.$store.dispatch("chat/setChat", []);
         await this.$store.dispatch("chat/setChat", msg);
 

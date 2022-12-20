@@ -3,6 +3,7 @@
 
 
 const state = {
+  userlogin: null,
   profile: null,
   token: window.localStorage.getItem('auth') || '',
   ownerid: null,
@@ -14,8 +15,8 @@ const getters = {
   token: (state) => state.token,
   profile: (state) => state.profile,
   ofiicialprofile:(state)=>state.ofiicialprofile,
+  userlogin: (state) => state.userlogin
 
- 
 };
 
 // mutations
@@ -42,7 +43,9 @@ const mutations = {
   SET_OFFICIAL_PROFILE(state, officialprofile) {
     state.ofiicialprofile = officialprofile
   },
-  
+  SET_USER_LOGIN(state, userdata) {
+    state.userlogin = userdata
+  }
 
 
 };
@@ -69,6 +72,9 @@ const actions = {
   },
   setOfficialProfile({ commit }, officialprofile) {
     commit('SET_OFFICIAL_PROFILE', officialprofile)
+  },
+  setUserLogin({ commit }, userlogin) {
+    commit('SET_USER_LOGIN', userlogin)
   },
   getMe() {
     return new Promise((resolve, reject) => {
