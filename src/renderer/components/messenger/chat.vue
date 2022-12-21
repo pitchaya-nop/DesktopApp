@@ -2,14 +2,15 @@
   <!-- Main Chat start -->
   <div
     class="chitchat-main"
+    
     :class="togglerightside ? 'small-sidebar' : ''"
     id="content"
   >
     <div v-if="showModal">
       <transition name="modal">
-        <div class="modal-mask">
+        <div class="modal-mask" >
           <div class="modal-wrapper">
-            <div class="modal-dialog" role="document" style="max-width: 300px">
+            <div class="modal-dialog" role="document" style="max-width:300px">
               <div class="modal-content">
                 <!-- <div class="modal-header">
                   <h5 class="modal-title">Error</h5>
@@ -24,36 +25,22 @@
                     >
                   </button>
                 </div> -->
-                <div
-                  class="modal-body"
-                  style="padding-top: 32px; display: flex; align-items: center"
-                >
+                <div class="modal-body" style="padding-top:32px;display:flex;align-items:center">
                   <!-- <p>Modal body text goes here.</p> -->
-                  <img
-                    :src="getErrorIcon()"
-                    style="width: 22px; height: 22px; margin-right: 16px"
-                  />
-                  <span
-                    style="text-align: left; font-weight: 600; font-size: 16px"
-                    >{{ this.errorMessage }}</span
-                  >
+                  <img :src="getErrorIcon()" style="width:22px;height:22px;margin-right:16px"/>
+                  <span style="text-align:left;font-weight:600;font-size:16px">{{this.errorMessage}}</span>
                   <!-- <h5>This file format can’t be sent.</h5> -->
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" >
                   <button
                     type="button"
                     class="btn btn-danger"
-                    style="
-                      font-weight: 400;
-                      color: #fff;
-                      font-size: 14px;
-                      padding: 5px 16px;
-                      border-radius: 2px;
-                    "
+                    style="font-weight:400;color:#fff;font-size:14px;padding:5px 16px;border-radius:2px"
                     @click="showModal = false"
                   >
                     OK
                   </button>
+            
                 </div>
               </div>
             </div>
@@ -464,7 +451,6 @@ import Poll from "../messenger/modals/pollModal.vue";
 import OfficialChatHeader from "./chat/OfficialChat/officialchatheader.vue";
 import OfficialCustomChat from "./chat/OfficialChat/officialcustomchat.vue";
 import { v4 as uuidv4 } from "uuid";
-import {socket} from '../../plugins/socketio.service'
 export default {
   components: {
     Stickers,
@@ -490,7 +476,7 @@ export default {
       blockroom: false,
       roomdisplay: null,
       showModal: false,
-      errorMessage: "",
+      errorMessage:'',
       styleObject: {
         "background-color": "transparent",
         "background-blend-mode": "unset",
@@ -598,15 +584,13 @@ export default {
           if (e.target.files[i].size > 10 * 1024 * 1024) {
             this.showModal = true;
             document.getElementById("fileimage").value = "";
-            this.errorMessage =
-              "You can send files no more than 10MB at a time.";
+            this.errorMessage = 'You can only send up to 10MB of file at a time.'
             return false;
           }
           if (e.target.files.length > 10) {
             this.showModal = true;
             document.getElementById("fileimage").value = "";
-            this.errorMessage =
-              "You can send files no more than 10 Files at a time.";
+            this.errorMessage = 'You can select no more than 10 items.'
             return false;
           }
           const dataimage = await this.imageDimensions(e.target.files[i]);
@@ -692,19 +676,9 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-
+          
           if (res.data.code == "0000") {
             this.addDataToRealm(res.data.data, "updateDummyMesaage");
-            this.addDataToRealm(res.data.data, "addMessage");
-            // if(socket.connected == false){
-            //   console.log('disconnected');
-            //   socket.connect()
-            // }
-            if (this.sessionID == res.data.data[0].sessionId) {
-              this.setMessage(this.sessionID);
-            }
-
-            // this.addDataToRealm(res.data.data, "addMessage");
           }
           this.scrollbottom();
           if (res.data.message != "success") {
@@ -781,7 +755,7 @@ export default {
     getImgUrl() {
       return require("../../assets/images/avtar/defaultimageoa.png");
     },
-    getErrorIcon() {
+    getErrorIcon(){
       return require("../../assets/images/erroricon.png");
     },
     addemogi(emogi) {

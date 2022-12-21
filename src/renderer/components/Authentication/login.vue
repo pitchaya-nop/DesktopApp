@@ -17,6 +17,7 @@
               <h3>Hello Everyone , We are GooChat</h3>
               <h4>Welcome to GoChat please login to your account.</h4> -->
               <!-- <img :src="getImgUrl()" style="width:100px;height:100px"/> -->
+              <button type="button" @click="checkuserlogin">checkloginuser</button>
               <form class="form1" v-on:submit.prevent="handleLogin">
                 <div class="form-group">
                   <label
@@ -280,6 +281,15 @@ export default {
     getImgUrl() {
       return require("../../assets/images/goochatload.gif");
     },
+    checkuserlogin(){
+      this.getdataDB.then((data) => {
+        let userlogin = data.objects('LOGIN')
+        userlogin.map((item)=>{
+          console.log(item);
+        })
+
+      });
+    },
     async handleLogin() {
       // console.log("email", this.email);
       // console.log("password", this.password);
@@ -314,11 +324,19 @@ export default {
             // console.log('success');
             console.log(response.data.accessToken);
             const data = response.data;
+            this.getdataDB.then((item) => {
+              let userlogin = item
+                .objects("LOGIN")
+                .filtered(`userid == "${data.userProfile.id}"`);
+              if (userlogin.length < 1) {
+                this.addDataToRealm(data, "addDatalogin");
+              }
+            });
             await this.$store.dispatch("auth/setToken", data.accessToken);
             await this.$store.dispatch("auth/setProfile", data.userProfile);
             await this.$store.dispatch("auth/setUserLogin", data.userProfile);
-            this.email = ''
-            this.password = ''
+            this.email = "";
+            this.password = "";
             this.$router.push("/");
             // this.loginloading = false
           } else {

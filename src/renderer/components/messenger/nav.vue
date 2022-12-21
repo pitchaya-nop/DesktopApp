@@ -9,6 +9,7 @@
     <div class="sidebar-main">
       <ul class="sidebar-top custom-scroll">
         <button @click="deleteDB">Clear DB</button>
+        <!-- <button @click="showuserlogin">get data userlogin</button> -->
         <!-- <li>
           <a
             class="icon-btn btn-light button-effect"
@@ -110,6 +111,7 @@ export default {
       activesidebar: (state) => state.common.activesidebar,
       logintype: (state) => state.auth.logintype,
       profile: (state) => state.auth.profile,
+      userlogin: (state) => state.auth.userlogin,
       currentOfficial() {
         return (this.official = this.$store.getters["official/officialList"]);
       },
@@ -182,13 +184,30 @@ export default {
       }
       this.$store.dispatch("layout/setLayout", this.mixLayout);
     },
+    showuserlogin() {
+      this.getdataDB.then((data) => {
+        let userlogin = data.objects("LOGIN");
+        userlogin.map((item) => {
+          console.log(item);
+        });
+      });
+    },
     clearDb() {
       this.ClearRealm();
     },
     async handleSingOut() {
       // if (window.confirm("Do you really want to log out?")) {
+
       socketDisconnect();
-      localStorage.setItem("timeStamp", this.getTimeToUtc());
+      if (this.userlogin != null) {
+        let stamptime = {
+          synctime: this.getTimeToUtc(),
+          id: this.userlogin.id,
+        };
+        this.addDataToRealm(stamptime, "updateLogin");
+      }
+
+      // localStorage.setItem("timeStamp", this.getTimeToUtc());
       this.$store.state.common.activesidebar = 0;
       this.$store.state.common.iscontact = false;
       this.$store.dispatch("chat/resetState");

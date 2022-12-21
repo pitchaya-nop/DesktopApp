@@ -29,9 +29,17 @@ export default {
     ...mapState({
       sesssionid: (state) => state.chat.session,
       profile: (state) => state.auth.profile,
+      userlogin: (state) => state.auth.userlogin,
     }),
   },
   created() {
+    this.getdataDB.then((datadb) => {
+      let userlogin = datadb.objects("LOGIN").filtered(`userid == "${this.userlogin.id}"`);
+      console.log('login time');
+      userlogin.map((item) => {
+        this.syncTime = item.logoutstamptime
+      });
+    });
     // SocketioService.setupSocketConnection();
     socketAuth();
   },
@@ -46,7 +54,12 @@ export default {
     this.getOfficial();
     socket.on("keepAlive", (data) => {
       // console.log(data);
-      localStorage.setItem("timeStamp", data.syncTime);
+      let stamptime = {
+        synctime: data.syncTime,
+        id: this.userlogin.id,
+      };
+      this.addDataToRealm(stamptime, "updateLogin");
+      // localStorage.setItem("timeStamp", data.syncTime);
     });
     socket.on("connect", (data) => {
       console.log(
@@ -97,8 +110,8 @@ export default {
     },
     async unsubSocketEvent() {
       socket.off("socketId");
-      socket.off(`web:auth:${this.$store.getters["auth/profile"].id}`);
-      socket.off(`officials:user:${this.getProfile.id}`);
+      socket.off(`web:auth:${this.userlogin.id}`);
+      socket.off(`officials:user:${this.userlogin.id}`);
       this.Officialuser.map((officialdata) => {
         socket.off(`me:official:update:${officialdata.id}`);
         socket.off(`rooms:official:update:${officialdata.id}`);
@@ -125,12 +138,12 @@ export default {
       socket.on("socketId", (data) => {
         socket.emit(
           "web:auth",
-          `{"userId": "${this.$store.getters["auth/profile"].id}","auth":"Bearer ${this.token}"}`
+          `{"userId": "${this.userlogin.id}","auth":"Bearer ${this.token}"}`
         );
         socket.on(
-          `web:auth:${this.$store.getters["auth/profile"].id}`,
+          `web:auth:${this.userlogin.id}`,
           (data) => {
-            this.syncTime = data.syncTime;
+            // this.syncTime = data.syncTime;
             socket.emit(
               "officials:user",
               `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1}`
@@ -141,7 +154,7 @@ export default {
             //   console.log(data);
             // })
 
-            socket.on(`officials:user:${this.getProfile.id}`, (data) => {
+            socket.on(`officials:user:${this.userlogin.id}`, (data) => {
               this.Officialuser = data.data;
 
               data.data.map((officialdata) => {
@@ -251,7 +264,6 @@ export default {
                               ) {
                                 ipcRenderer.send("notify", data.messages[0]);
                               }
-                              
                             });
                             // ipcRenderer.send("notify", data.messages[0]);
                           }
@@ -288,9 +300,7 @@ export default {
                     socket.emit(
                       `messages`,
                       `{"auth":"Bearer ${this.token}","syncTime":"${
-                        localStorage.getItem("timeStamp")
-                          ? localStorage.getItem("timeStamp")
-                          : '0001-01-01 00:00:00'
+                        this.syncTime
                       }","sessionId":"${data.data[0].sessionId}"}`
                     );
                     setTimeout(() => {
@@ -401,7 +411,6 @@ export default {
                               ) {
                                 ipcRenderer.send("notify", data.messages[0]);
                               }
-                              
                             });
                           }
                         });
@@ -433,9 +442,7 @@ export default {
                     socket.emit(
                       `messages`,
                       `{"auth":"Bearer ${this.token}","syncTime":"${
-                        localStorage.getItem("timeStamp")
-                          ? localStorage.getItem("timeStamp")
-                          : '0001-01-01 00:00:00'
+                        this.syncTime
                       }","sessionId":"${item.sessionId}"}`
                     );
                   });
@@ -917,7 +924,7 @@ export default {
         );
         if (response.status === 200) {
           response.data.data.map((item) => {
-            console.log('profile id');
+            console.log("profile id");
             console.log(this.profile.id);
             item.profileId = this.profile.id;
           });

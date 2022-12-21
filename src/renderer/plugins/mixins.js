@@ -3,24 +3,13 @@ import Vue from 'vue';
 import moment from 'moment'
 const Realm = require("realm");
 
-const CarSchema = {
-    name: "Car",
+const LoginDataSchema = {
+    name: 'LOGIN',
     properties: {
-        make: "string",
-        model: "string",
-        miles: { type: "int", default: 0 },
-    },
-};
-const PersonSchema = {
-    name: "Person",
-    properties: {
-        name: "string",
-        birthday: "date",
-        cars: "Car[]",
-        picture: "data?", // optional property
-    },
-};
-
+        userid: 'string',
+        logoutstamptime: 'string'
+    }
+}
 const UserSchema = {
     name: "USER",
     properties: {
@@ -78,7 +67,6 @@ const OfficialSchema = {
         gochatid: "string",
         profileid: "string",
         id: "string",
-        stamptimeout: "string",
         package: "string",
         role: "string",
         updatedtime: "string",
@@ -225,8 +213,8 @@ Vue.mixin({
 
         getdataDB: function () {
             return Realm.open({
-                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 4
+                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema, LoginDataSchema],
+                schemaVersion: 5
             }).then(
                 (realm) => {
                     return realm
@@ -318,8 +306,8 @@ Vue.mixin({
         addDataToRealm(data, action) {
 
             Realm.open({
-                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema],
-                schemaVersion: 4,
+                schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema, LoginDataSchema],
+                schemaVersion: 5,
                 // migration: (oldRealm, newRealm) => {
 
                 //     if (oldRealm.schemaVersion < 1) { }
@@ -339,6 +327,16 @@ Vue.mixin({
             })
                 .then((realm) => {
                     switch (action) {
+                        case 'addDatalogin':
+                            console.log('case add data login @@@@@@@@@@@@@@@');
+                            realm.write(() => {
+                                console.log(data);
+                                realm.create('LOGIN', {
+                                    userid: data.userProfile.id,
+                                    logoutstamptime: '0001-01-01 00:00:00'
+                                })
+                            })
+                            break;
                         case 'addUser':
                             data.map((item) => {
                                 realm.write(() => {
@@ -399,7 +397,6 @@ Vue.mixin({
                                             gochatid: item.gochatId,
                                             profileid: item.profileId,
                                             id: item.id,
-                                            stamptimeout: '',
                                             package: item.package,
                                             role: item.role,
                                             updatedtime: item.updatedTime,
@@ -727,6 +724,14 @@ Vue.mixin({
                                 const dummymsg = realm.objects("MESSAGE").filtered(`referencekey == "${data.referenceKey}" AND status == "WAITING"`)
                                 dummymsg.map((dummsg) => {
                                     dummsg.status = "FAILED"
+                                })
+                            })
+                            break;
+                        case 'updateLogin':
+                            realm.write(() => {
+                                const loginuserid = realm.objects("LOGIN").filtered(`userid == "${data.id}"`)
+                                loginuserid.map((datalogin) => {
+                                    datalogin.logoutstamptime = data.synctime
                                 })
                             })
                             break;
