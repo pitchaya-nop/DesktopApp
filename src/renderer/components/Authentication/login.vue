@@ -17,7 +17,7 @@
               <h3>Hello Everyone , We are GooChat</h3>
               <h4>Welcome to GoChat please login to your account.</h4> -->
               <!-- <img :src="getImgUrl()" style="width:100px;height:100px"/> -->
-              <button type="button" @click="checkuserlogin">checkloginuser</button>
+              <!-- <button type="button" @click="checkuserlogin">checkloginuser</button> -->
               <form class="form1" v-on:submit.prevent="handleLogin">
                 <div class="form-group">
                   <label
@@ -299,8 +299,8 @@ export default {
         this.loginfailed = false;
         try {
           var keyHex = CryptoJS.enc.Utf8.parse(
-            // "a62d9f02d9412f4c724919362a5ad4fe"
-            "4a310288218c3394d829e49bd187c395"
+            "a62d9f02d9412f4c724919362a5ad4fe"
+            // "4a310288218c3394d829e49bd187c395"
           );
           // "4a310288218c3394d829e49bd187c395" ---> dev sit
           console.log(keyHex);
