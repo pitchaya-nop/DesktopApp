@@ -46,7 +46,7 @@
           <li v-for="(oa, index) in currentOfficial.listoa" :key="index">
             <a
               class="icon-btn btn-light button-effect active-official"
-              :class="activesidebar == 3 && oa.id == profile.id ? 'active' : ''"
+              :class="activesidebar == 3 && oa.id == userlogin.id ? 'active' : ''"
               :style="
                 oa.avatars.source != 'null'
                   ? [
