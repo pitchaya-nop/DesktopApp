@@ -1,7 +1,28 @@
 <template>
   <!--Direct Chat User start -->
+
   <div>
-    <div class="search2">
+    <!-- <div
+      style="
+        position: fixed;
+        bottom: 50px;
+        left: 85px;
+        width: auto;
+        border: 1px solid #828282;
+        background: #fff;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        border-radius: 3px;
+      "
+      v-if="openlogout"
+    >
+      <div style="padding: 15px" @click="logout"><a>Logout</a></div>
+      <div style="padding: 15px; padding-top: 0" @click="logoutclear">
+        <a>Logout and Clear Data</a>
+      </div>
+    </div> -->
+    <div class="search2" v-if="officialprofile != null">
       <div>
         <div class="input-group">
           <div class="input-group-append">
@@ -124,7 +145,7 @@
 <script>
 import { mapState } from "vuex";
 import Vue from "vue";
-import { socket } from "../../../../plugins/socketio.service";
+import { socket, socketDisconnect } from "../../../../plugins/socketio.service";
 const { ipcRenderer } = require("electron");
 export default {
   data() {
@@ -146,6 +167,8 @@ export default {
       profile: (state) => state.auth.profile,
       sessionroom: (state) => state.chat.session,
       roomtype: (state) => state.room.roomtype,
+      openlogout: (state) => state.common.openlogout,
+      officialprofile: (state) => state.auth.ofiicialprofile,
       currentRoom() {
         return (this.chatUser = this.$store.getters["room/currentRoom"]);
       },
@@ -186,7 +209,10 @@ export default {
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
-
+    getTimeToUtc() {
+      var utcdate = new Date().toISOString().substr(0, 19).replace("T", " ");
+      return utcdate;
+    },
     setBlockroom(isblock) {
       if (isblock == true) {
         this.$store.state.common.isblockroom = true;
@@ -220,7 +246,7 @@ export default {
           .filtered(
             `sessionid == "${sessionid}" AND  createdtime <= "${lastshowtime[0].showtime}" `
           );
-      
+
         await this.$store.dispatch("chat/setChat", []);
         await this.$store.dispatch("chat/setChat", msg);
 
@@ -351,6 +377,52 @@ export default {
     setActive(index) {
       this.activeIndex = index;
     },
+    // logout() {
+    //   socketDisconnect();
+    //   if (this.userlogin != null) {
+    //     let stamptime = {
+    //       synctime: this.getTimeToUtc(),
+    //       id: this.userlogin.id,
+    //     };
+    //     this.addDataToRealm(stamptime, "updateLogin");
+    //   }
+    //   this.$store.state.common.activesidebar = 2;
+    //   this.$store.state.common.openlogout =
+    //     !this.$store.state.common.openlogout;
+    //   this.$store.state.common.iscontact = false;
+    //   this.$store.dispatch("chat/resetState");
+    //   this.$store.dispatch("contact/resetState");
+    //   this.$store.dispatch("room/resetState");
+    //   // this.addDataToRealm("", "deleteData");
+    //   this.$store.dispatch("auth/setToken", "");
+    //   this.$store.dispatch("auth/setProfile", "");
+    //   window.localStorage.removeItem("auth");
+    //   this.$router.push("/authentication/login");
+    // },
+    // logoutclear() {
+      
+    //   socketDisconnect();
+    //   if (this.userlogin != null) {
+    //     let stamptime = {
+    //       synctime: this.getTimeToUtc(),
+    //       id: this.userlogin.id,
+    //     };
+    //     this.addDataToRealm(stamptime, "updateLogin");
+    //   }
+    //   this.addDataToRealm("", "deleteData");
+    //   this.$store.state.common.activesidebar = 2;
+    //   this.$store.state.common.openlogout =
+    //     !this.$store.state.common.openlogout;
+    //   this.$store.state.common.iscontact = false;
+    //   this.$store.dispatch("chat/resetState");
+    //   this.$store.dispatch("contact/resetState");
+    //   this.$store.dispatch("room/resetState");
+
+    //   this.$store.dispatch("auth/setToken", "");
+    //   this.$store.dispatch("auth/setProfile", "");
+    //   window.localStorage.removeItem("auth");
+    //   this.$router.push("/authentication/login");
+    // },
   },
 };
 </script>

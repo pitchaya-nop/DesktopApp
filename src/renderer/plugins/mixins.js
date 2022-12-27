@@ -850,8 +850,17 @@ Vue.mixin({
                         case 'deleteData':
                             realm.write(() => {
                                 // realm.deleteAll()
-                                let official = realm.objects("OFFICIAL")
-                                realm.delete(official)
+                                let message = realm.objects("MESSAGE")
+                                let room = realm.objects('ROOM')
+                                let userlogin = realm.objects('LOGIN')
+                                realm.delete(room)
+                                realm.delete(message)
+                                realm.delete(userlogin)
+                                // if (official.length > 0) {
+                                //     realm.delete(official)
+                                // }
+
+
                             })
                             break;
                         case 'deleteallData':

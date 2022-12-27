@@ -184,6 +184,7 @@
           }
         }
       }
+
     }
     .recent-default {
       position: relative;
@@ -282,6 +283,27 @@
         }
       }
     }
+  .logout-area{
+    position: fixed;
+        bottom: 50px;
+        left: 85px;
+        width: auto;
+        border: 1px solid #ececf6;
+        background: #fff;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        border-radius: 3px;
+        .logoutoption{
+          padding: 10px 15px;
+          cursor: pointer;
+          font-size:15px;
+          &:hover{
+            background-color: #ececf6;
+          }
+        }
+        
+  }
   }
 }
 

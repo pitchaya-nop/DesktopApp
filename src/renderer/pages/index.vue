@@ -148,6 +148,7 @@ export default {
               "officials:user",
               `{"auth":"Bearer ${this.token}","syncTime":"0001-01-01 00:00:00","page":1}`
             );
+            
             // console.log(this.getProfile.id);
             // socket.on(`officials:user:${this.getProfile.id}`,(data)=>{
             //   console.log('on official');
@@ -928,9 +929,10 @@ export default {
             console.log(this.profile.id);
             item.profileId = this.profile.id;
           });
-
+          console.log('add official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@');
           this.addDataToRealm(response.data.data, "addOfficial");
           setTimeout(() => {
+        
             this.setOfficial();
           }, 500);
         }

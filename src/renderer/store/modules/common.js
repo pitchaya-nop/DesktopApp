@@ -35,6 +35,7 @@ const state = {
   chatwallpaperIndex: layout.config.wallpaper,
   chatwallpaper: "",
   chatwallpapergrandiant: "",
+  openlogout: false,
 };
 
 // mutations

@@ -6,9 +6,11 @@
   >
     <div class="recent">
       <div class="theme-title">
-        <div class="media">
-          <div v-if="officialprofile == null">
-            <h2>Chats</h2>
+        <div class="media" >
+          <div v-if="officialprofile == null" style="width: 100%;text-align: center;">
+            <h2>Welcome Goochat</h2>
+            <p style=text-align:center>Select official to start</p>
+            <!-- <h2>Chats</h2> -->
             <!-- <button type="button" @click="clearallDB()">
               clear before addnew filed
             </button> -->

@@ -12,10 +12,11 @@
     height: 0;
     margin-left: $caret-width;
     vertical-align: middle;
-    content: "";
-    border-top: $caret-width solid;
-    border-right: $caret-width solid transparent;
-    border-left: $caret-width solid transparent;
+    content: "...";
+    border:0
+    // border-top: $caret-width solid;
+    // border-right: $caret-width solid transparent;
+    // border-left: $caret-width solid transparent;
   }
 
   // Prevent the focus on the dropdown toggle when closing dropdowns

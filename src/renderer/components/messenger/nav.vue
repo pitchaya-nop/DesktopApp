@@ -8,7 +8,7 @@
     </div> -->
     <div class="sidebar-main">
       <ul class="sidebar-top custom-scroll">
-        <button @click="deleteDB">Clear DB</button>
+        <!-- <button @click="deleteDB">Clear DB</button> -->
         <!-- <button @click="showuserlogin">get data userlogin</button> -->
         <!-- <li>
           <a
@@ -76,13 +76,30 @@
           </li>
         </template>
       </ul>
+
       <ul class="sidebar-bottom">
         <!-- <li><a class="icon-btn btn-light button-effect mode" href="javascript:void(0)" v-b-tooltip.hover.topright title="Theme Mode" data-tippy-content="Theme Mode" data-intro="Change mode" @click="customizeMixLayout()"><i class="fa" :class="this.mixLayout===''? 'fa-moon-o': 'fa-lightbulb-o'"></i></a></li> -->
+        <!-- <li>
+          <div @click="handleSingOut" class="icon-btn btn-light button-effect">
+            <h2>...</h2>
+          </div>
+        </li> -->
+
         <li>
           <div @click="handleSingOut" class="icon-btn btn-light button-effect">
-            <feather type="log-out"></feather>
+            <feather type="more-horizontal"></feather>
           </div>
         </li>
+        <!-- <div class="drop-picker" style="position:fixed;left:25px;bottom:30px">
+          <datepicker
+            
+            input-class="datepicker-here form-control digits"
+          ></datepicker>
+          <b-dropdown id="dropup-1">
+            <b-dropdown-item>Logout </b-dropdown-item>
+            <b-dropdown-item>ClearData Logout</b-dropdown-item>
+          </b-dropdown>
+        </div> -->
       </ul>
     </div>
   </nav>
@@ -102,13 +119,14 @@ export default {
         "background-size": "cover",
         "background-position": "center",
       },
-      status: "avtar/2.jpg",
+      show: false,
     };
   },
   computed: {
     ...mapState({
       toggleleftside: (state) => state.common.toggleleftside,
       activesidebar: (state) => state.common.activesidebar,
+      openlogout: (state) => state.common.openlogout,
       logintype: (state) => state.auth.logintype,
       profile: (state) => state.auth.profile,
       userlogin: (state) => state.auth.userlogin,
@@ -196,30 +214,27 @@ export default {
       this.ClearRealm();
     },
     async handleSingOut() {
-      // if (window.confirm("Do you really want to log out?")) {
-
-      socketDisconnect();
-      if (this.userlogin != null) {
-        let stamptime = {
-          synctime: this.getTimeToUtc(),
-          id: this.userlogin.id,
-        };
-        this.addDataToRealm(stamptime, "updateLogin");
-      }
-
-      // localStorage.setItem("timeStamp", this.getTimeToUtc());
-      this.$store.state.common.activesidebar = 0;
-      this.$store.state.common.iscontact = false;
-      this.$store.dispatch("chat/resetState");
-      this.$store.dispatch("contact/resetState");
-      this.$store.dispatch("room/resetState");
-
-      this.addDataToRealm("", "deleteData");
-      this.$store.dispatch("auth/setToken", "");
-      this.$store.dispatch("auth/setProfile", "");
-      window.localStorage.removeItem("auth");
-      this.$router.push("/authentication/login");
+      this.$store.state.common.openlogout =
+        !this.$store.state.common.openlogout;
+      
+      // socketDisconnect();
+      // if (this.userlogin != null) {
+      //   let stamptime = {
+      //     synctime: this.getTimeToUtc(),
+      //     id: this.userlogin.id,
+      //   };
+      //   this.addDataToRealm(stamptime, "updateLogin");
       // }
+      // this.$store.state.common.activesidebar = 0;
+      // this.$store.state.common.iscontact = false;
+      // this.$store.dispatch("chat/resetState");
+      // this.$store.dispatch("contact/resetState");
+      // this.$store.dispatch("room/resetState");
+      // this.addDataToRealm("", "deleteData");
+      // this.$store.dispatch("auth/setToken", "");
+      // this.$store.dispatch("auth/setProfile", "");
+      // window.localStorage.removeItem("auth");
+      // this.$router.push("/authentication/login");
     },
   },
 };

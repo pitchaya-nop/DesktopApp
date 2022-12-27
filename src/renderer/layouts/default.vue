@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="chitchat-container sidebar-toggle">
+      
       <Navbar />
       <LeftSideBar />
       <nuxt />
