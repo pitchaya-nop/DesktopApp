@@ -933,7 +933,7 @@ export default {
           this.addDataToRealm(response.data.data, "addOfficial");
           setTimeout(() => {
         
-            this.setOfficial();
+            this.setOfficial(this.userlogin.id);
           }, 500);
         }
       } catch (error) {

@@ -72,6 +72,8 @@ export default {
       // this.addDataToRealm("", "deleteData");
       this.$store.dispatch("auth/setToken", "");
       this.$store.dispatch("auth/setProfile", "");
+      this.$store.dispatch("auth/setUserLogin", "");
+      this.$store.dispatch("official/setOfficial", null);
       window.localStorage.removeItem("auth");
       this.$router.push("/authentication/login");
     },
@@ -95,6 +97,8 @@ export default {
 
       this.$store.dispatch("auth/setToken", "");
       this.$store.dispatch("auth/setProfile", "");
+      this.$store.dispatch("auth/setUserLogin", "");
+      this.$store.dispatch("official/setOfficial", null);
       window.localStorage.removeItem("auth");
       this.$router.push("/authentication/login");
     },

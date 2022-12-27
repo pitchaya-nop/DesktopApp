@@ -292,12 +292,12 @@ Vue.mixin({
         setFilterRoom() {
 
         },
-        setOfficial() {
+        setOfficial(userid) {
             this.getdataDB.then((data) => {
 
                 console.log('setofficial');
 
-                let official = data.objects("OFFICIAL")
+                let official = data.objects("OFFICIAL").filtered(`profileid == "${userid}"`);
                 console.log(official);
                 official.map((data) => { console.log(data); })
                 this.$store.dispatch("official/setOfficial", official)
