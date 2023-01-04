@@ -7,6 +7,9 @@
         <div class="login-contain-main">
           <div class="left-page">
             <div class="login-content">
+              <div style="width:100%;text-align:center;margin-bottom:30px">
+                <img :src="getImageLogo()" style="width:400px"/>
+              </div>
               <!-- <div class="login-content-header mt-3 mb-3">
                 <img
                   class="image-fluid my-auto"
@@ -151,8 +154,8 @@
               <!--              </div>-->
             </div>
           </div>
-          <div class="right-page">
-            <div class="right-login animat-rate">
+          <div class="right-page" :style="[{'background-image':'url(' + getImageBackground() + ')'}]">
+            <!-- <div class="right-login animat-rate">
               <div class="animation-block">
                 <div class="bg_circle">
                   <div></div>
@@ -172,27 +175,7 @@
                 <div class="cross2"></div>
                 <div class="dot"></div>
                 <div class="dot1"></div>
-                <!-- <div class="maincircle"></div> -->
-                <!-- <div class="top-circle"></div>
-                <div class="center-circle"></div>
-                <div class="bottom-circle"></div>
-                <div class="bottom-circle1"></div>
-                <div class="right-circle"></div>
-                <div class="right-circle1"></div> -->
-                <!-- <img
-                  class="heart-logo"
-                  src="../../assets/images/login_signup/5.png"
-                  alt="login logo"
-                /><img
-                  class="has-logo"
-                  src="../../assets/images/login_signup/4.png"
-                  alt="login logo"
-                /> -->
-                <!-- <img
-                  class="login-img"
-                  src="../../assets/images/login_signup/1.png"
-                  alt="login logo"
-                /> -->
+                
                 <img
                   class="boy-logo"
                   src="../../assets/images/login_signup/6.png"
@@ -202,27 +185,7 @@
                   src="../../assets/images/login_signup/7.png"
                   alt="girllogo"
                 />
-                <!-- <img
-                  class="cloud-logo"
-                  src="../../assets/images/login_signup/2.png"
-                  alt="login logo"
-                /><img
-                  class="cloud-logo1"
-                  src="../../assets/images/login_signup/2.png"
-                  alt="login logo"
-                /><img
-                  class="cloud-logo2"
-                  src="../../assets/images/login_signup/2.png"
-                  alt="login logo"
-                /><img
-                  class="cloud-logo3"
-                  src="../../assets/images/login_signup/2.png"
-                  alt="login logo"
-                /><img
-                  class="cloud-logo4"
-                  src="../../assets/images/login_signup/2.png"
-                  alt="login logo"
-                /> -->
+                
                 <img
                   class="cloud-logo"
                   src="../../assets/images/logo/logo-circle.png"
@@ -248,13 +211,9 @@
                   src="../../assets/images/logo/logo-circle.png"
                   alt="login logo"
                 />
-                <!-- <img
-                  class="has-logo1"
-                  src="../../assets/images/login_signup/4.png"
-                  alt="login logo"
-                /> -->
+                
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -280,6 +239,12 @@ export default {
   methods: {
     getImgUrl() {
       return require("../../assets/images/goochatload.gif");
+    },
+    getImageBackground(){
+      return require("../../assets/images/backgroundwelcome.jpg");
+    },
+    getImageLogo(){
+      return require("../../assets/images/logogoochat.png");
     },
     checkuserlogin(){
       this.getdataDB.then((data) => {

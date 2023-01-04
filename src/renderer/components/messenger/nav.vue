@@ -43,7 +43,8 @@
         <!-- <hr /> -->
         <template>
           <!-- <li @click="clearDb">clear db</li> -->
-          <li v-for="(oa, index) in currentOfficial.listoa" :key="index">
+          <li v-for="(oa, index) in currentOfficial.listoa" :key="index" style="position:relative">
+            <div v-if="activesidebar == 3 && oa.id == profile.id" style="position:absolute;width:7px;height:28px;left:0;bottom:16px;background:#ffffff;border-top-right-radius: 3px;border-bottom-right-radius: 3px;"></div>
             <a
               class="icon-btn btn-light button-effect active-official"
               :class="activesidebar == 3 && oa.id == profile.id ? 'active' : ''"
@@ -86,8 +87,8 @@
         </li> -->
 
         <li>
-          <div @click="handleSingOut" class="icon-btn btn-light button-effect">
-            <feather type="more-horizontal"></feather>
+          <div @click="handleSingOut" class="icon-btn btn-light button-effect" style="background:transparent">
+            <feather type="settings" size="25" stroke="white"></feather>
           </div>
         </li>
         <!-- <div class="drop-picker" style="position:fixed;left:25px;bottom:30px">

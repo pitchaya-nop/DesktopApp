@@ -86,7 +86,7 @@ export default {
         };
         this.addDataToRealm(stamptime, "updateLogin");
       }
-      this.addDataToRealm("", "deleteData");
+      
       this.$store.state.common.activesidebar = 2;
       this.$store.state.common.openlogout =
         !this.$store.state.common.openlogout;
@@ -99,6 +99,7 @@ export default {
       this.$store.dispatch("auth/setProfile", "");
       this.$store.dispatch("auth/setUserLogin", "");
       this.$store.dispatch("official/setOfficial", null);
+      this.addDataToRealm("", "deleteallData");
       window.localStorage.removeItem("auth");
       this.$router.push("/authentication/login");
     },

@@ -1,7 +1,6 @@
 <template>
   <!--Direct Chat start -->
   <div class="contact-chat">
-    
     <ul class="chatappend" style="position: relative">
       <div class="text-center loadchat" v-if="this.loading">
         <b-spinner
@@ -9,8 +8,7 @@
           style="position: fixed; width: 4rem; height: 4rem"
         ></b-spinner>
       </div>
-      
-      
+
       <template v-if="currentChat.chat">
         <li
           :class="
@@ -36,8 +34,8 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: rgba(255, 255, 255, 0.4);
-              color: #2a2a54;
+              background-color: #bcbcde;
+              color: #ffffff;
               border-radius: 10px;
             "
             v-if="
@@ -55,8 +53,8 @@
             style="
               margin-top: 1rem;
               text-align: center;
-              background-color: rgba(255, 255, 255, 0.4);
-              color: #2a2a54;
+              background-color: #bcbcde;
+              color: #ffffff;
               border-radius: 10px;
             "
             v-if="
@@ -125,9 +123,7 @@
                       style="
                         white-space: pre-wrap;
                         text-align: left;
-                        word-break: break-all;
-                      "
-                    >{{ chat.content }}</h5>
+                        word-break: break-all">{{ chat.content }}</h5>
                     <div
                       v-if="chat.contenttype == 'IMAGE'"
                       :style="
@@ -246,7 +242,7 @@
                       /> -->
                     </div>
 
-                    <div style="display: flex; flex-direction: column">
+                    <div style="display: flex">
                       <div
                         v-if="
                           chat.status == 'READ' &&
@@ -254,17 +250,17 @@
                             chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
-                        class="badge sm ml-2"
-                        :class="'badge-success'"
+                        class="badge sm "
+                        
                         style="display: block"
                       >
-                        R
+                        <img :src="getReadicon('readicon')" style="width: 11px; height: 8px"/>
                       </div>
-                      <div v-if="chat.status == 'READ'" class="badge sm ml-2">
+                      <div v-if="chat.status == 'READ'" class="badge sm ml-2" style="color:#8D92C4">
                         {{ infoTime(chat.createdtime) }}
                       </div>
                     </div>
-                    <div style="display: flex; flex-direction: column">
+                    <div style="display: flex;">
                       <div
                         v-if="
                           chat.status == 'SENT' &&
@@ -272,13 +268,13 @@
                             chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
-                        class="badge sm ml-2"
-                        :class="'badge-dark'"
+                        class="badge sm "
+                        
                         style="display: block"
                       >
-                        S
+                        <img :src="getReadicon('unreadicon')" style="width: 11px; height: 8px"/>
                       </div>
-                      <div v-if="chat.status == 'SENT'" class="badge sm ml-2">
+                      <div v-if="chat.status == 'SENT'" class="badge sm ml-2" style="color:#8D92C4">
                         {{ infoTime(chat.createdtime) }}
                       </div>
                     </div>
@@ -289,10 +285,13 @@
                           chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
-                      class="badge sm ml-2"
-                      :class="'badge-warning'"
+                      class="badge sm "
+                      
                     >
-                      W
+                      <b-spinner
+                      :variant="'secondary'"
+                        style="width: 11px; height: 11px"
+                      ></b-spinner>
                     </div>
 
                     <div
@@ -524,6 +523,9 @@ export default {
     },
     getDefaultimage() {
       return require("../../../../assets/images/logo/waitimg.png");
+    },
+    getReadicon(imagename) {
+      return require(`../../../../assets/images/${imagename}.png`);
     },
     async resendfailed(failedmessage) {
       console.log(failedmessage);

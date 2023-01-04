@@ -11,7 +11,8 @@
     overflow-y: auto;
     background-blend-mode: overlay;
     top: 0;
-    background-color: $primary-light;
+    // background-color: $primary-light;
+    background-color: #ECECF7;
     display: none;
     // animation: fadeInLeft 300ms ease-in-out;
     animation: none;
@@ -247,6 +248,10 @@
   .badge {
     &.sm {
       padding: 4px 4px 2px;
+      padding-left:0;
+      padding-right:0;
+      margin-left: 4px !important;
+      // margin-right:8px
 
     }
     &.refresh {
