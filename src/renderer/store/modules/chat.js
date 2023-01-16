@@ -11,8 +11,8 @@ const innitialstate = {
   typing: false,
   unreadtime: null,
   firstmessageunread: null,
-  messagelength:50,
-  startmessagelength:0,
+  messagelength: 50,
+  startmessagelength: 0,
 }
 const state = {
   users: Users.data,
@@ -22,8 +22,8 @@ const state = {
   typing: false,
   unreadtime: null,
   firstmessageunread: null,
-  messagelength:50,
-  startmessagelength:0,
+  messagelength: 50,
+  startmessagelength: 0,
   // dbchange: 0
 };
 
@@ -141,7 +141,11 @@ const mutations = {
 // actions
 const actions = {
   setChat: (context, payload) => {
+    payload.sort((a, b) => new Date(a.createdtime) - new Date(b.createdtime));
+    payload.sort((a, b) => a.messagetimestamp - b.messagetimestamp);
     return new Promise(resolve => { context.commit("setChat", payload); resolve() })
+
+
   },
   setActiveuser: (context, payload) => {
     context.commit("setActiveuser", payload);
@@ -176,7 +180,7 @@ const actions = {
   uploadImage({ commit }, payload) {
     return new Promise((resolve, reject) => {
       try {
-        
+
         const response = this.$axios.post(`/chat/image/upload`, payload);
         resolve(response);
       } catch (e) {
@@ -187,7 +191,7 @@ const actions = {
   addChat({ commit }, payload) {
     return new Promise((resolve, reject) => {
       try {
-        
+
         const response = this.$axios.post(`/chat/send`, payload);
         resolve(response);
       } catch (e) {

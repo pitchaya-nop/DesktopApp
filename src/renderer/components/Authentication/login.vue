@@ -154,7 +154,7 @@
               <!--              </div>-->
             </div>
           </div>
-          <div class="right-page" :style="[{'background-image':'url(' + getImageBackground() + ')'}]">
+          <div class="right-page" :style="[{'background-image':'url(' + getImageBackground() + ')','background-size':'cover'}]">
             <!-- <div class="right-login animat-rate">
               <div class="animation-block">
                 <div class="bg_circle">

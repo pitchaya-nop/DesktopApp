@@ -254,7 +254,7 @@
                         
                         style="display: block"
                       >
-                        <img :src="getReadicon('readicon')" style="width: 11px; height: 8px"/>
+                        <img :src="getReadicon()" style="width: 11px; height: 8px"/>
                       </div>
                       <div v-if="chat.status == 'READ'" class="badge sm ml-2" style="color:#8D92C4">
                         {{ infoTime(chat.createdtime) }}
@@ -272,7 +272,7 @@
                         
                         style="display: block"
                       >
-                        <img :src="getReadicon('unreadicon')" style="width: 11px; height: 8px"/>
+                        <img :src="getUnreadicon()" style="width: 11px; height: 8px"/>
                       </div>
                       <div v-if="chat.status == 'SENT'" class="badge sm ml-2" style="color:#8D92C4">
                         {{ infoTime(chat.createdtime) }}
@@ -524,11 +524,13 @@ export default {
     getDefaultimage() {
       return require("../../../../assets/images/logo/waitimg.png");
     },
-    getReadicon(imagename) {
-      return require(`../../../../assets/images/${imagename}.png`);
+    getReadicon() {
+      return require(`../../../../assets/images/readicon.png`);
+    },
+    getUnreadicon(){
+      return require(`../../../../assets/images/unreadicon.png`);
     },
     async resendfailed(failedmessage) {
-      console.log(failedmessage);
       if (failedmessage.contenttype == "TEXT") {
         const payload = {
           sessionId: failedmessage.sessionid,
@@ -595,19 +597,19 @@ export default {
     },
   },
   mounted() {
-    // document
-    //   .querySelector(".scrolltopdirectchat")
-    //   .addEventListener("scroll", this.addMessage, false);
+    document
+      .querySelector(".scrolltopdirectchat")
+      .addEventListener("scroll", this.addMessage, false);
   },
   beforeDestroy() {
-    // document
-    //   .querySelector(".scrolltopdirectchat")
-    //   .removeEventListener("scroll", this.addMessage, false);
+    document
+      .querySelector(".scrolltopdirectchat")
+      .removeEventListener("scroll", this.addMessage, false);
   },
   destroyed() {
-    // document
-    //   .querySelector(".scrolltopdirectchat")
-    //   .removeEventListener("scroll", this.addMessage, false);
+    document
+      .querySelector(".scrolltopdirectchat")
+      .removeEventListener("scroll", this.addMessage, false);
   },
   computed: {
     ...mapState({

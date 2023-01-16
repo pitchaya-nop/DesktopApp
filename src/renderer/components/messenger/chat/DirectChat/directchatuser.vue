@@ -128,12 +128,19 @@
             <h6>{{ user.lastmessage }}</h6>
           </div>
           <div class="date-status">
-            <span
-              class="unreadcount"
-              v-if="user.unreadcount > 0 && sessionroom != user.sessionid"
-            >
-              {{ user.unreadcount }}
-            </span>
+            <div>
+              <span>{{
+                user.lastmessagetime != "" ? infoTime(user.lastmessagetime) : ""
+              }}</span>
+            </div>
+            <div>
+              <span
+                class="unreadcount"
+                v-if="user.unreadcount > 0 && sessionroom != user.sessionid"
+              >
+                {{ user.unreadcount > 999 ? "999+" : user.unreadcount }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -144,8 +151,8 @@
 
 <script>
 import { mapState } from "vuex";
-import Vue from "vue";
-import { socket, socketDisconnect } from "../../../../plugins/socketio.service";
+import moment from "moment";
+import { socket } from "../../../../plugins/socketio.service";
 const { ipcRenderer } = require("electron");
 export default {
   data() {
@@ -206,6 +213,17 @@ export default {
     },
   },
   methods: {
+    infoTime(time) {
+      var stillUtc = moment.utc(time).toDate();
+      if (
+        moment(stillUtc).local().format("DD/MM/YYYY") ==
+        moment(new Date()).format("DD/MM/YYYY")
+      ) {
+        return moment(stillUtc).local().format("HH:mm");
+      } else {
+        return moment(stillUtc).local().format("DD/MM");
+      }
+    },
     getImgUrl() {
       return require("../../../../assets/images/avtar/defaultimageoa.png");
     },
@@ -248,21 +266,28 @@ export default {
           );
 
         await this.$store.dispatch("chat/setChat", []);
-        await this.$store.dispatch("chat/setChat", msg);
+        // await this.$store.dispatch("chat/setChat", msg);
+        let arr = [];
+        this.$store.state.chat.messagelength = 50;
+        if (msg.length < this.$store.state.chat.messagelength) {
+          for(let i = 0 ; i < msg.length ;i++){
+            arr.push(msg[i])
+          }
+          await this.$store.dispatch("chat/setChat", arr);
+        } else {
+          for (
+            let i = msg.length - 1;
+            i > msg.length - this.$store.state.chat.messagelength;
+            i--
+          ) {
+            arr.push(msg[i]);
+          }
+          
+          // let sortarray = arr.sort((a,b)=>a.createdtime-b.createdtime);
+          
+          await this.$store.dispatch("chat/setChat", arr);
+        }
 
-        // this.$store.state.chat.messagelength = 50;
-        // if (msg.length < this.$store.state.chat.messagelength) {
-        //   this.$store.dispatch("chat/setChat", msg);
-        // } else {
-        //   for (
-        //     let i = msg.length - 1;
-        //     i > msg.length - this.$store.state.chat.messagelength;
-        //     i--
-        //   ) {
-        //     arr.push(msg[i]);
-        //   }
-        //   this.$store.dispatch("chat/setChat", arr.reverse());
-        // }
         if (this.roomtype == "official") {
           let unreadtime = data
             .objects("MESSAGE")
@@ -400,7 +425,7 @@ export default {
     //   this.$router.push("/authentication/login");
     // },
     // logoutclear() {
-      
+
     //   socketDisconnect();
     //   if (this.userlogin != null) {
     //     let stamptime = {

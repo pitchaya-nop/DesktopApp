@@ -2,15 +2,14 @@
   <!-- Main Chat start -->
   <div
     class="chitchat-main"
-    
     :class="togglerightside ? 'small-sidebar' : ''"
     id="content"
   >
     <div v-if="showModal">
       <transition name="modal">
-        <div class="modal-mask" >
+        <div class="modal-mask">
           <div class="modal-wrapper">
-            <div class="modal-dialog" role="document" style="max-width:300px">
+            <div class="modal-dialog" role="document" style="max-width: 300px">
               <div class="modal-content">
                 <!-- <div class="modal-header">
                   <h5 class="modal-title">Error</h5>
@@ -25,22 +24,36 @@
                     >
                   </button>
                 </div> -->
-                <div class="modal-body" style="padding-top:32px;display:flex;align-items:center">
+                <div
+                  class="modal-body"
+                  style="padding-top: 32px; display: flex; align-items: center"
+                >
                   <!-- <p>Modal body text goes here.</p> -->
-                  <img :src="getErrorIcon()" style="width:22px;height:22px;margin-right:16px"/>
-                  <span style="text-align:left;font-weight:600;font-size:16px">{{this.errorMessage}}</span>
+                  <img
+                    :src="getErrorIcon()"
+                    style="width: 22px; height: 22px; margin-right: 16px"
+                  />
+                  <span
+                    style="text-align: left; font-weight: 600; font-size: 16px"
+                    >{{ this.errorMessage }}</span
+                  >
                   <!-- <h5>This file format can’t be sent.</h5> -->
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
                   <button
                     type="button"
                     class="btn btn-danger"
-                    style="font-weight:400;color:#fff;font-size:14px;padding:5px 16px;border-radius:2px"
+                    style="
+                      font-weight: 400;
+                      color: #fff;
+                      font-size: 14px;
+                      padding: 5px 16px;
+                      border-radius: 2px;
+                    "
                     @click="showModal = false"
                   >
                     OK
                   </button>
-            
                 </div>
               </div>
             </div>
@@ -233,18 +246,52 @@
         <OfficialChatHeader />
         <OfficialCustomChat />
       </div>
-      <div v-if="this.isblockroom" class="message-input-block">
+      <div v-if="this.isblockroom" class="message-input-block" style="height:160px;display:flex;align-items:center;justify-content:center">
         You can't message this user because they either blocked you or deleted
         their account.
       </div>
-      <div
-        v-if="!this.isblockroom"
-        class="message-input"
-        style="padding-top: 15px"
-      >
-        <div class="wrap emojis-main">
-          <div class="mr-3">
-            <!-- class:dot-btn dot-primary  -->
+      <div v-if="!this.isblockroom" class="message-input" style="padding: 0">
+        <div class="wrap emojis-main" style="height: 48px; padding: 12px">
+          <a
+            title="Image"
+            @click="$refs.file.click()"
+            href="javascript:void(0)"
+            style="margin-right:10px"
+          >
+            <feather type="image" size="24" stroke="#77767D"></feather>
+          </a>
+          <a @click="openEmogi()" href="javascript:void(0)">
+            <feather type="smile" size="24" stroke="#77767D"></feather>
+          </a>
+
+          <!-- <feather type="send" size="24"></feather> -->
+          <!-- <a
+            title="Image"
+            @click="$refs.file.click()"
+            class="icon-btn btn-outline-primary button-effect toggle-emoji"
+            href="javascript:void(0)"
+          >
+            <feather type="image" size="24" height="15"></feather>
+          </a>
+          <a
+            class="icon-btn btn-outline-primary button-effect toggle-emoji"
+            @click="openEmogi()"
+            href="javascript:void(0)"
+            ><feather type="smile" size="24" height="15"></feather
+          ></a>
+          <button
+            class="submit icon-btn btn-primary mr-3"
+            :class="text === '' ? 'disabled' : ''"
+            id="send-msg"
+            :disabled="text === ''"
+            @click="handleAddChat()"
+          >
+            <feather type="send" size="15" height="15"></feather>
+          </button> -->
+        </div>
+        <div class="wrap emojis-main" style="height: 112px">
+          <!-- <div class="mr-3">
+            
             <a
               title="Image"
               @click="$refs.file.click()"
@@ -252,7 +299,7 @@
               href="javascript:void(0)"
               ><feather type="image" size="15" height="15"></feather
             ></a>
-          </div>
+          </div> -->
           <input
             id="fileimage"
             type="file"
@@ -317,14 +364,14 @@
                 points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "
               ></polygon></svg
           ></a> -->
-          <div class="mr-3">
+          <!-- <div class="mr-3">
             <a
               class="icon-btn btn-outline-primary button-effect toggle-emoji"
               @click="openEmogi()"
               href="javascript:void(0)"
               ><feather type="smile" size="15" height="15"></feather
             ></a>
-          </div>
+          </div> -->
           <!-- <div class="contact-poll">
             <b-dropdown
               size="lg"
@@ -380,6 +427,7 @@
             @keydown.enter.exact.prevent
             v-on:keyup.enter="addChat"
             type="text"
+            style="width: 100%; border: 0;border-top: 1px solid #eff1f2;"
             placeholder="Write your message..."
           />
           <!-- v-on:keyup.enter="addChat()" -->
@@ -388,7 +436,7 @@
             href="javascript:void(0)"
             ><feather type="mic" size="15" height="15"></feather>
           </a> -->
-          <div class="mr-3 ml-3">
+          <!-- <div class="mr-3 ml-3">
             <button
               class="submit icon-btn btn-primary mr-3"
               :class="text === '' ? 'disabled' : ''"
@@ -398,7 +446,7 @@
             >
               <feather type="send" size="15" height="15"></feather>
             </button>
-          </div>
+          </div> -->
           <div class="emojis-contain" :class="showemogi ? 'open' : ''">
             <div class="emojis-sub-contain custom-scroll">
               <ul>
@@ -476,7 +524,7 @@ export default {
       blockroom: false,
       roomdisplay: null,
       showModal: false,
-      errorMessage:'',
+      errorMessage: "",
       styleObject: {
         "background-color": "transparent",
         "background-blend-mode": "unset",
@@ -550,6 +598,10 @@ export default {
     backtochat() {
       document.querySelector(".sidebar-toggle").classList.remove("mobile-menu");
     },
+    generatenanosec(){
+      let millisectime = new Date().getTime()
+      return millisectime * 1000000;
+    },
     imageDimensions(file) {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -584,13 +636,14 @@ export default {
           if (e.target.files[i].size > 10 * 1024 * 1024) {
             this.showModal = true;
             document.getElementById("fileimage").value = "";
-            this.errorMessage = 'You can only send up to 10MB of file at a time.'
+            this.errorMessage =
+              "You can only send up to 10MB of file at a time.";
             return false;
           }
           if (e.target.files.length > 10) {
             this.showModal = true;
             document.getElementById("fileimage").value = "";
-            this.errorMessage = 'You can select no more than 10 items.'
+            this.errorMessage = "You can select no more than 10 items.";
             return false;
           }
           const dataimage = await this.imageDimensions(e.target.files[i]);
@@ -658,6 +711,7 @@ export default {
       //     this.scrollbottom()
       // }
     },
+
     async addChat(e) {
       if (e.keyCode == 13 && e.shiftKey == false) {
         if (this.text != "") {
@@ -667,6 +721,7 @@ export default {
             contentType: "TEXT",
             content: this.text,
             // this.text.slice(0, -1)
+            messagetimestamp:this.generatenanosec(),
             destructTime: 0,
             senderId: this.profile.id,
             oaId: this.profile.id,
@@ -676,7 +731,7 @@ export default {
           this.addDataToRealm(payload, "addDummyMessage");
           this.setMessage(this.sessionID);
           const res = await this.$store.dispatch("chat/addChat", payload);
-          
+
           if (res.data.code == "0000") {
             this.addDataToRealm(res.data.data, "updateDummyMesaage");
           }
@@ -755,7 +810,7 @@ export default {
     getImgUrl() {
       return require("../../assets/images/avtar/defaultimageoa.png");
     },
-    getErrorIcon(){
+    getErrorIcon() {
       return require("../../assets/images/erroricon.png");
     },
     addemogi(emogi) {

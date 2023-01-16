@@ -386,6 +386,8 @@ export default {
                     socket.on(
                       `messages:update:${item.sessionId}`,
                       (msgupdate) => {
+                        console.log('message update');
+                        console.log(msgupdate);
                         // console.log('profile id');
                         // console.log(this.profile.id);
                         // this.profile.adminuserids.map((item) => {

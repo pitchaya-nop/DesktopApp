@@ -4,8 +4,8 @@
     padding-top: 0;
     // height: calc(100vh - 95px);
     // min-height: calc(100vh - 95px);
-    height: calc(100vh - 160px);
-    min-height: calc(100vh - 160px);
+    height: calc(100vh - 225px);
+    min-height: calc(100vh - 225px);
     overflow: auto;
     overflow-x: hidden;
     overflow-y: auto;
@@ -185,7 +185,7 @@
     color:#BBB9C0
   }
   .message-input {
-    height: 95px;
+    height: 160px;
     position: fixed;
     background-color: $white;
     border-top: 1px solid $bordergray !important;
