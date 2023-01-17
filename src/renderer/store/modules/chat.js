@@ -141,8 +141,28 @@ const mutations = {
 // actions
 const actions = {
   setChat: (context, payload) => {
+
+    // Array.prototype.groupBy = function (field) {
+    //   let groupedArr = [];
+    //   this.forEach(function (e) {
+    //     //look for an existent group
+    //     let group = groupedArr.find(g => g['field'] === e[field]);
+    //     if (group == undefined) {
+    //       //add new group if it doesn't exist
+    //       group = { field: e[field], groupList: [] };
+    //       groupedArr.push(group);
+    //     }
+
+    //     //add the element to the group
+    //     group.groupList.push(e);
+    //   });
+
+    //   return groupedArr;
+    // }
+
     payload.sort((a, b) => new Date(a.createdtime) - new Date(b.createdtime));
     payload.sort((a, b) => a.messagetimestamp - b.messagetimestamp);
+
     return new Promise(resolve => { context.commit("setChat", payload); resolve() })
 
 
@@ -188,6 +208,7 @@ const actions = {
       }
     });
   },
+
   addChat({ commit }, payload) {
     return new Promise((resolve, reject) => {
       try {

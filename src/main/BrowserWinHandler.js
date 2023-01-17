@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, app, session, Notification, ipcMain, shell } from 'electron'
+import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell } from 'electron'
 import path from 'path';
 import url from 'url'
 const electron = require('electron')
@@ -84,6 +84,11 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+
+    // const view = new BrowserView()
+    // this.browserWindow.setBrowserView(view)
+    // view.setBounds({ x: 200, y: 200, width: 300, height: 300 })
+    // view.webContents.loadURL('https://electronjs.org')
 
     // electron.powerMonitor.on('suspend', () => {
     //   console.log('The system is going to sleep')

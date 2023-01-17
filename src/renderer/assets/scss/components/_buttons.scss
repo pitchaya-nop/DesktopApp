@@ -374,6 +374,7 @@
 	}
 	&:hover {
 		cursor: pointer;
+		background-color: transparent !important;
 		&:before{
 			-webkit-animation: circle .75s;
 			animation: circle .75s;
