@@ -1,10 +1,10 @@
-const ICONS_DIR = 'build/icons/'
+const ICONS_DIR = "build/icons/";
 
 const windowsOS = {
   win: {
-    icon: ICONS_DIR + 'win-icon.ico',
-    publisherName: 'michal',
-    target: 'nsis',
+    icon: ICONS_DIR + "win-icon.ico",
+    publisherName: "michal",
+    target: "nsis",
   },
 
   nsis: {
@@ -12,64 +12,70 @@ const windowsOS = {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-  }
-}
+  },
+};
 
 const linuxOS = {
   linux: {
     icon: ICONS_DIR,
-    target: 'deb'
-  }
-}
+    target: "deb",
+  },
+};
 
 const macOS = {
   mac: {
-    target: 'dmg',
-    icon: ICONS_DIR + 'con.icns'
+    target: "dmg",
+    icon: ICONS_DIR + "con.icns",
+    hardenedRuntime: true,
+    entitlements: "build_helper/entitlements.mac.plist",
+    entitlementsInherit: "build_helper/entitlements.mac.plist",
+    gatekeeperAssess: false,
   },
   dmg: {
+    sign: false,
     contents: [
       {
         x: 410,
         y: 150,
-        type: 'link',
-        path: '/Applications'
+        type: "link",
+        path: "/Applications",
       },
       {
         x: 130,
         y: 150,
-        type: 'file'
-      }
-    ]
-  }
-}
+        type: "file",
+      },
+    ],
+  },
+};
 
 module.exports = {
-  productName: 'Goochat',
-  appId: 'com.example.app',
-  artifactName: 'goochatsetup-${version}.${ext}',
+  productName: "Goochat",
+  appId: "com.example.app",
+  artifactName: "goochatsetup-${version}.${ext}",
+  afterSign: "scripts/notarize.js",
   directories: {
-    output: 'build'
+    output: "build",
   },
   // default files: https://www.electron.build/configuration/contents
   files: [
-    'package.json',
+    "package.json",
     {
-      from: 'dist/main/',
-      to: 'dist/main/'
+      from: "dist/main/",
+      to: "dist/main/",
     },
     {
-      from: 'dist/renderer',
-      to: 'dist/renderer/'
-    }
+      from: "dist/renderer",
+      to: "dist/renderer/",
+    },
   ],
   extraResources: [
     {
-      from: 'src/extraResources/',
-      to: ''
-    }
+      from: "src/extraResources/",
+      to: "",
+    },
   ],
   ...windowsOS,
   ...linuxOS,
-  ...macOS
-}
+  ...macOS,
+};
