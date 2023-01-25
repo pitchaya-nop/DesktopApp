@@ -40,18 +40,14 @@ export default {
         this.syncTime = item.logoutstamptime
       });
     });
-    // SocketioService.setupSocketConnection();
+    // this.getOfficial();
     socketAuth();
   },
   async mounted() {
-    // this.socketEvent();
-    // localStorage.debug = false
     if (this.getProfile == null) {
       await this.getMe();
     }
-    this.getContact();
-    // this.getRooms();
-    this.getOfficial();
+    // this.getContact();
     socket.on("keepAlive", (data) => {
       // console.log(data);
       let stamptime = {
@@ -157,7 +153,17 @@ export default {
 
             socket.on(`officials:user:${this.userlogin.id}`, (data) => {
               this.Officialuser = data.data;
-
+              
+              console.log('official user socket');
+              console.log(data.data);
+              data.data.map((item)=>{
+                item.profileId = this.userlogin.id;
+              })
+              this.addDataToRealm(data.data, "addOfficial");
+              setTimeout(() => {
+                this.setOfficial()
+              }, 500);
+              
               data.data.map((officialdata) => {
                 socket.emit(
                   "oa:auth",
@@ -925,18 +931,17 @@ export default {
           "official/requestOfficial",
           payload
         );
+        console.log('official data api');
+        console.log(response.data.data);
         if (response.status === 200) {
           response.data.data.map((item) => {
             console.log("profile id");
             console.log(this.profile.id);
             item.profileId = this.profile.id;
           });
-          console.log('add official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@official@@@@@@@@@@@@@@@@@@@@@@@');
+          
           this.addDataToRealm(response.data.data, "addOfficial");
-          setTimeout(() => {
-        
-            this.setOfficial(this.userlogin.id);
-          }, 500);
+          
         }
       } catch (error) {
         console.log(error);

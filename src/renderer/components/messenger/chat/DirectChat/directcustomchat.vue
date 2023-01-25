@@ -10,6 +10,8 @@
       </div>
 
       <template v-if="currentChat.chat">
+        <div v-for="(data, idx) in currentChat.chat" :key="idx">
+          <p>{{data.field}}</p>
         <li
           :class="
             chat.senderid == userprofile.id ||
@@ -18,7 +20,7 @@
               ? 'sent'
               : 'replies'
           "
-          v-for="(chat, index) in currentChat.chat"
+          v-for="(chat, index) in data.groupList"
           :key="index"
           :style="
             currentChat.unread &&
@@ -28,6 +30,7 @@
               ? 'width:100%'
               : 'width:80%'
           "
+          
         >
           <p
             class="unreadmessage"
@@ -123,7 +126,9 @@
                       style="
                         white-space: pre-wrap;
                         text-align: left;
-                        word-break: break-all">{{ chat.content }}</h5>
+                        word-break: break-all;
+                      "
+                    >{{ chat.content }}</h5>
                     <div
                       v-if="chat.contenttype == 'IMAGE'"
                       :style="
@@ -250,17 +255,23 @@
                             chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
-                        class="badge sm "
-                        
+                        class="badge sm"
                         style="display: block"
                       >
-                        <img :src="getReadicon()" style="width: 11px; height: 8px"/>
+                        <img
+                          :src="getReadicon()"
+                          style="width: 11px; height: 8px"
+                        />
                       </div>
-                      <div v-if="chat.status == 'READ'" class="badge sm ml-2" style="color:#8D92C4">
+                      <div
+                        v-if="chat.status == 'READ'"
+                        class="badge sm ml-2"
+                        style="color: #8d92c4"
+                      >
                         {{ infoTime(chat.createdtime) }}
                       </div>
                     </div>
-                    <div style="display: flex;">
+                    <div style="display: flex">
                       <div
                         v-if="
                           chat.status == 'SENT' &&
@@ -268,13 +279,19 @@
                             chat.oaid !== '' ||
                             checksender(chat.senderid))
                         "
-                        class="badge sm "
-                        
+                        class="badge sm"
                         style="display: block"
                       >
-                        <img :src="getUnreadicon()" style="width: 11px; height: 8px"/>
+                        <img
+                          :src="getUnreadicon()"
+                          style="width: 11px; height: 8px"
+                        />
                       </div>
-                      <div v-if="chat.status == 'SENT'" class="badge sm ml-2" style="color:#8D92C4">
+                      <div
+                        v-if="chat.status == 'SENT'"
+                        class="badge sm ml-2"
+                        style="color: #8d92c4"
+                      >
                         {{ infoTime(chat.createdtime) }}
                       </div>
                     </div>
@@ -285,11 +302,10 @@
                           chat.oaid !== '' ||
                           checksender(chat.senderid))
                       "
-                      class="badge sm "
-                      
+                      class="badge sm"
                     >
                       <b-spinner
-                      :variant="'secondary'"
+                        :variant="'secondary'"
                         style="width: 11px; height: 11px"
                       ></b-spinner>
                     </div>
@@ -429,6 +445,7 @@
             </div>
           </div>
         </li>
+        </div>
       </template>
 
       <!-- <li :class="typing ? 'sent last typing-': 'sent'" :style="typing? 'display: block': 'display: none'">
@@ -504,16 +521,16 @@ export default {
   data() {
     return {
       currentchat: [],
-      testdata: [],
       refresh: false,
       styleObject: {
         "background-size": "cover",
         "background-position": "center",
         display: "block",
       },
+      setLastMessageRef:null
     };
   },
-
+ 
   methods: {
     previewimage(image) {
       window.open(image, "_blank");
@@ -527,7 +544,7 @@ export default {
     getReadicon() {
       return require(`../../../../assets/images/readicon.png`);
     },
-    getUnreadicon(){
+    getUnreadicon() {
       return require(`../../../../assets/images/unreadicon.png`);
     },
     async resendfailed(failedmessage) {
@@ -560,7 +577,7 @@ export default {
         setTimeout(() => {
           var postScrollHeight = contain.scrollHeight;
           var delta = postScrollHeight - preScrollHeight;
-          contain.scrollBy(0, delta);
+            contain.scrollBy(0, delta);
         }, 10);
       }
     },
@@ -597,6 +614,7 @@ export default {
     },
   },
   mounted() {
+    
     document
       .querySelector(".scrolltopdirectchat")
       .addEventListener("scroll", this.addMessage, false);

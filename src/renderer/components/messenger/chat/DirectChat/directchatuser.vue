@@ -340,10 +340,11 @@ export default {
           const contain = document.querySelector(".scrolltopdirectchat");
           contain.scrollTop = contain.scrollHeight;
         }
-      }, 600);
-      setTimeout(() => {
         this.$store.dispatch("common/setLoadingchat", false);
-      }, 610);
+      }, 600);
+      // setTimeout(() => {
+      //   this.$store.dispatch("common/setLoadingchat", false);
+      // }, 500);
     },
     setSeesionuser: function (sessionid) {
       this.$store.dispatch("chat/setSessionChat", sessionid);

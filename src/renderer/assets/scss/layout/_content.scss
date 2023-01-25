@@ -7,8 +7,6 @@
     height: calc(100vh - 225px);
     min-height: calc(100vh - 225px);
     overflow: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
     background-blend-mode: overlay;
     top: 0;
     // background-color: $primary-light;
@@ -16,9 +14,11 @@
     display: none;
     // animation: fadeInLeft 300ms ease-in-out;
     animation: none;
+    
     &.active {
       display: block;
       animation: none;
+      
       // animation: fadeInLeft 300ms ease-in-out;
     }
     .contact-details {

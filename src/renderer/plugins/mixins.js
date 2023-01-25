@@ -180,7 +180,8 @@ const MessageSchema = {
         uniqueids: "string[]",
         createdtime: "string",
         updatedtime: "string",
-        messagetimestamp: "int"
+        messagetimestamp: "int",
+        grouptimedisplay: "string"
     }
 
 
@@ -216,7 +217,7 @@ Vue.mixin({
         getdataDB: function () {
             return Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema, LoginDataSchema],
-                schemaVersion: 7
+                schemaVersion: 8
             }).then(
                 (realm) => {
                     return realm
@@ -233,13 +234,21 @@ Vue.mixin({
             const profile = this.$store.getters['auth/profile']
             return profile
         },
+        getLoginProfile: function () {
+            const profile = this.$store.getters['auth/userlogin']
+            return profile
+        },
         getToken: function () {
             const token = this.$store.getters['auth/token']
             return token
         }
     },
     methods: {
-         setMessage(session) {
+        getDateUtcDisplay(value) {
+            var stillUtc = moment.utc(value).toDate();
+            return moment(stillUtc).local().format("DD/MM/YYYY");
+        },
+        setMessage(session) {
             // let container = document.querySelector(".scrolltopdirectchat");
             this.getdataDB.then(async (data) => {
                 let lastshowtime = data
@@ -268,11 +277,7 @@ Vue.mixin({
                     this.$store.dispatch("chat/setChat", arr);
                 }
 
-                // if (document.querySelector(".scrolltopdirectchat")) {
-                //     if (((container.scrollTop + container.clientHeight) - container.scrollHeight) < 1 && ((container.scrollTop + container.clientHeight) - container.scrollHeight) >= 0) {
-                //         container.scrollTop = container.scrollHeight;
-                //     }
-                // }
+               
 
             })
 
@@ -296,17 +301,12 @@ Vue.mixin({
                 this.$store.dispatch("room/setRoom", room)
             })
         },
-        setFilterRoom() {
 
-        },
-        setOfficial(userid) {
+        setOfficial() {
             this.getdataDB.then((data) => {
-
-                console.log('setofficial');
-
-                let official = data.objects("OFFICIAL").filtered(`profileid == "${userid}"`);
-                console.log(official);
-                official.map((data) => { console.log(data); })
+           
+                let official = data.objects("OFFICIAL").filtered(`profileid == "${this.getLoginProfile.id}"`);
+                console.log(official.length);
                 this.$store.dispatch("official/setOfficial", official)
             })
         },
@@ -314,7 +314,7 @@ Vue.mixin({
 
             Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema, LoginDataSchema],
-                schemaVersion: 7,
+                schemaVersion: 8,
                 // migration: (oldRealm, newRealm) => {
 
                 //     if (oldRealm.schemaVersion < 1) { }
@@ -389,6 +389,7 @@ Vue.mixin({
                             break;
                         case 'addOfficial':
                             data.map((item) => {
+
                                 let official = realm.objects("OFFICIAL").filtered(`id == "${item.id}" `)
                                 if (official.length > 0) {
                                     return false
@@ -560,7 +561,6 @@ Vue.mixin({
 
                             break;
                         case 'addMessage':
-
                             realm.write(() => {
                                 data.map((item) => {
                                     item.messages.map((msg) => {
@@ -584,6 +584,7 @@ Vue.mixin({
                                                 content: msg.content,
                                                 createdtime: msg.createdTime,
                                                 messagetimestamp: msg.messageTimeStamp,
+                                                grouptimedisplay: this.getDateUtcDisplay(msg.createdTime),
                                                 dummyfile: [],
                                                 media: msg.media ? msg.media : [{
                                                     id: "",
@@ -634,6 +635,7 @@ Vue.mixin({
                                     contenttype: data.contentType,
                                     content: data.content,
                                     createdtime: "",
+                                    grouptimedisplay: this.getDateUtcDisplay(data.createdtime),
                                     messagetimestamp: data.messagetimestamp,
                                     dummyfile: [],
                                     media: data.media,
@@ -672,6 +674,7 @@ Vue.mixin({
                                                     dummsg.content = msg.content,
                                                     dummsg.createdtime = msg.createdTime,
                                                     dummsg.messagetimestamp = msg.messageTimeStamp,
+                                                    dummsg.grouptimedisplay = this.getDateUtcDisplay(msg.createdTime),
                                                     dummsg.dummyfile = []
                                                 dummsg.media = [{
                                                     id: "",
@@ -714,8 +717,9 @@ Vue.mixin({
                                                     dummsg.content = msg.content,
                                                     dummsg.createdtime = msg.createdTime,
                                                     dummsg.messagetimestamp = msg.messageTimeStamp,
+                                                    dummsg.grouptimedisplay = this.getDateUtcDisplay(msg.createdTime),
                                                     dummsg.dummyfile = []
-                                                dummsg.media = msg.media,
+                                                    dummsg.media = msg.media,
                                                     dummsg.cancelmessage = msg.cancelMessage,
                                                     dummsg.strangermessage = msg.strangerMessage,
                                                     dummsg.blockmessage = msg.blockMessage,
@@ -868,12 +872,13 @@ Vue.mixin({
                         case 'deleteData':
                             realm.write(() => {
                                 // realm.deleteAll()
-                                let message = realm.objects("MESSAGE")
-                                let room = realm.objects('ROOM')
-                                let userlogin = realm.objects('LOGIN')
-                                realm.delete(room)
-                                realm.delete(message)
-                                realm.delete(userlogin)
+                                let official = realm.objects("OFFICIAL")
+                                // let message = realm.objects("MESSAGE")
+                                // let room = realm.objects('ROOM')
+                                // let userlogin = realm.objects('LOGIN')
+                                realm.delete(official)
+                                // realm.delete(message)
+                                // realm.delete(userlogin)
                                 // if (official.length > 0) {
                                 //     realm.delete(official)
                                 // }

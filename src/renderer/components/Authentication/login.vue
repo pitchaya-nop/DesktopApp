@@ -8,7 +8,7 @@
           <div class="left-page">
             <div class="login-content">
               <div style="width:100%;text-align:center;margin-bottom:30px">
-                <img :src="getImageLogo()" style="width:400px"/>
+                <img :src="getImageLogo()" style="width:90%"/>
               </div>
               <!-- <div class="login-content-header mt-3 mb-3">
                 <img
