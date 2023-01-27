@@ -44,7 +44,7 @@ export default {
     socketAuth();
   },
   async mounted() {
-    if (this.getProfile == null) {
+    if (this.getProfile == null ) {
       await this.getMe();
     }
     // this.getContact();

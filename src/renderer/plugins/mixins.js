@@ -756,6 +756,7 @@ Vue.mixin({
                             // checkunreadcount
                             // console.log('update unreadcount');
                             // console.log(data);
+                            console.log('updateUnreadcount');
                             realm.write(() => {
                                 const session = realm.objects("ROOM").filtered(`isshow == true`)
                                 // console.log(session);

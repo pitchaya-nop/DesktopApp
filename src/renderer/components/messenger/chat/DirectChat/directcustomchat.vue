@@ -11,7 +11,13 @@
 
       <template v-if="currentChat.chat">
         <div v-for="(data, idx) in currentChat.chat" :key="idx">
-          <p>{{data.field}}</p>
+          <div class="notice_date_block">
+            <p class="notice_center" style="width:96px;margin:auto">
+            {{data.field}}
+            {{groupMessageTimeDisplay(data.field)}}
+          </p>
+          </div>
+          
         <li
           :class="
             chat.senderid == userprofile.id ||
@@ -32,15 +38,11 @@
           "
           
         >
+        
+       
           <p
-            class="unreadmessage"
-            style="
-              margin-top: 1rem;
-              text-align: center;
-              background-color: #bcbcde;
-              color: #ffffff;
-              border-radius: 10px;
-            "
+            class="unreadmessage notice_center"
+            
             v-if="
               currentChat.unread &&
               chat.createdtime == currentChat.unread &&
@@ -52,14 +54,8 @@
             Unread message below
           </p>
           <p
-            class="unreadmessage"
-            style="
-              margin-top: 1rem;
-              text-align: center;
-              background-color: #bcbcde;
-              color: #ffffff;
-              border-radius: 10px;
-            "
+            class="unreadmessage notice_center"
+            
             v-if="
               currentChat.unread &&
               chat.createdtime == currentChat.unread &&
@@ -601,8 +597,14 @@ export default {
         return `${imgwidth}px`;
       }
     },
+    groupMessageTimeDisplay(time){
+    var stillUtc = moment.utc(new Date(time)).toDate();
+    // console.log(stillUtc);
+    },
     infoTime(time) {
+      console.log(time);
       var stillUtc = moment.utc(time).toDate();
+      console.log(stillUtc);
       if (
         moment(stillUtc).local().format("DD/MM/YYYY") ==
         moment(new Date()).format("DD/MM/YYYY")

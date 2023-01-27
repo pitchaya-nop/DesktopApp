@@ -162,7 +162,7 @@ export default {
     },
     setroom() {
       this.addDataToRealm(this.profile, "updateUnreadcount");
-      this.addDataToRealm(this.profile, "updateLastmessage");
+      // this.addDataToRealm(this.profile, "updateLastmessage");
       this.setRooms();
     },
     activemenu(id, type) {

@@ -253,9 +253,8 @@ export default {
 
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);
-
+      this.addDataToRealm(this.profile, "updateUnreadcount");
       this.getdataDB.then(async (data) => {
-        this.addDataToRealm(this.profile, "updateUnreadcount");
         let lastshowtime = data
           .objects("ROOM")
           .filtered(`sessionid == "${sessionid}"`);
@@ -270,8 +269,8 @@ export default {
         let arr = [];
         this.$store.state.chat.messagelength = 50;
         if (msg.length < this.$store.state.chat.messagelength) {
-          for(let i = 0 ; i < msg.length ;i++){
-            arr.push(msg[i])
+          for (let i = 0; i < msg.length; i++) {
+            arr.push(msg[i]);
           }
           await this.$store.dispatch("chat/setChat", arr);
         } else {
@@ -282,9 +281,9 @@ export default {
           ) {
             arr.push(msg[i]);
           }
-          
+
           // let sortarray = arr.sort((a,b)=>a.createdtime-b.createdtime);
-          
+
           await this.$store.dispatch("chat/setChat", arr);
         }
 
@@ -328,9 +327,9 @@ export default {
           }
         }
       });
-      // console.log(this.profile);
       this.addDataToRealm(this.profile, "updateLastmessage");
       this.setRooms();
+      
       setTimeout(() => {
         if (document.querySelector(".unreadmessage")) {
           const contain = document.querySelector(".scrolltopdirectchat");
@@ -342,9 +341,6 @@ export default {
         }
         this.$store.dispatch("common/setLoadingchat", false);
       }, 600);
-      // setTimeout(() => {
-      //   this.$store.dispatch("common/setLoadingchat", false);
-      // }, 500);
     },
     setSeesionuser: function (sessionid) {
       this.$store.dispatch("chat/setSessionChat", sessionid);

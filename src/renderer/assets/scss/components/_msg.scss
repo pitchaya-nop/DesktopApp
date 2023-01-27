@@ -131,7 +131,17 @@
       .last {
         order: 999;
       }
-    }
+		}
+		.notice_date_block{
+			width: 100%;
+		}
+		.notice_center{
+			margin-top: 1rem;
+			text-align: center;
+			background-color: #bcbcde;
+			color: #ffffff;
+			border-radius: 10px;
+		 }
    > div > li {
       &.replies {
         .document {
