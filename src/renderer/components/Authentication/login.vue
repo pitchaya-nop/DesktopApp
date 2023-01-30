@@ -1,4 +1,3 @@
-
 <template>
   <!--SignIn start -->
   <div class="container-fluid p-0">
@@ -7,8 +6,8 @@
         <div class="login-contain-main">
           <div class="left-page">
             <div class="login-content">
-              <div style="width:100%;text-align:center;margin-bottom:30px">
-                <img :src="getImageLogo()" style="width:90%"/>
+              <div style="width: 100%; text-align: center; margin-bottom: 30px">
+                <img :src="getImageLogo()" style="width: 90%" />
               </div>
               <!-- <div class="login-content-header mt-3 mb-3">
                 <img
@@ -78,7 +77,10 @@
                 <template v-if="this.loginfailed">
                   <p class="error-label-login">{{ this.errorlogin }}</p>
                 </template>
+                <!--  -->
+                <Checkbox :label="`Remember me `" v-model="isRememberMe" />
 
+                <Checkbox :label="`Remember me2 `" v-model="isRememberMe" />
                 <div class="form-group">
                   <div class="buttons">
                     <button
@@ -90,7 +92,6 @@
                           : { padding: '14px 65px' },
                       ]"
                       href="javascript:void(0)"
-                      @click="handleLogin"
                       :disabled="this.password == '' || this.email == ''"
                     >
                       <template v-if="this.loginloading">
@@ -104,6 +105,7 @@
                           <span class="sr-only">Loading...</span>
                         </div> -->
                       </template>
+
                       <template v-else> Login </template>
                     </button>
 
@@ -154,7 +156,15 @@
               <!--              </div>-->
             </div>
           </div>
-          <div class="right-page" :style="[{'background-image':'url(' + getImageBackground() + ')','background-size':'cover'}]">
+          <div
+            class="right-page"
+            :style="[
+              {
+                'background-image': 'url(' + getImageBackground() + ')',
+                'background-size': 'cover',
+              },
+            ]"
+          >
             <!-- <div class="right-login animat-rate">
               <div class="animation-block">
                 <div class="bg_circle">
@@ -224,35 +234,66 @@
 
 <script>
 const CryptoJS = require("crypto-js");
+import Checkbox from "@/components/common/checkBox/checkBox.vue";
+
 import VueSocketIO from "vue-socket.io";
 
+import Vue from "vue";
+
+var keyHex = CryptoJS.enc.Utf8.parse(
+  "a62d9f02d9412f4c724919362a5ad4fe"
+  // "4a310288218c3394d829e49bd187c395"
+);
+
 export default {
+  components: {
+    Checkbox,
+  },
   data() {
     return {
-      email: "haruthai.moe@snocko-tech.com",
-      password: "Hh12345",
+      email: window.localStorage.getItem("saveEmail"),
+      // decrypt password
+      password: CryptoJS.AES.decrypt(
+        window.localStorage.getItem("savePassword"),
+        keyHex,
+        {
+          mode: CryptoJS.mode.ECB,
+        }
+      ).toString(CryptoJS.enc.Utf8),
+
       loginloading: false,
       loginfailed: false,
+      isRememberMe: window.localStorage.getItem("isRememberMe") === "true",
       errorlogin: "error login naja",
     };
   },
+
+  watch: {
+    // handle get isRemember me
+    isRememberMe() {
+      console.log("set isRememberMe : ", this.isRememberMe);
+      window.localStorage.setItem("isRememberMe", this.isRememberMe);
+    },
+  },
   methods: {
+    testLog() {
+      console.log("testLog !!");
+    },
     getImgUrl() {
       return require("../../assets/images/goochatload.gif");
     },
-    getImageBackground(){
+    getImageBackground() {
       return require("../../assets/images/backgroundwelcome.jpg");
     },
-    getImageLogo(){
+    getImageLogo() {
       return require("../../assets/images/logogoochat.png");
     },
-    checkuserlogin(){
+    checkuserlogin() {
       this.getdataDB.then((data) => {
-        let userlogin = data.objects('LOGIN')
-        userlogin.map((item)=>{
+        let userlogin = data.objects("LOGIN");
+        userlogin.map((item) => {
           console.log(item);
-        })
-
+        });
       });
     },
     async handleLogin() {
@@ -268,12 +309,29 @@ export default {
             // "4a310288218c3394d829e49bd187c395"
           );
           // "4a310288218c3394d829e49bd187c395" ---> dev sit
-          console.log(keyHex);
+          // console.log(keyHex);
           var encrypted = CryptoJS.AES.encrypt(this.password, keyHex, {
             mode: CryptoJS.mode.ECB,
             padding: CryptoJS.pad.Pkcs7,
           });
-          // console.log("qwe", encrypted);
+
+          var bytes = CryptoJS.AES.decrypt(this.password, keyHex, {
+            mode: CryptoJS.mode.ECB,
+            // padding: CryptoJS.pad.Pkcs7,
+          });
+
+          // var decryptedPassword = CryptoJS.AES.decrypt(
+          //   encrypted.toString(),
+          //   keyHex,
+          //   {
+          //     mode: CryptoJS.mode.ECB,
+          //   }
+          // ).toString(CryptoJS.enc.Utf8);
+
+          // console.log(
+          //   "Decrypted:\n",
+          //   decryptedPassword.toString(CryptoJS.enc.Utf8)
+          // );
 
           const payload = new FormData();
           payload.append("email", this.email);
@@ -284,10 +342,17 @@ export default {
             payload
           );
           // console.log("response", response);
+          if (this.isRememberMe) {
+            // console.log("set1 email = ", this.email);
+            // console.log("set1 password = ", this.password);
+            window.localStorage.setItem("saveEmail", this.email);
+            window.localStorage.setItem("savePassword", encrypted);
+          }
 
           if (response.code === "0000") {
             // console.log('success');
             console.log(response.data.accessToken);
+
             const data = response.data;
             this.getdataDB.then((item) => {
               let userlogin = item
@@ -300,6 +365,7 @@ export default {
             await this.$store.dispatch("auth/setToken", data.accessToken);
             // await this.$store.dispatch("auth/setProfile", data.userProfile);
             await this.$store.dispatch("auth/setUserLogin", data.userProfile);
+
             this.email = "";
             this.password = "";
             this.$router.push("/");
