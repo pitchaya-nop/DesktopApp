@@ -79,8 +79,6 @@
                 </template>
                 <!--  -->
                 <Checkbox :label="`Remember me `" v-model="isRememberMe" />
-
-                <Checkbox :label="`Remember me2 `" v-model="isRememberMe" />
                 <div class="form-group">
                   <div class="buttons">
                     <button
