@@ -277,7 +277,7 @@ Vue.mixin({
                     this.$store.dispatch("chat/setChat", arr);
                 }
 
-               
+
 
             })
 
@@ -289,24 +289,25 @@ Vue.mixin({
             })
         },
         setRooms() {
-            this.getdataDB.then((data) => {
-                let room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
-                // if (this.$store.state.room.roomtype == 'official') {
-                //     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
-                // } else {
-                //     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}"`).sorted('showtime', true)
-                // }
 
+            if (this.getProfile != null && this.getProfile != "") {
+                this.getdataDB.then((data) => {
+                    let room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
+                    // if (this.$store.state.room.roomtype == 'official') {
+                    //     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}" AND idofficialroom =="${this.getProfile.id}"`).sorted('showtime', true)
+                    // } else {
+                    //     room = data.objects("ROOM").filtered(`isshow == true AND roomtype == "${this.$store.state.room.roomtype}"`).sorted('showtime', true)
+                    // }
+                    this.$store.dispatch("room/setRoom", room)
+                })
+            }
 
-                this.$store.dispatch("room/setRoom", room)
-            })
         },
 
         setOfficial() {
+
             this.getdataDB.then((data) => {
-           
                 let official = data.objects("OFFICIAL").filtered(`profileid == "${this.getLoginProfile.id}"`);
-                console.log(official.length);
                 this.$store.dispatch("official/setOfficial", official)
             })
         },
@@ -719,7 +720,7 @@ Vue.mixin({
                                                     dummsg.messagetimestamp = msg.messageTimeStamp,
                                                     dummsg.grouptimedisplay = this.getDateUtcDisplay(msg.createdTime),
                                                     dummsg.dummyfile = []
-                                                    dummsg.media = msg.media,
+                                                dummsg.media = msg.media,
                                                     dummsg.cancelmessage = msg.cancelMessage,
                                                     dummsg.strangermessage = msg.strangerMessage,
                                                     dummsg.blockmessage = msg.blockMessage,
@@ -753,15 +754,14 @@ Vue.mixin({
                             })
                             break;
                         case 'updateUnreadcount':
-                            // checkunreadcount
-                            // console.log('update unreadcount');
-                            // console.log(data);
+
                             console.log('updateUnreadcount');
                             realm.write(() => {
-                                const session = realm.objects("ROOM").filtered(`isshow == true`)
-                                // console.log(session);
+                                const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
+                                console.log(session.length);
                                 session.map((sessionroom) => {
-                                    // console.log(sessionroom);
+
+
                                     // if (sessionroom.roomtype == 'official') {
                                     const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND oaid != "${data.id}"`)
                                     sessionroom.unreadcount = unreadcount.length
@@ -777,22 +777,33 @@ Vue.mixin({
                         //     break;
                         case 'updateLastmessage':
                             realm.write(() => {
-                                const session = realm.objects("ROOM").filtered(`isshow == true`)
+                                const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
                                 session.map((sessionroom) => {
                                     if (sessionroom.roomtype == 'official') {
                                         const lastmsg = realm.objects("MESSAGE").filtered(`sessionid == "${sessionroom.sessionid}" `)
 
-                                        for (let i = 0; i < lastmsg.length; i++) {
-                                            if (lastmsg[i].contenttype == "TEXT") {
-                                                sessionroom.lastmessage = lastmsg[i].content
-                                                sessionroom.lastmessagetime = lastmsg[i].createdtime
-                                                // sessionroom.lastmessagetime =
-                                            } else if (lastmsg[i].contenttype == "IMAGE") {
-                                                sessionroom.lastmessage = "Image"
-                                                sessionroom.lastmessagetime = lastmsg[i].createdtime
-                                            }
+                                        // for (let i = 0; i < lastmsg.length; i++) {
+                                        if (lastmsg[lastmsg.length - 1] != undefined) {
+                                            if (lastmsg[lastmsg.length - 1].contenttype == "TEXT") {
+                                                sessionroom.lastmessage = lastmsg[lastmsg.length - 1].content
+                                                sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
 
+                                            } else if (lastmsg[lastmsg.length - 1].contenttype == "IMAGE") {
+                                                sessionroom.lastmessage = "Image"
+                                                sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+                                            }
                                         }
+
+                                        // if (lastmsg[lastmsg.length - 1].contenttype == "TEXT") {
+                                        //     sessionroom.lastmessage = lastmsg[lastmsg.length - 1].content
+                                        //     sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+
+                                        // } else if (lastmsg[lastmsg.length - 1].contenttype == "IMAGE") {
+                                        //         sessionroom.lastmessage = "Image"
+                                        //     sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+
+
+                                        // }
 
                                     }
                                 })

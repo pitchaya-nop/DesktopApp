@@ -229,8 +229,8 @@ import VueSocketIO from "vue-socket.io";
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      email: "haruthai.moe@snocko-tech.com",
+      password: "Hh12345",
       loginloading: false,
       loginfailed: false,
       errorlogin: "error login naja",
@@ -298,7 +298,7 @@ export default {
               }
             });
             await this.$store.dispatch("auth/setToken", data.accessToken);
-            await this.$store.dispatch("auth/setProfile", data.userProfile);
+            // await this.$store.dispatch("auth/setProfile", data.userProfile);
             await this.$store.dispatch("auth/setUserLogin", data.userProfile);
             this.email = "";
             this.password = "";

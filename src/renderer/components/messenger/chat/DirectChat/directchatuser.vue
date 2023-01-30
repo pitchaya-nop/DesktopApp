@@ -189,7 +189,7 @@ export default {
         this.getdataDB.then((data) => {
           let objs = data
             .objects("ROOM")
-            .filtered(`idofficialroom =="${this.getProfile.id}"`);
+            .filtered(`idofficialroom =="${this.profile.id}"`);
           objs.map((data) => {
             if (
               data.user.displayName.includes(`${val}`) ||
@@ -203,12 +203,7 @@ export default {
         this.$store.dispatch("room/setRoom", arr);
       } else {
         this.setRooms();
-        // this.getdataDB.then((data) => {
-        //   let objs = data
-        //     .objects("ROOM")
-        //     .filtered(`idofficialroom =="${this.getProfile.id}"`);
-        //   console.log(objs);
-        // });
+       
       }
     },
   },
@@ -238,18 +233,7 @@ export default {
         this.$store.state.common.isblockroom = false;
       }
     },
-    // searchofficial() {
-    //   this.getdataDB.then((data) => {
-    //     let objs = data
-    //       .objects("ROOM")
-    //       .filtered(`idofficialroom =="${this.getProfile.id}"`);
-    //     objs.map((data) => {
-    //       if (data.user.displayName.includes("i")) {
-    //         console.log(data);
-    //       }
-    //     });
-    //   });
-    // },
+   
 
     setChatuser: function (sessionid) {
       this.$store.dispatch("common/setLoadingchat", true);

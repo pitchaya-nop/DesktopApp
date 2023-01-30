@@ -64,10 +64,8 @@
               href="javascript:void(0)"
               @click="
                 resetsession();
-                activemenu(3, false),
-                  setOfficial(oa),
-                  setProfileOa(oa),
-                  setroom();
+                setOfficial(oa),
+                activemenu(3, false)
               "
               v-b-tooltip.hover.bottomleft
               :title="oa.displayname"
@@ -136,6 +134,7 @@ export default {
       },
     }),
   },
+ 
   methods: {
     getImgUrl() {
       return require("../../assets/images/avtar/defaultimageoa.png");
@@ -153,20 +152,21 @@ export default {
       this.addDataToRealm("", "deleteallData");
     },
     setOfficial(data) {
-      this.$store.dispatch("auth/setOfficialProfile", data);
       if (data == null) {
         this.$store.state.room.roomtype = "user";
       } else {
         this.$store.state.room.roomtype = "official";
       }
-    },
-    setroom() {
-      this.addDataToRealm(this.profile, "updateUnreadcount");
-      // this.addDataToRealm(this.profile, "updateLastmessage");
+      this.addDataToRealm(data, "updateUnreadcount");
+      this.addDataToRealm(data, "updateLastmessage");
+      this.$store.dispatch("auth/setProfile", data);
+      this.$store.dispatch("auth/setOfficialProfile", data);
+      this.$store.dispatch("room/setRoomDisplay", null);
+      
+      
       this.setRooms();
     },
     activemenu(id, type) {
-      // console.log(type);
       this.$store.state.common.activesidebar = id;
       this.$store.state.common.iscontact = type;
     },
@@ -180,18 +180,7 @@ export default {
         console.log(error);
       }
     },
-    setProfileOa(data) {
-      console.log(data);
-
-      this.$store.dispatch("room/setRoomDisplay", null);
-      this.$store.dispatch("auth/setProfile", data);
-    },
-
     resetsession() {
-      // this.$store.dispatch("chat/setUnreadtime", null);
-      // this.$store.dispatch("chat/setMessagefirstunread", null);
-      // this.$store.dispatch("chat/setSessionChat", null);
-      // this.$store.dispatch("chat/setChat", null);
       this.$store.dispatch("chat/resetState");
       this.$store.state.chat.activeuser = null;
     },
@@ -217,25 +206,6 @@ export default {
     async handleSingOut() {
       this.$store.state.common.openlogout =
         !this.$store.state.common.openlogout;
-      
-      // socketDisconnect();
-      // if (this.userlogin != null) {
-      //   let stamptime = {
-      //     synctime: this.getTimeToUtc(),
-      //     id: this.userlogin.id,
-      //   };
-      //   this.addDataToRealm(stamptime, "updateLogin");
-      // }
-      // this.$store.state.common.activesidebar = 0;
-      // this.$store.state.common.iscontact = false;
-      // this.$store.dispatch("chat/resetState");
-      // this.$store.dispatch("contact/resetState");
-      // this.$store.dispatch("room/resetState");
-      // this.addDataToRealm("", "deleteData");
-      // this.$store.dispatch("auth/setToken", "");
-      // this.$store.dispatch("auth/setProfile", "");
-      // window.localStorage.removeItem("auth");
-      // this.$router.push("/authentication/login");
     },
   },
 };

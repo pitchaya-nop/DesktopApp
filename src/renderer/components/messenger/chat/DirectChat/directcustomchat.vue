@@ -14,7 +14,7 @@
           <div class="notice_date_block">
             <p class="notice_center" style="width:96px;margin:auto">
             {{data.field}}
-            {{groupMessageTimeDisplay(data.field)}}
+            <!-- {{groupMessageTimeDisplay(data.field)}} -->
           </p>
           </div>
           
@@ -602,9 +602,9 @@ export default {
     // console.log(stillUtc);
     },
     infoTime(time) {
-      console.log(time);
+      
       var stillUtc = moment.utc(time).toDate();
-      console.log(stillUtc);
+    
       if (
         moment(stillUtc).local().format("DD/MM/YYYY") ==
         moment(new Date()).format("DD/MM/YYYY")
