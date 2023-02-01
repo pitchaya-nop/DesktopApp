@@ -250,15 +250,16 @@ export default {
   data() {
     return {
       email: window.localStorage.getItem("saveEmail"),
+      password: window.localStorage.getItem("savePassword")
+        ? CryptoJS.AES.decrypt(
+            window.localStorage.getItem("savePassword"),
+            keyHex,
+            {
+              mode: CryptoJS.mode.ECB,
+            }
+          ).toString(CryptoJS.enc.Utf8)
+        : "",
       // decrypt password
-      password: CryptoJS.AES.decrypt(
-        window.localStorage.getItem("savePassword"),
-        keyHex,
-        {
-          mode: CryptoJS.mode.ECB,
-        }
-      ).toString(CryptoJS.enc.Utf8),
-
       loginloading: false,
       loginfailed: false,
       isRememberMe: window.localStorage.getItem("isRememberMe") === "true",
