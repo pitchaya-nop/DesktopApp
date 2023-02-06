@@ -46,11 +46,10 @@
       v-for="(user, index) in currentRoom.room"
       :key="index"
       @click="
-        setActive(index),
-          setActiveuser(user.id, user),
-          setSeesionuser(user.sessionid),
-          setBlockroom(user.isblock);
-        setChatuser(user.sessionid, user.roomtype), readMessage(user.sessionid);
+        setChatuser(user.sessionid, user.roomtype),
+        setActiveuser(user.id, user),
+        setBlockroom(user.isblock),
+        readMessage(user.sessionid)
       "
     >
       <div class="chat-box">
@@ -157,7 +156,6 @@ const { ipcRenderer } = require("electron");
 export default {
   data() {
     return {
-      activeIndex: null,
       styleObject: {
         "background-size": "cover",
         "background-position": "center",
@@ -203,7 +201,6 @@ export default {
         this.$store.dispatch("room/setRoom", arr);
       } else {
         this.setRooms();
-       
       }
     },
   },
@@ -233,9 +230,9 @@ export default {
         this.$store.state.common.isblockroom = false;
       }
     },
-   
 
     setChatuser: function (sessionid) {
+      this.$store.dispatch("chat/setSessionChat", sessionid);
       this.$store.dispatch("common/setLoadingchat", true);
       this.addDataToRealm(this.profile, "updateUnreadcount");
       this.getdataDB.then(async (data) => {
@@ -313,7 +310,7 @@ export default {
       });
       this.addDataToRealm(this.profile, "updateLastmessage");
       this.setRooms();
-      
+
       setTimeout(() => {
         if (document.querySelector(".unreadmessage")) {
           const contain = document.querySelector(".scrolltopdirectchat");
@@ -326,9 +323,9 @@ export default {
         this.$store.dispatch("common/setLoadingchat", false);
       }, 600);
     },
-    setSeesionuser: function (sessionid) {
-      this.$store.dispatch("chat/setSessionChat", sessionid);
-    },
+    // setSeesionuser: function (sessionid) {
+    //   this.$store.dispatch("chat/setSessionChat", sessionid);
+    // },
     readMessage: function (sessionid) {
       //check if
       if (this.roomtype == "official") {
@@ -364,8 +361,6 @@ export default {
     setActiveuser: function (id, userdata) {
       this.$store.dispatch("chat/setActiveuser", id);
       this.$store.dispatch("room/setRoomDisplay", userdata);
-      console.log(userdata);
-      console.log(userdata);
       if (process.client) {
         this.width = window.innerWidth;
         if (this.width < 992) {
@@ -380,54 +375,8 @@ export default {
       this.$store.state.common.showemogi = false;
       this.$store.state.common.showcontactcontent = false;
     },
-    setActive(index) {
-      this.activeIndex = index;
-    },
-    // logout() {
-    //   socketDisconnect();
-    //   if (this.userlogin != null) {
-    //     let stamptime = {
-    //       synctime: this.getTimeToUtc(),
-    //       id: this.userlogin.id,
-    //     };
-    //     this.addDataToRealm(stamptime, "updateLogin");
-    //   }
-    //   this.$store.state.common.activesidebar = 2;
-    //   this.$store.state.common.openlogout =
-    //     !this.$store.state.common.openlogout;
-    //   this.$store.state.common.iscontact = false;
-    //   this.$store.dispatch("chat/resetState");
-    //   this.$store.dispatch("contact/resetState");
-    //   this.$store.dispatch("room/resetState");
-    //   // this.addDataToRealm("", "deleteData");
-    //   this.$store.dispatch("auth/setToken", "");
-    //   this.$store.dispatch("auth/setProfile", "");
-    //   window.localStorage.removeItem("auth");
-    //   this.$router.push("/authentication/login");
-    // },
-    // logoutclear() {
-
-    //   socketDisconnect();
-    //   if (this.userlogin != null) {
-    //     let stamptime = {
-    //       synctime: this.getTimeToUtc(),
-    //       id: this.userlogin.id,
-    //     };
-    //     this.addDataToRealm(stamptime, "updateLogin");
-    //   }
-    //   this.addDataToRealm("", "deleteData");
-    //   this.$store.state.common.activesidebar = 2;
-    //   this.$store.state.common.openlogout =
-    //     !this.$store.state.common.openlogout;
-    //   this.$store.state.common.iscontact = false;
-    //   this.$store.dispatch("chat/resetState");
-    //   this.$store.dispatch("contact/resetState");
-    //   this.$store.dispatch("room/resetState");
-
-    //   this.$store.dispatch("auth/setToken", "");
-    //   this.$store.dispatch("auth/setProfile", "");
-    //   window.localStorage.removeItem("auth");
-    //   this.$router.push("/authentication/login");
+    // setActive(index) {
+    //   this.activeIndex = index;
     // },
   },
 };

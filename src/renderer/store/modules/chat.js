@@ -155,7 +155,7 @@ const actions = {
     }
       payload.sort((a, b) => new Date(a.createdtime) - new Date(b.createdtime));
       payload.sort((a, b) => a.messagetimestamp - b.messagetimestamp);
-    console.log(payload.groupBy('grouptimedisplay'));
+
     return new Promise(resolve => { context.commit("setChat", payload.groupBy('grouptimedisplay')); resolve() })
   },
   setActiveuser: (context, payload) => {

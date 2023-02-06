@@ -9,7 +9,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
 process.chdir(app.getPath('userData'))
 
-
 export default class BrowserWinHandler {
   /**
    * @param [options] {object} - browser window options
@@ -55,11 +54,7 @@ export default class BrowserWinHandler {
   // }
 
   _create() {
-    const iconUrl = url.format({
-      pathname: path.join(__dirname, '/favicon.png'),
-      protocol: 'file:',
-      slashes: true
-    })
+
     this.browserWindow = new BrowserWindow(
       {
         ...this.options,
@@ -70,8 +65,8 @@ export default class BrowserWinHandler {
           contextIsolation: false, // https://github.com/electron/electron/issues/18037#issuecomment-806320028
           devTools: true
         },
-        width: 1200,
-        height: 800,
+        width: 1400,
+        height: 1000,
         // icon: iconUrl
         // titleBarStyle: 'hiddenInset',
         // titleBarOverlay: true
@@ -84,7 +79,14 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
+  //   updateApp({
+  //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
+  //     updateInterval: '1 hour',
+  //     notifyUser: true
+  // });
 
+
+    
     // const view = new BrowserView()
     // this.browserWindow.setBrowserView(view)
     // view.setBounds({ x: 200, y: 200, width: 300, height: 300 })

@@ -5,6 +5,7 @@ const windowsOS = {
     icon: ICONS_DIR + 'win-icon.ico',
     publisherName: 'michal',
     target: 'nsis',
+
   },
 
   nsis: {

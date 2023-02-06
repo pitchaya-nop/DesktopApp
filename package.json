@@ -1,11 +1,26 @@
 {
   "name": "GOOCHAT",
-  "version": "1.0.17",
-  "description": "An electron-nuxt project",
+  "version": "0.0.2",
+  "productName": "GOOCHAT",
+  "description": "Official support chat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pitchaya-nop/DesktopApp"
+  },
   "main": "./dist/main/index.js",
+  "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "pitchaya-nop",
+        "repo": "DesktopApp"
+      }
+    ]
+  },
   "scripts": {
     "dev": "node .electron-nuxt/dev.js",
     "build": "node .electron-nuxt/build.js",
+    "publish": "node .electron-nuxt/build.js",
     "preinstall": "node .electron-nuxt/check-engines.js",
     "postinstall": "electron-builder install-app-deps "
   },
@@ -58,6 +73,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "ant-design-vue": "^1.7.8",
+    "electron-updater": "^5.3.0",
     "moment": "^2.29.1",
     "nuxt-socket-io": "^2.0.3",
     "realm": "^11.0.0-rc.0",

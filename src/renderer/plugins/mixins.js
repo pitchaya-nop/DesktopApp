@@ -212,8 +212,8 @@ const FileDummySchema = {
 }
 
 Vue.mixin({
-    computed: {
 
+    computed: {
         getdataDB: function () {
             return Realm.open({
                 schema: [UserSchema, ImageSchema, RoomSchema, ImageroomSchema, UserroomSchema, MessageSchema, MediaMessageSchema, FileDummySchema, OfficialSchema, ImageOfficialSchema, LoginDataSchema],
@@ -268,12 +268,10 @@ Vue.mixin({
                         arr.push(msg[i])
                     }
                     this.$store.dispatch("chat/setChat", arr);
-                    console.log('message < 50');
                 } else {
                     for (let i = msg.length - 1; i > msg.length - this.$store.state.chat.messagelength; i--) {
                         arr.push(msg[i]);
                     }
-
                     this.$store.dispatch("chat/setChat", arr);
                 }
 
@@ -336,9 +334,9 @@ Vue.mixin({
                 .then((realm) => {
                     switch (action) {
                         case 'addDatalogin':
-                            console.log('case add data login @@@@@@@@@@@@@@@');
+
                             realm.write(() => {
-                                console.log(data);
+
                                 realm.create('LOGIN', {
                                     userid: data.userProfile.id,
                                     logoutstamptime: '0001-01-01 00:00:00'
@@ -754,60 +752,44 @@ Vue.mixin({
                             })
                             break;
                         case 'updateUnreadcount':
+                            if (data != null) {
+                                realm.write(() => {
+                                    const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
 
-                            console.log('updateUnreadcount');
-                            realm.write(() => {
-                                const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
-                                console.log(session.length);
-                                session.map((sessionroom) => {
-
-
-                                    // if (sessionroom.roomtype == 'official') {
-                                    const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND oaid != "${data.id}"`)
-                                    sessionroom.unreadcount = unreadcount.length
-                                    // } else if (sessionroom.roomtype == 'user') {
-                                    //     const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND senderid != "${data.id}"`)
-                                    //     sessionroom.unreadcount = unreadcount.length
-                                    // }
+                                    session.map((sessionroom) => {
+                                        // if (sessionroom.roomtype == 'official') {
+                                        const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND oaid != "${data.id}"`)
+                                        sessionroom.unreadcount = unreadcount.length
+                                        // } else if (sessionroom.roomtype == 'user') {
+                                        //     const unreadcount = realm.objects("MESSAGE").filtered(`status == "SENT" AND sessionid == "${sessionroom.sessionid}" AND senderid != "${data.id}"`)
+                                        //     sessionroom.unreadcount = unreadcount.length
+                                        // }
+                                    })
                                 })
-                            })
+                            }
                             break;
-                        // case 'updateUnreadcountAfterSetuser':
-                        //     const session = realm.objects("ROOM").filtered(`isshow == true AND `)
-                        //     break;
                         case 'updateLastmessage':
-                            realm.write(() => {
-                                const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
-                                session.map((sessionroom) => {
-                                    if (sessionroom.roomtype == 'official') {
-                                        const lastmsg = realm.objects("MESSAGE").filtered(`sessionid == "${sessionroom.sessionid}" `)
+                            if (data != null) {
+                                realm.write(() => {
+                                    const session = realm.objects("ROOM").filtered(`isshow == true AND idofficialroom == "${data.id}"`)
+                                    session.map((sessionroom) => {
+                                        if (sessionroom.roomtype == 'official') {
+                                            const lastmsg = realm.objects("MESSAGE").filtered(`sessionid == "${sessionroom.sessionid}" `)
 
-                                        // for (let i = 0; i < lastmsg.length; i++) {
-                                        if (lastmsg[lastmsg.length - 1] != undefined) {
-                                            if (lastmsg[lastmsg.length - 1].contenttype == "TEXT") {
-                                                sessionroom.lastmessage = lastmsg[lastmsg.length - 1].content
-                                                sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
-
-                                            } else if (lastmsg[lastmsg.length - 1].contenttype == "IMAGE") {
-                                                sessionroom.lastmessage = "Image"
-                                                sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+                                            if (lastmsg[lastmsg.length - 1] != undefined) {
+                                                if (lastmsg[lastmsg.length - 1].contenttype == "TEXT") {
+                                                    sessionroom.lastmessage = lastmsg[lastmsg.length - 1].content
+                                                    sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+    
+                                                } else if (lastmsg[lastmsg.length - 1].contenttype == "IMAGE") {
+                                                    sessionroom.lastmessage = "Image"
+                                                    sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
+                                                }
                                             }
                                         }
-
-                                        // if (lastmsg[lastmsg.length - 1].contenttype == "TEXT") {
-                                        //     sessionroom.lastmessage = lastmsg[lastmsg.length - 1].content
-                                        //     sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
-
-                                        // } else if (lastmsg[lastmsg.length - 1].contenttype == "IMAGE") {
-                                        //         sessionroom.lastmessage = "Image"
-                                        //     sessionroom.lastmessagetime = lastmsg[lastmsg.length - 1].createdtime
-
-
-                                        // }
-
-                                    }
+                                    })
                                 })
-                            })
+                            }
                             break;
                         case 'updateShow':
                             realm.write(() => {
@@ -860,7 +842,7 @@ Vue.mixin({
                             realm.write(() => {
                                 blcokroom.map((contacts) => {
                                     contacts.isblock = true
-                                    console.log(contacts.user.displayName);
+
                                 })
                             })
                             break;
@@ -869,7 +851,7 @@ Vue.mixin({
                             realm.write(() => {
                                 unblockroom.map((contacts) => {
                                     contacts.isblock = false
-                                    console.log(contacts.user.displayName);
+
                                 })
                             })
                             break;

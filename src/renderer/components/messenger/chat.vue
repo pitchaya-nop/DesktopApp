@@ -802,7 +802,7 @@ export default {
           content: this.text,
           destructTime: 0,
           senderId: this.profile.id,
-          oaId: this.profile.id,
+          oaId: this.profile.id
         };
         this.text = "";
         this.emogiarray = [];
