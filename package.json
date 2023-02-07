@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "productName": "GOOCHAT",
   "description": "Official support chat",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pitchaya-nop/DesktopApp.git"
@@ -23,7 +20,7 @@
   "scripts": {
     "dev": "node .electron-nuxt/dev.js",
     "build": "node .electron-nuxt/build.js",
-    "publish": "node .electron-nuxt/build.js --mac -p always",
+    "deploy": "node .electron-nuxt/build.js --mac --win --publish always",
     "preinstall": "node .electron-nuxt/check-engines.js",
     "postinstall": "electron-builder install-app-deps "
   },
