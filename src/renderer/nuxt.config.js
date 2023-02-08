@@ -45,8 +45,17 @@ module.exports = {
     '@nuxtjs/axios',
   ],
   build: {
+
     transpile: [
       "vee-validate/dist/rules"
+    ],
+    publish: [
+      {
+        "provider": "github",
+        "owner": "pitchaya-nop",
+        "repo": "DesktopApp"
+       
+      }
     ],
     /*
     ** You can extend webpack config here

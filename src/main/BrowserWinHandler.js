@@ -1,6 +1,7 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell } from 'electron'
+import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell,dialog } from 'electron'
+import { autoUpdater } from "electron-updater"
 import path from 'path';
 import url from 'url'
 const electron = require('electron')
@@ -133,6 +134,30 @@ export default class BrowserWinHandler {
       return { action: 'deny' };
     });
 
+    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Ok'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version is being downloaded.'
+      }
+      dialog.showMessageBox(dialogOpts, (response) => {
+    
+      });
+    })
+    autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Restart', 'Later'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+      };
+      dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall()
+      })
+    });
     // ipcMain.on('newtab', (e, data) => {
     //   e.preventDefault()
     //   shell.openExternal("http://www.google.com")

@@ -5,7 +5,9 @@ const windowsOS = {
     icon: ICONS_DIR + 'win-icon.ico',
     publisherName: 'michal',
     target: 'nsis',
-
+    "publish": [
+      "github"
+    ]
   },
 
   nsis: {
@@ -49,6 +51,7 @@ module.exports = {
   productName: 'Goochat',
   appId: 'com.example.app',
   artifactName: 'goochatsetup-${version}.${ext}',
+ 
   directories: {
     output: 'build'
   },
