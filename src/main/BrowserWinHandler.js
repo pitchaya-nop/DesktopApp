@@ -35,7 +35,7 @@ export default class BrowserWinHandler {
     if (app.isReady()) this._create()
     else {
       app.once('ready', () => {
-
+        autoUpdater.checkForUpdatesAndNotify()
         this._create()
       })
     }
@@ -81,7 +81,7 @@ export default class BrowserWinHandler {
       }
     )
    
-    autoUpdater.checkForUpdatesAndNotify()
+    
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
   //     updateInterval: '1 hour',
@@ -135,31 +135,36 @@ export default class BrowserWinHandler {
       shell.openExternal(url);
       return { action: 'deny' };
     });
-
-    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Ok'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version is being downloaded.'
-      }
-      dialog.showMessageBox(dialogOpts, (response) => {
-    
-      });
-    })
-    autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Restart', 'Later'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-      };
-      dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall()
-      })
+    autoUpdater.on('update-available', () => {
+      this.browserWindow.webContents.send('update_available');
     });
+    autoUpdater.on('update-downloaded', () => {
+      this.browserWindow.webContents.send('update_downloaded');
+    });
+    // autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+    //   const dialogOpts = {
+    //     type: 'info',
+    //     buttons: ['Ok'],
+    //     title: 'Application Update',
+    //     message: process.platform === 'win32' ? releaseNotes : releaseName,
+    //     detail: 'A new version is being downloaded.'
+    //   }
+    //   dialog.showMessageBox(dialogOpts, (response) => {
+    
+    //   });
+    // })
+    // autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
+    //   const dialogOpts = {
+    //     type: 'info',
+    //     buttons: ['Restart', 'Later'],
+    //     title: 'Application Update',
+    //     message: process.platform === 'win32' ? releaseNotes : releaseName,
+    //     detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+    //   };
+    //   dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    //     if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    //   })
+    // });
     // ipcMain.on('newtab', (e, data) => {
     //   e.preventDefault()
     //   shell.openExternal("http://www.google.com")
