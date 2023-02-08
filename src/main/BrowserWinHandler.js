@@ -80,7 +80,7 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
-    autoUpdater.logger = "new version"
+   
     autoUpdater.checkForUpdatesAndNotify()
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json

@@ -53,8 +53,8 @@ module.exports = {
       {
         "provider": "github",
         "owner": "pitchaya-nop",
-        "repo": "DesktopApp"
-       
+        "repo": "DesktopApp",
+        "publishAutoUpdate": true
       }
     ],
     /*
