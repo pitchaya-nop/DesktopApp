@@ -35,7 +35,7 @@ export default class BrowserWinHandler {
     if (app.isReady()) this._create()
     else {
       app.once('ready', () => {
-        autoUpdater.checkForUpdatesAndNotify()
+       
         this._create()
       })
     }
@@ -45,6 +45,12 @@ export default class BrowserWinHandler {
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
 
+    autoUpdater.on('update-available', () => {
+      this.browserWindow.webContents.send('update_available');
+    });
+    autoUpdater.on('update-downloaded', () => {
+      this.browserWindow.webContents.send('update_downloaded');
+    });
   }
 
   // showNotification() {
@@ -80,7 +86,9 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
-   
+      this.browserWindow.once('ready-to-show',()=>{
+        autoUpdater.checkForUpdatesAndNotify();
+      })
     
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
@@ -135,12 +143,7 @@ export default class BrowserWinHandler {
       shell.openExternal(url);
       return { action: 'deny' };
     });
-    autoUpdater.on('update-available', () => {
-      this.browserWindow.webContents.send('update_available');
-    });
-    autoUpdater.on('update-downloaded', () => {
-      this.browserWindow.webContents.send('update_downloaded');
-    });
+    
     // autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
     //   const dialogOpts = {
     //     type: 'info',
