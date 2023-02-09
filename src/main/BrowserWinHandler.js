@@ -35,7 +35,7 @@ export default class BrowserWinHandler {
     if (app.isReady()) this._create()
     else {
       app.once('ready', () => {
-       
+        autoUpdater.checkForUpdatesAndNotify();
         this._create()
       })
     }
@@ -90,10 +90,7 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
-      this.browserWindow.once('ready-to-show',()=>{
-        console.log('ready-to-show');
-        autoUpdater.checkForUpdatesAndNotify();
-      })
+    
     
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
