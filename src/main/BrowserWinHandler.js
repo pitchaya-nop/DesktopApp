@@ -21,7 +21,7 @@ export default class BrowserWinHandler {
     this.options = options
     this.browserWindow = null
     this._createInstance()
-
+    autoUpdater.checkForUpdatesAndNotify();
   }
 
 
@@ -32,7 +32,10 @@ export default class BrowserWinHandler {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    if (app.isReady()) this._create()
+    if (app.isReady()){
+      autoUpdater.checkForUpdatesAndNotify();
+      this._create()
+    } 
     else {
       app.once('ready', () => {
         autoUpdater.checkForUpdatesAndNotify();
