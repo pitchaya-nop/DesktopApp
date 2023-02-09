@@ -91,9 +91,7 @@ export default class BrowserWinHandler {
       }
     )
       this.browserWindow.once('ready-to-show',()=>{
-        const log = require("electron-log")
-        log.transports.file.level = "debug"
-        autoUpdater.logger = log
+        console.log('ready-to-show');
         autoUpdater.checkForUpdatesAndNotify();
       })
     
