@@ -1,6 +1,6 @@
 {
   "name": "GOOCHAT",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "productName": "GOOCHAT",
   "description": "Official support chat",
   "repository": {
@@ -12,8 +12,8 @@
     "dev": "node .electron-nuxt/dev.js",
     "build": "node .electron-nuxt/build.js",
     "preinstall": "node .electron-nuxt/check-engines.js",
-    "postinstall": "electron-builder install-app-deps ",
-    "deploy": "electron-builder build"
+    "postinstall": "electron-builder install-app-deps "
+    
   },
   "keywords": [],
   "author": "ratchanon-san <ratchanon.san@snocko-tech.com>",
