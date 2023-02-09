@@ -1,12 +1,20 @@
 {
   "name": "GOOCHAT",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "productName": "GOOCHAT",
   "description": "Official support chat",
   "repository": {
     "type": "git",
     "url": "https://github.com/pitchaya-nop/DesktopApp.git"
   },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "pitchaya-nop",
+      "repo": "DesktopApp",
+      "publishAutoUpdate": true
+    }
+  ],
   "main": "./dist/main/index.js",
   "scripts": {
     "dev": "node .electron-nuxt/dev.js",
