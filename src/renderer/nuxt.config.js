@@ -54,7 +54,8 @@ module.exports = {
         "provider": "github",
         "owner": "pitchaya-nop",
         "repo": "DesktopApp",
-        "publishAutoUpdate": true
+        "publishAutoUpdate": true,
+        "GH_TOKEN":"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"
       }
     ],
     /*
