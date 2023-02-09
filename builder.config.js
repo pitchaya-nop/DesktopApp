@@ -7,7 +7,14 @@ const windowsOS = {
     target: 'nsis',
     "publish": [
       "github"
-    ]
+    ],
+    // target:[{
+    //   target:"nsis",
+    //   arch:[
+    //     "x64",
+    //     "ia32"
+    //   ]
+    // }]
   },
 
   nsis: {

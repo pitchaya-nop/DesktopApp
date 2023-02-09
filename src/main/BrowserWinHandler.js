@@ -51,6 +51,10 @@ export default class BrowserWinHandler {
     autoUpdater.on('update-downloaded', () => {
       this.browserWindow.webContents.send('update_downloaded');
     });
+    autoUpdater.on('error', message => {
+      console.error('There was a problem updating the application')
+      console.error(message)
+  })
   }
 
   // showNotification() {
@@ -87,6 +91,9 @@ export default class BrowserWinHandler {
       }
     )
       this.browserWindow.once('ready-to-show',()=>{
+        const log = require("electron-log")
+        log.transports.file.level = "debug"
+        autoUpdater.logger = log
         autoUpdater.checkForUpdatesAndNotify();
       })
     
