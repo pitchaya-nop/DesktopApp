@@ -4,6 +4,7 @@ import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell,
 import { autoUpdater } from "electron-updater"
 import path from 'path';
 import url from 'url'
+const fs = require('fs');
 const data = fs.readFileSync(__dirname + '/../../package.json', 'utf8');
 const dataObj = JSON.parse(data);
 const electron = require('electron')
