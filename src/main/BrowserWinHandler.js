@@ -67,6 +67,53 @@ export default class BrowserWinHandler {
           autoUpdater.channel = "latest";
       }
         this.updateInterval = setInterval(() => autoUpdater.checkForUpdatesAndNotify(), 5000);
+        autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+          dialog.showMessageBox({message:'update-available'})
+          const dialogOpts = {
+              type: 'info',
+              buttons: ['Ok'],
+              title: `${autoUpdater.channel} Update Available`,
+              message: process.platform === 'win32' ? releaseNotes : releaseName,
+              detail: `A new ${autoUpdater.channel} version download started.`
+          };
+      
+          if (!this.updateCheck) {
+              this.updateInterval = null;
+              dialog.showMessageBox(dialogOpts);
+              this.updateCheck = true;
+          }
+      });
+      
+      autoUpdater.on("update-downloaded", (_event) => {
+          if (!this.updateFound) {
+              this.updateInterval = null;
+              this.updateFound = true;
+      
+              setTimeout(() => {
+                  autoUpdater.quitAndInstall();
+              }, 3500);
+          }
+      });
+      autoUpdater.on("error", (e) => {
+        dialog.showMessageBox(mainWindow, { message: (e).message });
+        console.error("There was a problem updating the application");
+        console.error(e);
+      });
+      autoUpdater.on("update-not-available", (_event) => {
+        dialog.showMessageBox({message:'update-not-available'})
+          const dialogOpts = {
+              type: 'info',
+              buttons: ['Ok'],
+              title: `Update Not available for ${autoUpdater.channel}`,
+              message: "A message!",
+              detail: `Update Not available for ${autoUpdater.channel}`
+          };
+      
+          if (!this.updateNotAvailable) {
+              this.updateNotAvailable = true;
+              dialog.showMessageBox(dialogOpts);
+          }
+      });
       })
     }
 
@@ -102,8 +149,13 @@ export default class BrowserWinHandler {
           }, 3500);
       }
   });
-  
+  autoUpdater.on("error", (e) => {
+    dialog.showMessageBox(mainWindow, { message: (e).message });
+    console.error("There was a problem updating the application");
+    console.error(e);
+  });
   autoUpdater.on("update-not-available", (_event) => {
+    dialog.showMessageBox({message:'update-not-available'})
       const dialogOpts = {
           type: 'info',
           buttons: ['Ok'],
@@ -152,7 +204,53 @@ export default class BrowserWinHandler {
         // fullscreen: true
       }
     )
-    
+    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+      dialog.showMessageBox({message:'update-available'})
+      const dialogOpts = {
+          type: 'info',
+          buttons: ['Ok'],
+          title: `${autoUpdater.channel} Update Available`,
+          message: process.platform === 'win32' ? releaseNotes : releaseName,
+          detail: `A new ${autoUpdater.channel} version download started.`
+      };
+  
+      if (!this.updateCheck) {
+          this.updateInterval = null;
+          dialog.showMessageBox(dialogOpts);
+          this.updateCheck = true;
+      }
+  });
+  
+  autoUpdater.on("update-downloaded", (_event) => {
+      if (!this.updateFound) {
+          this.updateInterval = null;
+          this.updateFound = true;
+  
+          setTimeout(() => {
+              autoUpdater.quitAndInstall();
+          }, 3500);
+      }
+  });
+  autoUpdater.on("error", (e) => {
+    dialog.showMessageBox(mainWindow, { message: (e).message });
+    console.error("There was a problem updating the application");
+    console.error(e);
+  });
+  autoUpdater.on("update-not-available", (_event) => {
+    dialog.showMessageBox({message:'update-not-available'})
+      const dialogOpts = {
+          type: 'info',
+          buttons: ['Ok'],
+          title: `Update Not available for ${autoUpdater.channel}`,
+          message: "A message!",
+          detail: `Update Not available for ${autoUpdater.channel}`
+      };
+  
+      if (!this.updateNotAvailable) {
+          this.updateNotAvailable = true;
+          dialog.showMessageBox(dialogOpts);
+      }
+  });
     
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
