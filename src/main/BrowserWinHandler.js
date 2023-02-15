@@ -4,6 +4,8 @@ import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell,
 import { autoUpdater } from "electron-updater"
 import path from 'path';
 import url from 'url'
+const data = fs.readFileSync(__dirname + '/../../package.json', 'utf8');
+const dataObj = JSON.parse(data);
 const electron = require('electron')
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
@@ -19,9 +21,16 @@ export default class BrowserWinHandler {
     this._eventEmitter = new EventEmitter()
     this.allowRecreate = allowRecreate
     this.options = options
+
     this.browserWindow = null
+    this.updateInterval = null;
+    this.updateCheck = false;
+    this.updateFound = false;
+    this.updateNotAvailable = false;
+    this.willQuitApp = false;
+
     this._createInstance()
-    autoUpdater.checkForUpdatesAndNotify();
+    
   }
 
 
@@ -33,13 +42,29 @@ export default class BrowserWinHandler {
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
     if (app.isReady()){
-      autoUpdater.checkForUpdatesAndNotify();
+      
       this._create()
+      if (dataObj.version.includes("-alpha")) {
+        autoUpdater.channel = "alpha";
+    } else if (dataObj.version.includes("-beta")) {
+        autoUpdater.channel = "beta";
+    } else {
+        autoUpdater.channel = "latest";
+    }
+      this.updateInterval = setInterval(() => autoUpdater.checkForUpdates(), 5000);
     } 
     else {
       app.once('ready', () => {
-        autoUpdater.checkForUpdatesAndNotify();
+        
         this._create()
+        if (dataObj.version.includes("-alpha")) {
+          autoUpdater.channel = "alpha";
+      } else if (dataObj.version.includes("-beta")) {
+          autoUpdater.channel = "beta";
+      } else {
+          autoUpdater.channel = "latest";
+      }
+        this.updateInterval = setInterval(() => autoUpdater.checkForUpdates(), 5000);
       })
     }
 
@@ -48,16 +73,47 @@ export default class BrowserWinHandler {
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
 
-    autoUpdater.on('update-available', () => {
-      this.browserWindow.webContents.send('update_available');
-    });
-    autoUpdater.on('update-downloaded', () => {
-      this.browserWindow.webContents.send('update_downloaded');
-    });
-    autoUpdater.on('error', message => {
-      console.error('There was a problem updating the application')
-      console.error(message)
-  })
+    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+          type: 'info',
+          buttons: ['Ok'],
+          title: `${autoUpdater.channel} Update Available`,
+          message: process.platform === 'win32' ? releaseNotes : releaseName,
+          detail: `A new ${autoUpdater.channel} version download started.`
+      };
+  
+      if (!this.updateCheck) {
+          this.updateInterval = null;
+          dialog.showMessageBox(dialogOpts);
+          this.updateCheck = true;
+      }
+  });
+  
+  autoUpdater.on("update-downloaded", (_event) => {
+      if (!this.updateFound) {
+          this.updateInterval = null;
+          this.updateFound = true;
+  
+          setTimeout(() => {
+              autoUpdater.quitAndInstall();
+          }, 3500);
+      }
+  });
+  
+  autoUpdater.on("update-not-available", (_event) => {
+      const dialogOpts = {
+          type: 'info',
+          buttons: ['Ok'],
+          title: `Update Not available for ${autoUpdater.channel}`,
+          message: "A message!",
+          detail: `Update Not available for ${autoUpdater.channel}`
+      };
+  
+      if (!this.updateNotAvailable) {
+          this.updateNotAvailable = true;
+          dialog.showMessageBox(dialogOpts);
+      }
+  });
   }
 
   // showNotification() {
