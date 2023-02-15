@@ -58,7 +58,7 @@ module.exports = {
   productName: 'Goochat',
   appId: 'com.example.app',
   artifactName: 'goochatsetup-${version}.${ext}',
- 
+
   directories: {
     output: 'build'
   },
