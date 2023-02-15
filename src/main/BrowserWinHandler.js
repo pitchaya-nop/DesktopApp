@@ -66,7 +66,7 @@ export default class BrowserWinHandler {
       } else {
           autoUpdater.channel = "latest";
       }
-        this.updateInterval = setInterval(() => autoUpdater.checkForUpdates(), 5000);
+        this.updateInterval = setInterval(() => autoUpdater.checkForUpdatesAndNotify(), 5000);
       })
     }
 
@@ -76,7 +76,7 @@ export default class BrowserWinHandler {
     app.on('activate', () => this._recreate())
 
     autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-      console.log('update-available')
+      dialog.showMessageBox({message:'update-available'})
       const dialogOpts = {
           type: 'info',
           buttons: ['Ok'],
