@@ -11,7 +11,7 @@ const electron = require('electron')
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
 const isDev = process.env.NODE_ENV === 'development'
-const log = require('electron-log');
+
 process.chdir(app.getPath('userData'))
 
 export default class BrowserWinHandler {
@@ -32,8 +32,7 @@ export default class BrowserWinHandler {
     this.willQuitApp = false;
 
     this._createInstance()
-    autoUpdater.logger = log;
-autoUpdater.logger.transports.file.level = 'info';
+   
   }
 
 
@@ -77,7 +76,7 @@ autoUpdater.logger.transports.file.level = 'info';
     app.on('activate', () => this._recreate())
 
     autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-      log.info('update-available');
+      console.log('update-available')
       const dialogOpts = {
           type: 'info',
           buttons: ['Ok'],
