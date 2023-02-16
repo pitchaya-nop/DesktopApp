@@ -49,14 +49,14 @@ module.exports = {
     transpile: [
       "vee-validate/dist/rules"
     ],
-    publish: [
-      {
-        "provider": "github",
-        "owner": "pitchaya-nop",
-        "repo": "DesktopApp",
-        "publishAutoUpdate": true
-      }
-    ],
+    // publish: [
+    //   {
+    //     "provider": "github",
+    //     "owner": "pitchaya-nop",
+    //     "repo": "DesktopApp",
+    //     "publishAutoUpdate": true
+    //   }
+    // ],
     /*
     ** You can extend webpack config here
     */

@@ -58,7 +58,16 @@ module.exports = {
   productName: 'Goochat',
   appId: 'com.example.app',
   artifactName: 'goochatsetup-${version}.${ext}',
-
+  publish: [
+    {
+      "provider": "github",
+      "owner": "pitchaya-nop",
+      "repo": "DesktopApp",
+      "publishAutoUpdate": true,
+      "private": true,
+      "token": ""
+    }
+  ],
   directories: {
     output: 'build'
   },

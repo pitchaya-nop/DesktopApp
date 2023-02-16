@@ -35,18 +35,19 @@ export default class BrowserWinHandler {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
+    
     if (app.isReady()){
       
       this._create()
      
-      setInterval(() => autoUpdater.checkForUpdatesAndNotify(), 5000);
+     
     } 
     else {
       app.once('ready', () => {
         
         this._create()
        
-        setInterval(() => autoUpdater.checkForUpdatesAndNotify(), 5000);
+      
       })
     }
 
@@ -54,7 +55,35 @@ export default class BrowserWinHandler {
     // dock icon is clicked and there are no other windows open.
     if (!this.allowRecreate) return
     app.on('activate', () => this._recreate())
+    
+    app.on('ready', () => {
+      if (!isDev) autoUpdater.checkForUpdates()
+    })
+    autoUpdater.channel = 'latest'
+autoUpdater.allowDowngrade = false
 
+autoUpdater.autoDownload = true
+    autoUpdater.on('update-downloaded', () => {
+      dialog.showMessageBox({
+        message: 'update Downloaded !!'
+      })
+    })
+    
+    autoUpdater.on('checking-for-update', () => {
+      dialog.showMessageBox({
+        message: 'CHECKING FOR UPDATES !!'
+      })
+    })
+    
+    autoUpdater.on('update-available', () => {
+      dialog.showMessageBox({
+        message: ' update-available !!'
+      })
+    })
+    
+    autoUpdater.on('error', (error) => {
+      autoUpdater.logger.debug(error)
+    })
   //   autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
   //     const dialogOpts = {
   //         type: 'info',
@@ -278,7 +307,7 @@ export default class BrowserWinHandler {
     const serverUrl = isDev ? DEV_SERVER_URL : 'app://./index.html'
     const fullPath = serverUrl + '#' + pagePath;
     if(!isDev){
-      autoUpdater.checkForUpdatesAndNotify()
+      autoUpdater.checkForUpdates()
     }
     await this.browserWindow.loadURL(fullPath)
   }
