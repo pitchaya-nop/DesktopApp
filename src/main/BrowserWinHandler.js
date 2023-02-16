@@ -4,8 +4,7 @@ import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell,
 import { autoUpdater } from "electron-updater"
 import path from 'path';
 import url from 'url'
-const data = fs.readFileSync(__dirname + '/../../package.json', 'utf8');
-const dataObj = JSON.parse(data);
+
 const electron = require('electron')
 const DEV_SERVER_URL = process.env.DEV_SERVER_URL
 const isProduction = process.env.NODE_ENV === 'production'
@@ -23,12 +22,7 @@ export default class BrowserWinHandler {
     this.options = options
 
     this.browserWindow = null
-    this.updateInterval = null;
-    this.updateCheck = false;
-    this.updateFound = false;
-    this.updateNotAvailable = false;
-    this.willQuitApp = false;
-
+    
     this._createInstance()
     
   }
