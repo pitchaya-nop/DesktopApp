@@ -82,7 +82,7 @@ autoUpdater.autoDownload = true
     })
     autoUpdater.on('update-not-available', function (info) {
       dialog.showMessageBox({
-        message: info+'update not available'
+        message:'update not available'
       })  });
     
     autoUpdater.on('error', (error) => {
