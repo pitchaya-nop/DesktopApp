@@ -138,7 +138,9 @@ export default class BrowserWinHandler {
       }
     )
     
-    
+    autoUpdater.on("checking-for-update",()=>{
+      this.browserWindow.webContents.send("check-for-update")
+    })
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
   //     updateInterval: '1 hour',
