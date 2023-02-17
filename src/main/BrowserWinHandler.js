@@ -57,7 +57,7 @@ export default class BrowserWinHandler {
     app.on('activate', () => this._recreate())
     
     app.on('ready', () => {
-      if (!isDev) autoUpdater.checkForUpdatesAndNotify()
+      if (!isDev) autoUpdater.checkForUpdates()
     })
     autoUpdater.channel = 'latest'
 autoUpdater.allowDowngrade = false
@@ -295,9 +295,7 @@ autoUpdater.autoDownload = true
     if (!this.browserWindow) return Promise.reject(new Error('The page could not be loaded before win \'created\' event'))
     const serverUrl = isDev ? DEV_SERVER_URL : 'app://./index.html'
     const fullPath = serverUrl + '#' + pagePath;
-    if(!isDev){
-      autoUpdater.checkForUpdatesAndNotify()
-    }
+    
     await this.browserWindow.loadURL(fullPath)
   }
 
