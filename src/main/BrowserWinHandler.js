@@ -57,7 +57,7 @@ export default class BrowserWinHandler {
     app.on('activate', () => this._recreate())
     
     app.on('ready', () => {
-      if (!isDev) autoUpdater.checkForUpdates()
+      if (!isDev) autoUpdater.checkForUpdatesAndNotify()
     })
     autoUpdater.channel = 'latest'
 autoUpdater.allowDowngrade = false
@@ -297,7 +297,7 @@ autoUpdater.autoDownload = true
     const serverUrl = isDev ? DEV_SERVER_URL : 'app://./index.html'
     const fullPath = serverUrl + '#' + pagePath;
     if(!isDev){
-      autoUpdater.checkForUpdates()
+      autoUpdater.checkForUpdatesAndNotify()
     }
     await this.browserWindow.loadURL(fullPath)
   }
