@@ -74,61 +74,45 @@ autoUpdater.autoDownload = true
         message: 'CHECKING FOR UPDATES !!'
       })
     })
+    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Ok'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version is being downloaded.'
+      }
+      dialog.showMessageBox(dialogOpts, (response) => {
     
-    autoUpdater.on('update-available', () => {
-      dialog.showMessageBox({
-        message: ' update-available !!'
+      });
+    })
+    
+    autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Restart', 'Later'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+      };
+      dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall()
       })
-    })
-    autoUpdater.on('update-not-available', function () {
-      dialog.showMessageBox({
-        message:'update not available'
-      })  });
+    });
+    // autoUpdater.on('update-available', () => {
+    //   dialog.showMessageBox({
+    //     message: ' update-available !!'
+    //   })
+    // })
+    // autoUpdater.on('update-not-available', function () {
+    //   dialog.showMessageBox({
+    //     message:'update not available'
+    //   })  });
     
-    autoUpdater.on('error', (error) => {
-      autoUpdater.logger.debug(error)
-    })
-  //   autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-  //     const dialogOpts = {
-  //         type: 'info',
-  //         buttons: ['Ok'],
-  //         title: `${autoUpdater.channel} Update Available`,
-  //         message: process.platform === 'win32' ? releaseNotes : releaseName,
-  //         detail: `A new ${autoUpdater.channel} version download started.`
-  //     };
+    // autoUpdater.on('error', (error) => {
+    //   autoUpdater.logger.debug(error)
+    // })
   
-  //     if (!this.updateCheck) {
-  //         this.updateInterval = null;
-  //         dialog.showMessageBox(dialogOpts);
-  //         this.updateCheck = true;
-  //     }
-  // });
-  
-  // autoUpdater.on("update-downloaded", (_event) => {
-  //     if (!this.updateFound) {
-  //         this.updateInterval = null;
-  //         this.updateFound = true;
-  
-  //         setTimeout(() => {
-  //             autoUpdater.quitAndInstall();
-  //         }, 3500);
-  //     }
-  // });
-  
-  // autoUpdater.on("update-not-available", (_event) => {
-  //     const dialogOpts = {
-  //         type: 'info',
-  //         buttons: ['Ok'],
-  //         title: `Update Not available for ${autoUpdater.channel}`,
-  //         message: "A message!",
-  //         detail: `Update Not available for ${autoUpdater.channel}`
-  //     };
-  
-  //     if (!this.updateNotAvailable) {
-  //         this.updateNotAvailable = true;
-  //         dialog.showMessageBox(dialogOpts);
-  //     }
-  // });
   }
 
   // showNotification() {
