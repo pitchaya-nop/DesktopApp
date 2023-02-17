@@ -61,7 +61,7 @@ export default class BrowserWinHandler {
     })
     autoUpdater.channel = 'latest'
     autoUpdater.allowDowngrade = false
-    autoUpdater.autoDownload = true
+    autoUpdater.autoDownload = false
 
     // autoUpdater.on('update-downloaded', () => {
     //   dialog.showMessageBox({
