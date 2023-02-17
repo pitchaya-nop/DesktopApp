@@ -61,13 +61,13 @@ export default class BrowserWinHandler {
     })
     autoUpdater.channel = 'latest'
 autoUpdater.allowDowngrade = false
-
 autoUpdater.autoDownload = true
-    autoUpdater.on('update-downloaded', () => {
-      dialog.showMessageBox({
-        message: 'update Downloaded !!'
-      })
-    })
+autoUpdater.autoDownload = true
+    // autoUpdater.on('update-downloaded', () => {
+    //   dialog.showMessageBox({
+    //     message: 'update Downloaded !!'
+    //   })
+    // })
     
     // autoUpdater.on('checking-for-update', () => {
     //   dialog.showMessageBox({
@@ -82,6 +82,7 @@ autoUpdater.autoDownload = true
         message: process.platform === 'win32' ? releaseNotes : releaseName,
         detail: 'A new version is being downloaded.'
       }
+      autoUpdater.downloadUpdate()
       dialog.showMessageBox(dialogOpts, (response) => {
     
       });
