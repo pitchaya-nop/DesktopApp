@@ -60,8 +60,8 @@ export default class BrowserWinHandler {
       if (!isDev) autoUpdater.checkForUpdates()
     })
     autoUpdater.channel = 'latest'
-autoUpdater.allowDowngrade = false
-autoUpdater.autoDownload = true
+    autoUpdater.allowDowngrade = false
+    autoUpdater.autoDownload = true
 
     // autoUpdater.on('update-downloaded', () => {
     //   dialog.showMessageBox({
@@ -89,18 +89,16 @@ autoUpdater.autoDownload = true
     })
     
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-      dialog.showMessageBox({message:'download'})
-      autoUpdater.quitAndInstall()
-      // const dialogOpts = {
-      //   type: 'info',
-      //   buttons: ['Restart', 'Later'],
-      //   title: 'Application Update',
-      //   message: process.platform === 'win32' ? releaseNotes : releaseName,
-      //   detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-      // };
-      // dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      //   if (returnValue.response === 0) autoUpdater.quitAndInstall()
-      // })
+      const dialogOpts = {
+        type: 'info',
+        buttons: ['Restart', 'Later'],
+        title: 'Application Update',
+        message: process.platform === 'win32' ? releaseNotes : releaseName,
+        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+      };
+      dialog.showMessageBox(dialogOpts).then((returnValue) => {
+        if (returnValue.response === 0) autoUpdater.quitAndInstall()
+      })
     });
     // autoUpdater.on('update-available', () => {
     //   dialog.showMessageBox({
