@@ -150,15 +150,6 @@ export default class BrowserWinHandler {
       }
     )
     
-    
-  //   updateApp({
-  //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
-  //     updateInterval: '1 hour',
-  //     notifyUser: true
-  // });
-
-
-    
     // const view = new BrowserView()
     // this.browserWindow.setBrowserView(view)
     // view.setBounds({ x: 200, y: 200, width: 300, height: 300 })
@@ -196,62 +187,9 @@ export default class BrowserWinHandler {
     })
 
     this.browserWindow.webContents.setWindowOpenHandler(({ url }) => {
-      // config.fileProtocol is my custom file protocol
-      // if (url.startsWith(config.fileProtocol)) {
-      //   return { action: 'allow' };
-      // }
-      // open url in a browser and prevent default
       shell.openExternal(url);
       return { action: 'deny' };
     });
-    
-    // autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-    //   const dialogOpts = {
-    //     type: 'info',
-    //     buttons: ['Ok'],
-    //     title: 'Application Update',
-    //     message: process.platform === 'win32' ? releaseNotes : releaseName,
-    //     detail: 'A new version is being downloaded.'
-    //   }
-    //   dialog.showMessageBox(dialogOpts, (response) => {
-    
-    //   });
-    // })
-    // autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-    //   const dialogOpts = {
-    //     type: 'info',
-    //     buttons: ['Restart', 'Later'],
-    //     title: 'Application Update',
-    //     message: process.platform === 'win32' ? releaseNotes : releaseName,
-    //     detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-    //   };
-    //   dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    //     if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    //   })
-    // });
-    // ipcMain.on('newtab', (e, data) => {
-    //   e.preventDefault()
-    //   shell.openExternal("http://www.google.com")
-    // })
-    // this.browserWindow.webContents.setWindowOpenHandler(({ url }) => {
-    //   return {
-    //     action: 'allow',
-    //     overrideBrowserWindowOptions: {
-    //       frame: false,
-    //       fullscreenable: false,
-    //       backgroundColor: 'black',
-    //       webPreferences: {
-    //         preload: 'my-child-window-preload-script.js'
-    //       }
-    //     }
-    //   }
-    // })
-
-    // this.browserWindow.setMenu(null)
-    // this.browserWindow.setWindowButtonVisibility(true)
-    // this.browserWindow.webcontents.on("did-finish-load",()=>{
-    //   dialog.showOpenDialog();
-    // })
 
     this.browserWindow.on('closed', () => {
       // Dereference the window object
