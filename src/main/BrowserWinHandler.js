@@ -112,9 +112,9 @@ autoUpdater.autoDownload = true
     //     message:'update not available'
     //   })  });
     
-    // autoUpdater.on('error', (error) => {
-    //   autoUpdater.logger.debug(error)
-    // })
+    autoUpdater.on('error', (error) => {
+      dialog.showMessageBox({message:error})
+    })
   
   }
 
