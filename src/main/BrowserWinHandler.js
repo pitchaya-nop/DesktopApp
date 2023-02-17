@@ -62,7 +62,7 @@ export default class BrowserWinHandler {
     autoUpdater.channel = 'latest'
 autoUpdater.allowDowngrade = false
 autoUpdater.autoDownload = true
-autoUpdater.autoDownload = true
+
     // autoUpdater.on('update-downloaded', () => {
     //   dialog.showMessageBox({
     //     message: 'update Downloaded !!'
@@ -152,9 +152,7 @@ autoUpdater.autoDownload = true
       }
     )
     
-    autoUpdater.on("checking-for-update",()=>{
-      this.browserWindow.webContents.send("check-for-update")
-    })
+    
   //   updateApp({
   //     // repo: 'PhiloNL/electron-hello-world', // defaults to package.json
   //     updateInterval: '1 hour',
