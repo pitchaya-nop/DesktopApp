@@ -19,12 +19,14 @@ const windowsOS = {
     //   ]
     // }]
   },
-
+  requestedExecutionLevel: "highestAvailable",
   nsis: {
     differentialPackage: true,
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
+    
+
   }
 }
 
