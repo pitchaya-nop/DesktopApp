@@ -27,7 +27,7 @@
                     class="col-form-label"
                     for="inputEmail3"
                     style="font-weight: 400; font-size: 14px"
-                    >Email Address new version 0.1.36</label
+                    >Email Address new version 0.1.37</label
                   >
                   <input
                     class="form-control"
