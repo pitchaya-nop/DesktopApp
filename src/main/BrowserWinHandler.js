@@ -60,12 +60,11 @@ export default class BrowserWinHandler {
     app.on('ready', () => {
       if (!isDev) autoUpdater.checkForUpdates()
 
-      dialog.showMessageBox({message:this.downloadprogress})
     })
     autoUpdater.channel = 'latest'
     autoUpdater.allowDowngrade = false
     autoUpdater.autoDownload = false
-    // app.commandLine.appendSwitch('disable-http2');
+    app.commandLine.appendSwitch('disable-http2');
     autoUpdater.requestHeaders = {'Cache-Control' : 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'};
 
     // autoUpdater.on('update-downloaded', () => {
@@ -97,7 +96,7 @@ export default class BrowserWinHandler {
       let log_message = 'Download speed: ' + progressObj.bytesPerSecond
       log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
       log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-      this.downloadprogress = log_message
+      dialog.showMessageBox({message:log_message})
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
