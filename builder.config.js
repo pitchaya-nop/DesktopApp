@@ -26,7 +26,7 @@ const windowsOS = {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    
+    allowElevation:true
 
   }
 }
