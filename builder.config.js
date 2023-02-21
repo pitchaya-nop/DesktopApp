@@ -7,6 +7,7 @@ const windowsOS = {
       'michaL',  // new name
       'michal'   // old name
     ],
+    requestedExecutionLevel:'highestAvailable',
     target: 'nsis',
     "publish": [
       "github"
@@ -25,7 +26,7 @@ const windowsOS = {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
-    requestedExecutionLevel: "highestAvailable"
+    
 
   }
 }
