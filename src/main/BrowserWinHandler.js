@@ -59,6 +59,8 @@ export default class BrowserWinHandler {
     
     app.on('ready', () => {
       if (!isDev) autoUpdater.checkForUpdates()
+
+      dialog.showMessageBox({message:this.downloadprogress})
     })
     autoUpdater.channel = 'latest'
     autoUpdater.allowDowngrade = false
@@ -77,7 +79,7 @@ export default class BrowserWinHandler {
     //     message: 'CHECKING FOR UPDATES !!'
     //   })
     // })
-    dialog.showMessageBox({message:this.downloadprogress})
+    
     autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
         type: 'info',
