@@ -22,6 +22,7 @@ export default class BrowserWinHandler {
     this.options = options
 
     this.browserWindow = null
+    this.downloadprogress = null
     
     this._createInstance()
     
@@ -76,6 +77,7 @@ export default class BrowserWinHandler {
     //     message: 'CHECKING FOR UPDATES !!'
     //   })
     // })
+    dialog.showMessageBox({message:this.downloadprogress})
     autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
         type: 'info',
@@ -93,7 +95,7 @@ export default class BrowserWinHandler {
       let log_message = 'Download speed: ' + progressObj.bytesPerSecond
       log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
       log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-      
+      this.downloadprogress = log_message
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
