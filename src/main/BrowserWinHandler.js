@@ -91,7 +91,7 @@ export default class BrowserWinHandler {
       let log_message = 'Download speed: ' + progressObj.bytesPerSecond
       log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
       log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-      dialog.showMessageBox({message:log_message})
+      console.log('percen'+log_message);
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
