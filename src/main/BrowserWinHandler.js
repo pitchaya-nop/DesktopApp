@@ -22,7 +22,7 @@ export default class BrowserWinHandler {
     this.options = options
 
     this.browserWindow = null
-    this.downloadprogress = null
+    this.downloadprogress = ''
     
     this._createInstance()
     
