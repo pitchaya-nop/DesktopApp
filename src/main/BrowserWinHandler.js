@@ -81,17 +81,15 @@ export default class BrowserWinHandler {
     // })
     
     autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Ok'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version is being downloaded.'
-      }
+      // const dialogOpts = {
+      //   type: 'info',
+      //   buttons: ['Ok'],
+      //   title: 'Application Update',
+      //   message: process.platform === 'win32' ? releaseNotes : releaseName,
+      //   detail: 'A new version is being downloaded.'
+      // }
       
-      dialog.showMessageBox(dialogOpts, (response) => {
-        
-      });
+      this.browserWindow.webContents.send('download_progress', 'update available');
       autoUpdater.downloadUpdate()
     })
     autoUpdater.on('download-progress', (progressObj) => {
@@ -102,7 +100,8 @@ export default class BrowserWinHandler {
       this.browserWindow.webContents.send('download_progress', log_message);
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-      dialog.showMessageBox({message:'download complete message'})
+      
+      this.browserWindow.webContents.send('download_progress', 'download complete');
     });
     // autoUpdater.on('update-available', () => {
     //   dialog.showMessageBox({
@@ -115,7 +114,7 @@ export default class BrowserWinHandler {
     //   })  });
     
     autoUpdater.on('error', (error) => {
-      dialog.showMessageBox({message:error})
+      this.browserWindow.webContents.send('download_progress', 'error download');
     })
   
   }
@@ -188,6 +187,11 @@ export default class BrowserWinHandler {
         // }]
       }
       new Notification(options).show()
+    })
+    ipcMain.on('forced_update', (e, message) => {
+      if(message == 'update'){
+        autoUpdater.quitAndInstall()
+      }
     })
 
     this.browserWindow.webContents.setWindowOpenHandler(({ url }) => {

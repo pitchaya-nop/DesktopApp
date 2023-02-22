@@ -27,9 +27,10 @@
                     class="col-form-label"
                     for="inputEmail3"
                     style="font-weight: 400; font-size: 14px"
-                    >Email Address new version 0.1.54</label
+                    >Email Address new version 0.1.55</label
                   >
                   <p>{{ this.progress }}</p>
+                  <button @click="Forcedupdate">forced update</button>
                   <input
                     class="form-control"
                     id="inputEmail3"
@@ -262,6 +263,9 @@ export default {
         })
 
       });
+    },
+    Forcedupdate(){
+      ipcRenderer.send("forced_update", 'update');
     },
     async handleLogin() {
       // console.log("email", this.email);
