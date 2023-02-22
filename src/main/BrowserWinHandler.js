@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from 'events'
-import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, shell,dialog } from 'electron'
+import { BrowserWindow, BrowserView, app, session, Notification, ipcMain, ipcRenderer,shell,dialog } from 'electron'
 import { autoUpdater } from "electron-updater"
 import path from 'path';
 import url from 'url'
@@ -97,7 +97,8 @@ export default class BrowserWinHandler {
       let log_message = 'Download speed: ' + progressObj.bytesPerSecond
       log_message = log_message + ' - Downloaded ' + progressObj.percent + '%'
       log_message = log_message + ' (' + progressObj.transferred + '/' + progressObj.total + ')'
-      dialog.showMessageBox({message:log_message})
+      // dialog.showMessageBox({message:log_message})
+      ipcRenderer.send("download", log_message);
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
       dialog.showMessageBox({message:'download complete message'})

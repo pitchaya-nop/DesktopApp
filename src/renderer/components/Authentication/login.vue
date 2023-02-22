@@ -27,8 +27,9 @@
                     class="col-form-label"
                     for="inputEmail3"
                     style="font-weight: 400; font-size: 14px"
-                    >Email Address new version 0.1.42</label
+                    >Email Address new version 0.1.43</label
                   >
+                  <p>{{ this.progress }}</p>
                   <input
                     class="form-control"
                     id="inputEmail3"
@@ -226,6 +227,8 @@
 <script>
 const CryptoJS = require("crypto-js");
 import VueSocketIO from "vue-socket.io";
+import { ipcMain } from 'electron'
+import { threadId } from "worker_threads";
 
 export default {
   data() {
@@ -235,7 +238,13 @@ export default {
       loginloading: false,
       loginfailed: false,
       errorlogin: "error login naja",
+      progress:''
     };
+  },
+  mounted() {
+    ipcMain.on('download', (e, message) => {
+      this.progress = message
+    })
   },
   methods: {
     getImgUrl() {
