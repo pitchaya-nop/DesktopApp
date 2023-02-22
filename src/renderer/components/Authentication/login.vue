@@ -239,7 +239,7 @@ export default {
     };
   },
   mounted() {
-    ipcRenderer.on('download_progress', function (evt, message) {
+    ipcRenderer.on('download_progress',  (evt, message)=> {
       this.progress = message
     
 });
