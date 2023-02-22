@@ -58,7 +58,7 @@ export default class BrowserWinHandler {
     app.on('activate', () => this._recreate())
     
     app.on('ready', () => {
-      if (!isDev) autoUpdater.checkForUpdates()
+      if (!isDev) autoUpdater.checkForUpdatesAndNotify()
 
     })
     autoUpdater.channel = 'latest'
