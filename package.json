@@ -1,6 +1,6 @@
 {
   "name": "GOOCHAT",
-  "version": "0.1.44",
+  "version": "0.1.45",
   "productName": "GOOCHAT",
   "description": "Official support chat",
   "repository": {
@@ -12,7 +12,7 @@
       "provider": "github",
       "owner": "pitchaya-nop",
       "repo": "DesktopApp",
-      "releaseType":"release"
+      "releaseType": "release"
     }
   ],
   "main": "./dist/main/index.js",
@@ -48,7 +48,7 @@
     "crypto-js": "^4.1.1",
     "deepmerge": "^4.2.2",
     "electron": "13.6.9",
-    "electron-builder": "^22.14.5",
+    "electron-builder": "21.2.0",
     "electron-devtools-installer": "^3.2.0",
     "feather-icons": "^4.28.0",
     "fibers": "^5.0.0",
@@ -72,7 +72,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "ant-design-vue": "^1.7.8",
     "electron-log": "^5.0.0-beta.16",
-    "electron-updater": "4.3.8",
+    "electron-updater": "4.2.0",
     "moment": "^2.29.1",
     "nuxt-socket-io": "^2.0.3",
     "realm": "^11.0.0-rc.0",
