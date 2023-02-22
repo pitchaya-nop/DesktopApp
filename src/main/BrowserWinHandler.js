@@ -58,13 +58,14 @@ export default class BrowserWinHandler {
     app.on('activate', () => this._recreate())
     
     app.on('ready', () => {
-      if (!isDev) autoUpdater.checkForUpdatesAndNotify()
+      if (!isDev) autoUpdater.checkForUpdates()
 
     })
     autoUpdater.channel = 'latest'
     autoUpdater.allowDowngrade = false
     autoUpdater.autoDownload = false
-    app.commandLine.appendSwitch('disable-http2');
+    autoUpdater.autoInstallOnAppQuit = true
+    // app.commandLine.appendSwitch('disable-http2');
     // autoUpdater.requestHeaders = {'Cache-Control' : 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'};
 
     // autoUpdater.on('update-downloaded', () => {
@@ -87,9 +88,9 @@ export default class BrowserWinHandler {
         message: process.platform === 'win32' ? releaseNotes : releaseName,
         detail: 'A new version is being downloaded.'
       }
-      autoUpdater.downloadUpdate()
+      
       dialog.showMessageBox(dialogOpts, (response) => {
-    
+        autoUpdater.downloadUpdate()
       });
     })
     autoUpdater.on('download-progress', (progressObj) => {
@@ -99,16 +100,7 @@ export default class BrowserWinHandler {
       dialog.showMessageBox({message:log_message})
     })
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: 'info',
-        buttons: ['Restart', 'Later'],
-        title: 'Application Update',
-        message: process.platform === 'win32' ? releaseNotes : releaseName,
-        detail: 'A new version has been downloaded. Restart the application to apply the updates.'
-      };
-      dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) autoUpdater.quitAndInstall()
-      })
+      dialog.showMessageBox({message:'download complete message'})
     });
     // autoUpdater.on('update-available', () => {
     //   dialog.showMessageBox({
