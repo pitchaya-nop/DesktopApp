@@ -27,7 +27,7 @@
                     class="col-form-label"
                     for="inputEmail3"
                     style="font-weight: 400; font-size: 14px"
-                    >Email Address new version 0.1.58</label
+                    >Email Address new version 0.1.59</label
                   >
                   <p>{{ this.progress }}</p>
                   <button @click="Forcedupdate">forced update</button>

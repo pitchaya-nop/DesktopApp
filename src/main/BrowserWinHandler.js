@@ -67,6 +67,9 @@ export default class BrowserWinHandler {
     autoUpdater.autoInstallOnAppQuit = true
     // app.commandLine.appendSwitch('disable-http2');
     // autoUpdater.requestHeaders = {'Cache-Control' : 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'};
+    app.commandLine.appendSwitch('disable-http2');
+    autoUpdater.requestHeaders = {'Cache-Control' : 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'};
+
 
     // autoUpdater.on('update-downloaded', () => {
     //   dialog.showMessageBox({
