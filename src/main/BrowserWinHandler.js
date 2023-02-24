@@ -114,7 +114,8 @@ export default class BrowserWinHandler {
     //   })  });
     
     autoUpdater.on('error', (error) => {
-      this.browserWindow.webContents.send('download_progress', 'error download');
+      let errmessage = 'error download'+error
+      this.browserWindow.webContents.send('download_progress', errmessage);
     })
   
   }
