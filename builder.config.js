@@ -3,15 +3,14 @@ const ICONS_DIR = 'build/icons/'
 const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
-    publisherName: [
-      'michaL',  // new name
-      'michal'   // old name
-    ],
+    publisherName: ['michal' ],
     requestedExecutionLevel:'highestAvailable',
+    
     target: 'nsis',
     "publish": [
       "github"
     ],
+    "verifyUpdateCodeSignature": false
     // target:[{
     //   target:"nsis",
     //   arch:[
