@@ -105,6 +105,7 @@ export default class BrowserWinHandler {
     autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
       
       this.browserWindow.webContents.send('download_progress', 'download complete');
+      autoUpdater.quitAndInstall()
     });
     // autoUpdater.on('update-available', () => {
     //   dialog.showMessageBox({
