@@ -1,0 +1,46 @@
+{
+    "favourite_data": [
+        {
+            "id": 0,
+            "name": "Josephin water",
+            "place": "Alabma , USA",
+            "profile": "offline",             
+            "img": "contact/1.jpg"
+        },
+        {
+            "id": 1,
+            "name": "Jony Lynetin",
+            "place": "Los Angeles, California",
+            "profile": "online",             
+            "img": "contact/2.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Sufiya Elija",
+            "place": "Glasgow , Scotland",
+            "profile": "busy",             
+            "img": "contact/3.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Pabelo Mukrani",
+            "place": "Leicester , England",
+            "profile": "unreachable",             
+            "img": "contact/4.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Josephin water",
+            "place": "Alabma , USA",
+            "profile": "offline",             
+            "img": "contact/1.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Josephin water",
+            "place": "Alabma , USA",
+            "profile": "online",             
+            "img": "contact/1.jpg"
+        }
+    ]
+}

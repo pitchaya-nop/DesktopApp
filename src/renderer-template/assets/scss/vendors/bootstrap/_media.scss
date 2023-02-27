@@ -1,0 +1,10 @@
+.media {
+  display: flex;
+  // align-items: baseline;
+  align-items: flex-start;
+  // align-items: center;
+}
+
+.media-body {
+  flex: 1;
+}

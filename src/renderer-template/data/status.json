@@ -1,0 +1,46 @@
+{
+    "status_data": [
+        {
+            "id": 0,
+            "name": "Josephin water",
+            "time": "today , 8:30am",
+            "small_img": "status-img/small/sm-1.jpg",             
+            "large_img": "status-img/large/lg-1.jpg"
+        },
+        {
+            "id": 1,
+            "name": "Jony Lynetin",
+            "time": "today , 10:30am",
+            "small_img": "status-img/small/sm-2.jpg",      
+            "large_img": "status-img/large/lg-2.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Sufiya Elija",
+            "time": "today , 11:00am",
+            "small_img": "status-img/small/sm-3.jpg",
+            "large_img": "status-img/large/lg-3.jpg"
+        },
+        {
+            "id": 3,
+            "name": "Mukrani Pabelo",
+            "time": "today , 9:55am",
+            "small_img": "status-img/small/sm-4.jpg",
+            "large_img": "status-img/large/lg-4.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Pabelo Mukrani",
+            "time": "today , 12:05am",
+            "small_img": "status-img/small/sm-5.jpg",
+            "large_img": "status-img/large/lg-5.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Sufiya Elija",
+            "time": "today , 11:00am",
+            "small_img": "status-img/small/sm-3.jpg",
+            "large_img": "status-img/large/lg-3.jpg"
+        }
+    ]
+}
