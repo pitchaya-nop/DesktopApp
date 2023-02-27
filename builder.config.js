@@ -15,7 +15,7 @@ const windowsOS = {
     differentialPackage: true,
     oneClick: true,
     perMachine: false,
-    allowToChangeInstallationDirectory: true,
+    // allowToChangeInstallationDirectory: true,
     allowElevation:true
   }
 }
