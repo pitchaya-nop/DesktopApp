@@ -10,13 +10,14 @@ const windowsOS = {
       "github"
     ],
     "verifyUpdateCodeSignature": false,
-    "deleteAppDataOnUninstall":true
+    
   },
   nsis: {
     differentialPackage: true,
     oneClick: true,
     perMachine: false,
     // allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall:true,
     allowElevation:true
   }
 }
