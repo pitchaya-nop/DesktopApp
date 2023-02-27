@@ -4,29 +4,19 @@ const windowsOS = {
   win: {
     icon: ICONS_DIR + 'win-icon.ico',
     publisherName: ['michal' ],
-    requestedExecutionLevel:'highestAvailable',
-    
+    // requestedExecutionLevel:'highestAvailable',
     target: 'nsis',
     "publish": [
       "github"
     ],
     "verifyUpdateCodeSignature": false
-    // target:[{
-    //   target:"nsis",
-    //   arch:[
-    //     "x64",
-    //     "ia32"
-    //   ]
-    // }]
   },
-  
   nsis: {
     differentialPackage: true,
-    oneClick: false,
+    oneClick: true,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     allowElevation:true
-
   }
 }
 
