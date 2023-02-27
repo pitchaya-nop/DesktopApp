@@ -9,7 +9,8 @@ const windowsOS = {
     "publish": [
       "github"
     ],
-    "verifyUpdateCodeSignature": false
+    "verifyUpdateCodeSignature": false,
+    "deleteAppDataOnUninstall":true
   },
   nsis: {
     differentialPackage: true,
