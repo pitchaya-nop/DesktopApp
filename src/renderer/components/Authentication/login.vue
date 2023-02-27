@@ -27,10 +27,10 @@
                     class="col-form-label"
                     for="inputEmail3"
                     style="font-weight: 400; font-size: 14px"
-                    >Email Address new version 0.1.68</label
+                    >Email Address new version 0.1.69</label
                   >
                   <p>{{ this.progress }}</p>
-                  <button @click="Forcedupdate">forced update</button>
+                  <!-- <button @click="Forcedupdate">forced update</button> -->
                   <input
                     class="form-control"
                     id="inputEmail3"
